@@ -1,7 +1,12 @@
 import greenfoot.*;
 
 public class MyWorld extends World {
+    
+    /**
+     * Constructor for the world
+     */
     public MyWorld() {
-        super(600, 400, 1);
+        // size of the world is 800 by 600 pixels
+        super(800, 600, 1);
     }
 }
