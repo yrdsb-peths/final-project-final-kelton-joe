@@ -6,12 +6,12 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Kelton and Joe
  * @version May 2025
  */
-public class Hero extends Actor
+public class Hero extends SmoothMover
 {
     int attack;
     int health;
     int def;
-    int speed = 3;
+    double speed = 2.0;
     
     double critRate = 5.0;
     double critDamage = 50.0;
@@ -25,16 +25,16 @@ public class Hero extends Actor
     {
         
         if (Greenfoot.isKeyDown("w")) {
-            this.setLocation(getX(), getY() - speed);
+            this.setLocation(getExactX(), getExactY() - speed);
         }
         if (Greenfoot.isKeyDown("s")) {
-            this.setLocation(getX(), getY() + speed);
+            this.setLocation(getExactX(), getExactY() + speed);
         }y++;
         if (Greenfoot.isKeyDown("a")) {
-            this.setLocation(getX() - speed, getY());
+            this.setLocation(getExactX() - speed, getExactY());
         }
         if (Greenfoot.isKeyDown("d")) {
-            this.setLocation(getX() + speed, getY());
+            this.setLocation(getExactX() + speed, getExactY());
         }
     }
 }
