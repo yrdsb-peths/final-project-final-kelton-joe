@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Class for the playable character
@@ -8,19 +9,22 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Hero extends SmoothMover
 {
-    int attack;
-    int health;
-    int def;
-    double speed = 2.0;
-    
-    double critRate = 5.0;
-    double critDamage = 50.0;
+    // hero stats
+    // attack dmg in hp units
+    private int attack = 1;
+    // attack freq in ms
+    private int attackSpeed = 1000;
+    // attack range
+    private final int attackRange = 25;
+    // hero hp 
+    private int health = 3;
+    // movement speed
+    private double speed = 2.0;
     
     /**
      * Movement code for the hero
      */
     int x, y;
-    
     
     public Hero() {
         setImage("images/bee.png");
@@ -30,7 +34,7 @@ public class Hero extends SmoothMover
     
     public void act()
     {
-        
+        // movement
         if (Greenfoot.isKeyDown("w")) {
             this.setLocation(getExactX(), getExactY() - speed);
         }
@@ -43,5 +47,38 @@ public class Hero extends SmoothMover
         if (Greenfoot.isKeyDown("d")) {
             this.setLocation(getExactX() + speed, getExactY());
         }
+        
+        // attack
+        if (Greenfoot.isKeyDown("space")) {
+            Attack(attack);
+        }
+    }
+    
+    /**
+     * finds the closest enemy in range of the Hero
+     */
+    ArrayList<Enemy> en = Enemy.enemies;
+    public Enemy isInRange() {
+        Enemy closestEnemy = null;
+        double smallestDistance = attackRange;
+        
+        for (int i = 0; i < en.size(); i++) {
+            double dx = en.get(i).getExactX() - getExactX();
+            double dy = en.get(i).getExactY() - getExactY();
+            
+            double distance = Math.sqrt(dx*dx + dy*dy);
+            if (distance < smallestDistance) {
+                smallestDistance = distance;
+                closestEnemy = en.get(i);
+            }
+        }
+        return closestEnemy;
+    }
+    
+    /**
+     * attacks an enemy if it is in range
+     */
+    public void Attack(int atk) {
+        if (isInRange() != null) isInRange().removeHp(atk);
     }
 }
