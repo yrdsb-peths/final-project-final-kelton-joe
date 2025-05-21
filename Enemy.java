@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
 
 /**
  * Write a description of class Enemy here.
@@ -14,11 +15,15 @@ public class Enemy extends SmoothMover
     
     private int hitpoints;
     
+    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    
     public Enemy(Hero hero) {
         setImage("images/balloon1.png");
         
         this.hero = hero;
         hitpoints = 3;
+        
+        enemies.add(this);
     }
     
     /**
