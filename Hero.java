@@ -21,6 +21,13 @@ public class Hero extends SmoothMover
      */
     int x, y;
     
+    
+    public Hero() {
+        setImage("images/bee.png");
+        GreenfootImage hero = getImage();
+        hero.scale(25, 25);
+    }
+    
     public void act()
     {
         
