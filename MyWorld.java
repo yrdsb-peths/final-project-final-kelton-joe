@@ -8,5 +8,8 @@ public class MyWorld extends World {
     public MyWorld() {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
+        
+        Hero hero = new Hero();
+        addObject(hero, 400, 300);
     }
 }

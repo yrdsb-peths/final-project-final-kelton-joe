@@ -1,19 +1,40 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Hero here.
+ * Class for the playable character
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Kelton and Joe
+ * @version May 2025
  */
 public class Hero extends Actor
 {
+    int attack;
+    int health;
+    int def;
+    int speed = 3;
+    
+    double critRate = 5.0;
+    double critDamage = 50.0;
+    
     /**
-     * Act - do whatever the Hero wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Movement code for the hero
      */
+    int x, y;
+    
     public void act()
     {
-        // Add your action code here.
+        
+        if (Greenfoot.isKeyDown("w")) {
+            this.setLocation(getX(), getY() - speed);
+        }
+        if (Greenfoot.isKeyDown("s")) {
+            this.setLocation(getX(), getY() + speed);
+        }y++;
+        if (Greenfoot.isKeyDown("a")) {
+            this.setLocation(getX() - speed, getY());
+        }
+        if (Greenfoot.isKeyDown("d")) {
+            this.setLocation(getX() + speed, getY());
+        }
     }
 }
