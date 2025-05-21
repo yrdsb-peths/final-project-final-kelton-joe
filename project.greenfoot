@@ -1,14 +1,17 @@
 #Greenfoot project file
-class.Enemy.image=RedCircle.png
-dependency1.from=Enemy
+class.Enemy.image=balloon1.png
+dependency1.from=MyWorld
 dependency1.to=Hero
 dependency1.type=UsesDependency
+dependency2.from=Enemy
+dependency2.to=Hero
+dependency2.type=UsesDependency
 editor.fx.0.height=737
 editor.fx.0.width=814
 editor.fx.0.x=360
 editor.fx.0.y=28
 height=784
-package.numDependencies=1
+package.numDependencies=2
 package.numTargets=4
 project.charset=UTF-8
 publish.hasSource=false

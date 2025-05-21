@@ -12,8 +12,13 @@ public class Enemy extends SmoothMover
     
     private double speed = 1.0;
     
+    private int hitpoints;
+    
     public Enemy(Hero hero) {
+        setImage("images/balloon1.png");
+        
         this.hero = hero;
+        hitpoints = 3;
     }
     
     /**
@@ -32,5 +37,9 @@ public class Enemy extends SmoothMover
         
         setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
         
+    }
+    
+    public void removeHp(int hitpoints) {
+        this.hitpoints -= hitpoints;
     }
 }
