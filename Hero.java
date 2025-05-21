@@ -15,7 +15,7 @@ public class Hero extends SmoothMover
     // attack freq in ms
     private int attackSpeed = 1000;
     // attack range
-    private final int attackRange = 25;
+    private final int attackRange = 50;
     // hero hp 
     private int health = 3;
     // movement speed
@@ -38,12 +38,15 @@ public class Hero extends SmoothMover
         if (Greenfoot.isKeyDown("w")) {
             this.setLocation(getExactX(), getExactY() - speed);
         }
+        
         if (Greenfoot.isKeyDown("s")) {
             this.setLocation(getExactX(), getExactY() + speed);
-        }y++;
+        }
+        
         if (Greenfoot.isKeyDown("a")) {
             this.setLocation(getExactX() - speed, getExactY());
         }
+        
         if (Greenfoot.isKeyDown("d")) {
             this.setLocation(getExactX() + speed, getExactY());
         }
@@ -57,28 +60,28 @@ public class Hero extends SmoothMover
     /**
      * finds the closest enemy in range of the Hero
      */
-    ArrayList<Enemy> en = Enemy.enemies;
     public Enemy isInRange() {
         Enemy closestEnemy = null;
         double smallestDistance = attackRange;
         
-        for (int i = 0; i < en.size(); i++) {
-            double dx = en.get(i).getExactX() - getExactX();
-            double dy = en.get(i).getExactY() - getExactY();
+        for (int i = 0; i < Enemy.enemies.size(); i++) {
+            double dx = Enemy.enemies.get(i).getExactX() - getExactX();
+            double dy = Enemy.enemies.get(i).getExactY() - getExactY();
             
             double distance = Math.sqrt(dx*dx + dy*dy);
+            
             if (distance < smallestDistance) {
                 smallestDistance = distance;
-                closestEnemy = en.get(i);
+                closestEnemy = Enemy.enemies.get(i);
             }
         }
         return closestEnemy;
     }
     
     /**
-     * attacks an enemy if it is in range
+     * attacks the closest enemy in range 
      */
     public void Attack(int atk) {
-        if (isInRange() != null) isInRange().removeHp(atk);
+        if (isInRange() != null && isInRange().hitpoints > 0) isInRange().removeHp(atk);
     }
 }
