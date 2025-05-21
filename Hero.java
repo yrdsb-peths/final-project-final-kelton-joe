@@ -37,13 +37,11 @@ public class Hero extends SmoothMover
         setImage("images/bee.png");
         GreenfootImage hero = getImage();
         hero.scale(25, 25);
+        t.mark();
     }
     
     public void act()
     {
-        if (attackCooldown > 0) {
-            attackCooldown --;
-        }
         // movement
         if (Greenfoot.isKeyDown("w")) {
             this.setLocation(getExactX(), getExactY() - speed);
@@ -63,8 +61,10 @@ public class Hero extends SmoothMover
         
         // attack
         if (Greenfoot.isKeyDown("space")) {
-            if (attackCooldown == 0) Attack(attack);
-            attackCooldown = attackSpeed;
+            if (t.millisElapsed() >= attackSpeed) {
+                Attack(attack);
+                t.mark();
+            }
         }
     }
     
