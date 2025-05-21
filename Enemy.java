@@ -22,8 +22,8 @@ public class Enemy extends SmoothMover
      */
     public void act()
     {
-        double dx = hero.getX() - getExactX();
-        double dy = hero.getY() - getExactY();
+        double dx = hero.getExactX() - getExactX();
+        double dy = hero.getExactY() - getExactY();
         
         double magnitude = Math.sqrt(dx * dx + dy * dy);
         
