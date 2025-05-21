@@ -13,13 +13,13 @@ public class Hero extends SmoothMover
     // attack dmg in hp units
     private int attack = 1;
     // attack freq in ms
-    private int attackSpeed = 1000;
+    private int attackSpeed = 500;
     private int attackCooldown = attackSpeed;
     
     SimpleTimer t = new SimpleTimer();
     
     // attack range
-    private final int attackRange = 50;
+    private final int attackRange = 75;
     // hero hp 
     private int health = 3;
     // movement speed
