@@ -24,6 +24,9 @@ public class Enemy extends SmoothMover
         hitpoints = 3;
         
         enemies.add(this);
+        
+        GreenfootImage enemy = getImage();
+        enemy.scale(25, 25);
     }
     
     /**
