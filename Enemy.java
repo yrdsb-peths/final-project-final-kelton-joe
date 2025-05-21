@@ -13,7 +13,7 @@ public class Enemy extends SmoothMover
     
     private double speed = 1.0;
     
-    private int hitpoints;
+    public int hitpoints;
     
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
@@ -41,10 +41,12 @@ public class Enemy extends SmoothMover
         double normalizedDy = dy / magnitude;
         
         setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
-        
     }
     
-    public void removeHp(int hitpoints) {
-        this.hitpoints -= hitpoints;
+    public void removeHp(int damage) {
+        hitpoints -= damage;
+        if (hitpoints <= 0) {
+            getWorld().removeObject(this);
+        }
     }
 }
