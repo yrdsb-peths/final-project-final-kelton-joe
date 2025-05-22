@@ -13,27 +13,26 @@ public class Hero extends SmoothMover
     
     // hero stats
     // attack dmg in hp units
-    private int attack = 1;
+    private double attack = 1.0;
     
     // attack freq in ms
-    private int attackSpeed = 500;
+    private double attackSpeed = 500.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
-    private final int attackRange = 75;
+    private double attackRange = 75;
     
     // hero hp 
-    public int health = 3;
+    public double health = 3.0;
     
     // movement speed
     private double speed = 2.0;
     
-    double critRate = 5.0;
-    double critDamage = 50.0;
+    // crit rate and damage
+    int critRate = 5;
+    int critDamage = 50;
     
-    /**
-     * Movement code for the hero
-     */
+    // position of the hero
     int x, y;
     
     public Hero() {
@@ -72,7 +71,7 @@ public class Hero extends SmoothMover
             // attack
             if (Greenfoot.isKeyDown("space")) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
-                    Attack(attack);
+                    Attack();
                     attackCooldown.mark();
                 }
             }
@@ -103,7 +102,26 @@ public class Hero extends SmoothMover
     /**
      * attacks the closest enemy in range 
      */
-    public void Attack(int atk) {
-        if (isInRange() != null && isInRange().hitpoints > 0) isInRange().removeHp(atk);
+    public void Attack() {
+        if (isInRange() != null && isInRange().hitpoints > 0) isInRange().removeHp((int) attack);
+    }
+    
+    public void setStat(double value, String stat) {
+        switch (stat) {
+            case "attack":
+                attack += value;
+            case "health":
+                health += value;
+            case "attackSpeed":
+                attackSpeed += value;
+            case "attackRange":
+                attackRange += value;
+            case "speed":
+                speed += value;
+            case "critRate":
+                critRate += value;
+            case "critDamage":
+                critDamage += value;
+        }
     }
 }
