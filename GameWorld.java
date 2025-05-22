@@ -17,6 +17,8 @@ public class GameWorld extends World {
     
     static boolean gameOver;
     
+    public static Label healthBar;
+    
     /**
      * Constructor for the world
      */
@@ -28,6 +30,9 @@ public class GameWorld extends World {
         
         hero = new Hero();
         addObject(hero, 400, 300);
+        
+        healthBar = new Label(Hero.hero.health + " hp", 40);
+        addObject(healthBar, 750, 20);
         
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 70, 20);
@@ -47,7 +52,8 @@ public class GameWorld extends World {
                 enemiesToSpawn--;
                 spawnTimer.mark();
             }
-        } else if (Enemy.enemies.size() == 0) {
+        } 
+        else if (Enemy.enemies.size() == 0) {
             startWave();
         }
     }

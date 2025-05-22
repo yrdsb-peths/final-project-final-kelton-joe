@@ -66,6 +66,8 @@ public class Enemy extends SmoothMover
     
     public void attack() {
         Hero.hero.health -= this.attack;
+        GameWorld.healthBar.setValue(Hero.hero.health + " hp");
+        
         if (Hero.hero.health <= 0) GameWorld.gameOver = true;
     }
 }

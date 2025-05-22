@@ -23,7 +23,7 @@ public class Hero extends SmoothMover
     private double attackRange = 75;
     
     // hero hp 
-    public double health = 3.0;
+    public int health = 3;
     
     // movement speed
     private double speed = 2.0;
