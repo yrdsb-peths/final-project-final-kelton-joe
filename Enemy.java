@@ -9,19 +9,16 @@ import java.util.ArrayList;
  */
 public class Enemy extends SmoothMover
 {
-    private Hero hero;
-    
     private double speed = 1.0;
     
     public int hitpoints;
     
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
-    public Enemy(Hero hero) {
+    public Enemy(int hitpoints) {
         setImage("images/balloon1.png");
         
-        this.hero = hero;
-        hitpoints = 3;
+        this.hitpoints = hitpoints;
         
         enemies.add(this);
         
@@ -35,8 +32,8 @@ public class Enemy extends SmoothMover
      */
     public void act()
     {
-        double dx = hero.getExactX() - getExactX();
-        double dy = hero.getExactY() - getExactY();
+        double dx = Hero.hero.getExactX() - getExactX();
+        double dy = Hero.hero.getExactY() - getExactY();
         
         double magnitude = Math.sqrt(dx * dx + dy * dy);
         
@@ -50,6 +47,7 @@ public class Enemy extends SmoothMover
         hitpoints -= damage;
         if (hitpoints <= 0) {
             getWorld().removeObject(this);
+            enemies.remove(this);
         }
     }
 }

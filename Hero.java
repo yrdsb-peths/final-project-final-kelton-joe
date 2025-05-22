@@ -9,6 +9,8 @@ import java.util.ArrayList;
  */
 public class Hero extends SmoothMover
 {
+    public static Hero hero;
+    
     // hero stats
     // attack dmg in hp units
     private int attack = 1;
@@ -39,6 +41,9 @@ public class Hero extends SmoothMover
         setImage("images/bee.png");
         GreenfootImage hero = getImage();
         hero.scale(25, 25);
+        
+        this.hero = this;
+        
         t.mark();
     }
     
