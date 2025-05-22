@@ -12,8 +12,12 @@ public class Enemy extends SmoothMover
     private double speed = 1.0;
     
     public int hitpoints;
+    private int attack = 1;
     
-    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    private int attackSpeed = 1000;
+    SimpleTimer attackCooldown = new SimpleTimer();
+    
+    public static ArrayList<Enemy> enemies;
     
     public Enemy(int hitpoints) {
         setImage("images/balloon1.png");
@@ -24,6 +28,8 @@ public class Enemy extends SmoothMover
         
         GreenfootImage enemy = getImage();
         enemy.scale(25, 25);
+        
+        attackCooldown.mark();
     }
     
     /**
@@ -41,6 +47,13 @@ public class Enemy extends SmoothMover
         double normalizedDy = dy / magnitude;
         
         setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
+        
+        if (this.isTouching(Hero.class)) {
+            if (attackCooldown.millisElapsed() >= attackSpeed) {
+                attack();
+                attackCooldown.mark();
+            }
+        }
     }
     
     public void removeHp(int damage) {
@@ -49,5 +62,10 @@ public class Enemy extends SmoothMover
             getWorld().removeObject(this);
             enemies.remove(this);
         }
+    }
+    
+    public void attack() {
+        Hero.hero.health -= this.attack;
+        if (Hero.hero.health <= 0) MyWorld.gameOver = true;
     }
 }

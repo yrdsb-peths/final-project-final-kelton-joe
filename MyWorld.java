@@ -15,12 +15,16 @@ public class MyWorld extends World {
     
     private Label waveLabel;
     
+    static boolean gameOver;
+    
     /**
      * Constructor for the world
      */
     public MyWorld() {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
+        
+        gameOver = false;
         
         hero = new Hero();
         addObject(hero, 400, 300);

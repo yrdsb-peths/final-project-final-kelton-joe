@@ -23,7 +23,7 @@ public class Hero extends SmoothMover
     private final int attackRange = 75;
     
     // hero hp 
-    private int health = 3;
+    public int health = 3;
     
     // movement speed
     private double speed = 2.0;
@@ -48,28 +48,31 @@ public class Hero extends SmoothMover
     
     public void act()
     {
-        // movement
-        if (Greenfoot.isKeyDown("w")) {
-            this.setLocation(getExactX(), getExactY() - speed);
-        }
         
-        if (Greenfoot.isKeyDown("s")) {
-            this.setLocation(getExactX(), getExactY() + speed);
-        }
-        
-        if (Greenfoot.isKeyDown("a")) {
-            this.setLocation(getExactX() - speed, getExactY());
-        }
-        
-        if (Greenfoot.isKeyDown("d")) {
-            this.setLocation(getExactX() + speed, getExactY());
-        }
-        
-        // attack
-        if (Greenfoot.isKeyDown("space")) {
-            if (attackCooldown.millisElapsed() >= attackSpeed) {
-                Attack(attack);
-                attackCooldown.mark();
+        if (!MyWorld.gameOver) {
+            // movement
+            if (Greenfoot.isKeyDown("w")) {
+                this.setLocation(getExactX(), getExactY() - speed);
+            }
+            
+            if (Greenfoot.isKeyDown("s")) {
+                this.setLocation(getExactX(), getExactY() + speed);
+            }
+            
+            if (Greenfoot.isKeyDown("a")) {
+                this.setLocation(getExactX() - speed, getExactY());
+            }
+            
+            if (Greenfoot.isKeyDown("d")) {
+                this.setLocation(getExactX() + speed, getExactY());
+            }
+            
+            // attack
+            if (Greenfoot.isKeyDown("space")) {
+                if (attackCooldown.millisElapsed() >= attackSpeed) {
+                    Attack(attack);
+                    attackCooldown.mark();
+                }
             }
         }
     }
