@@ -1,21 +1,31 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class EndScreen here.
+ * End screen after player loses
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Kelton and Joe
+ * @version May 2025
  */
 public class EndScreen extends World
 {
-
     /**
-     * Constructor for objects of class EndScreen.
-     * 
+     * Endscreen contructor
      */
     public EndScreen()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(800, 600, 1);
+        
+        Label gameOverText = new Label("Game Over", 80);
+        addObject(gameOverText, 400, 300);
+        
+        Label resetText = new Label("press space to restart", 40);
+        addObject(resetText, 400, 350);
+    }
+    
+    public void act() {
+        if (Greenfoot.isKeyDown("space")) {
+            GameWorld gameWorld = new GameWorld();
+            Greenfoot.setWorld(gameWorld);
+        }
     }
 }

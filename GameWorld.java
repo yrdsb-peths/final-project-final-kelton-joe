@@ -1,7 +1,7 @@
 import greenfoot.*;
 import java.util.ArrayList;
 
-public class MyWorld extends World {
+public class GameWorld extends World {
     SimpleTimer spawnTimer = new SimpleTimer();
     
     private int enemiesToSpawn;
@@ -20,7 +20,7 @@ public class MyWorld extends World {
     /**
      * Constructor for the world
      */
-    public MyWorld() {
+    public GameWorld() {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
         

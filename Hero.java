@@ -48,8 +48,10 @@ public class Hero extends SmoothMover
     
     public void act()
     {
-        
-        if (!MyWorld.gameOver) {
+        if (GameWorld.gameOver) {
+            EndScreen endScreen = new EndScreen();
+            Greenfoot.setWorld(endScreen);
+        } else {
             // movement
             if (Greenfoot.isKeyDown("w")) {
                 this.setLocation(getExactX(), getExactY() - speed);
