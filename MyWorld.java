@@ -1,4 +1,5 @@
 import greenfoot.*;
+import java.util.ArrayList;
 
 public class MyWorld extends World {
     SimpleTimer spawnTimer = new SimpleTimer();
@@ -26,6 +27,8 @@ public class MyWorld extends World {
         
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 70, 20);
+        
+        Enemy.enemies = new ArrayList<Enemy>();
         
         wave = 0;
         startWave();
