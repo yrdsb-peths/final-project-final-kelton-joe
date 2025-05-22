@@ -17,8 +17,7 @@ public class Hero extends SmoothMover
     
     // attack freq in ms
     private int attackSpeed = 500;
-    private int attackCooldown = attackSpeed;
-    SimpleTimer t = new SimpleTimer();
+    SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
     private final int attackRange = 75;
@@ -44,7 +43,7 @@ public class Hero extends SmoothMover
         
         this.hero = this;
         
-        t.mark();
+        attackCooldown.mark();
     }
     
     public void act()
@@ -68,9 +67,9 @@ public class Hero extends SmoothMover
         
         // attack
         if (Greenfoot.isKeyDown("space")) {
-            if (t.millisElapsed() >= attackSpeed) {
+            if (attackCooldown.millisElapsed() >= attackSpeed) {
                 Attack(attack);
-                t.mark();
+                attackCooldown.mark();
             }
         }
     }
