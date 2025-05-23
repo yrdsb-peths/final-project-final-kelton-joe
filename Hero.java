@@ -87,6 +87,7 @@ public class Hero extends SmoothMover
             if (regenCooldown.millisElapsed() >= regenInterval) {
                 currentHp = Math.min(regenAmount + currentHp, maxHp);
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
+                regenCooldown.mark();
             }
         }
     }
