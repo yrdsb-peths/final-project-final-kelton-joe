@@ -15,11 +15,13 @@ public class EndScreen extends World
     {    
         super(800, 600, 1);
         
-        Label gameOverText = new Label("Game Over", 80);
-        addObject(gameOverText, 400, 300);
+        setBackground(new GreenfootImage("gameOver.jpg"));
         
-        Label resetText = new Label("press space to restart", 40);
-        addObject(resetText, 400, 350);
+        Label gameOverText = new Label("Game Over", 80);
+        addObject(gameOverText, 400, 100);
+        
+        Label resetText = new Label("Press space to restart", 35);
+        addObject(resetText, 400, 500);
     }
     
     public void act() {

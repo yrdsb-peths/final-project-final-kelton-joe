@@ -30,9 +30,9 @@ public class Upgrade extends Actor
         0.25,
         -25.0,
         5,
-        1.0,
-        2.0,
-        -50.0,
+        3.0,
+        6.0,
+        -100.0,
         1.0
     };
     
