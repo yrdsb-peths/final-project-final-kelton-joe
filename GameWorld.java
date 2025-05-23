@@ -45,9 +45,6 @@ public class GameWorld extends World {
         
         Enemy.enemies = new ArrayList<Enemy>();
         
-        upgradeManager = new UpgradeManager(5, this);
-        addObject(upgradeManager, 0, 0);
-        
         wave = 0;
         startWave();
     }
@@ -62,12 +59,13 @@ public class GameWorld extends World {
                 spawnTimer.mark();
             }
         } 
-        else if (Enemy.enemies.size() == 0) {
-            startWave();
+        else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
+            upgradeManager = new UpgradeManager(5, this);
+            addObject(upgradeManager, 0, 0);
         }
     }
     
-    private void startWave() {
+    public void startWave() {
         wave++;
         
         waveLabel.setValue("Wave " + wave);
