@@ -132,9 +132,15 @@ public class Hero extends SmoothMover
                 break;
             case "attackSpeed":
                 attackSpeed = Math.max(attackSpeed + value, maxAttackSpeed);
+                if (attackSpeed == maxAttackSpeed) {
+                    Upgrade.type.remove("attackSpeed");
+                }
                 break;
             case "attackRange":
                 attackRange = Math.min(attackRange + value, maxAttackRange);
+                if (attackRange == maxAttackRange) {
+                    Upgrade.type.remove("attackRange");
+                }
                 break;
             case "speed":
                 speed += value;
@@ -147,6 +153,9 @@ public class Hero extends SmoothMover
                 break;
             case "regenInterval":
                 regenInterval = Math.max(regenInterval + (int) value, minRegenInterval);
+                if (regenInterval == minRegenInterval) {
+                    Upgrade.type.remove("regenInterval");
+                }
                 break;
             case "regenAmount":
                 regenAmount += value;

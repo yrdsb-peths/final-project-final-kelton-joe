@@ -1,4 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Class for hero upgrades
@@ -8,7 +10,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Upgrade extends Actor
 {
-    private String[] type = {
+    public static String[] typeString = {
         "health", 
         "attack", 
         "speed", 
@@ -19,6 +21,8 @@ public class Upgrade extends Actor
         "regenInterval",
         "regenAmount"
     };
+    
+    public static ArrayList<String> type;
     
     private double[] value = {
         1.0,
@@ -44,17 +48,19 @@ public class Upgrade extends Actor
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
         rectangle.scale(120, 140);
         setImage(rectangle);
+        
+        type = new ArrayList<String>(Arrays.asList(typeString)); 
     }
     
     protected void addedToWorld(World world) {
-        num = Greenfoot.getRandomNumber(8);
-        name = new Label(type[num] + "\nUP", 25);
+        num = Greenfoot.getRandomNumber(type.size());
+        name = new Label(type.get(num) + "\nUP", 25);
         GameWorld.gameWorld.addObject(name, getX(), getY() - 20);
     }
     
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            Hero.hero.setStat(value[num], type[num]);
+            Hero.hero.setStat(value[num], type.get(num));
             upgradeManager.isSelected = true;
         }
     }
