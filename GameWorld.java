@@ -38,10 +38,10 @@ public class GameWorld extends World {
         addObject(hero, 400, 300);
         
         healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
-        addObject(healthBar, 750, 20);
+        addObject(healthBar, 740, 20);
         
         waveLabel = new Label("Wave 0", 50);
-        addObject(waveLabel, 70, 20);
+        addObject(waveLabel, 80, 20);
         
         Enemy.enemies = new ArrayList<Enemy>();
         
