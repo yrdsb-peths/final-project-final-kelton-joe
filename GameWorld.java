@@ -2,6 +2,8 @@ import greenfoot.*;
 import java.util.ArrayList;
 
 public class GameWorld extends World {
+    static GameWorld gameWorld;
+    
     SimpleTimer spawnTimer = new SimpleTimer();
     
     private int enemiesToSpawn;
@@ -19,12 +21,16 @@ public class GameWorld extends World {
     
     public static Label healthBar;
     
+    private UpgradeManager upgradeManager;
+    
     /**
      * Constructor for the world
      */
     public GameWorld() {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
+        
+        gameWorld = this;
         
         gameOver = false;
         
@@ -38,6 +44,9 @@ public class GameWorld extends World {
         addObject(waveLabel, 70, 20);
         
         Enemy.enemies = new ArrayList<Enemy>();
+        
+        upgradeManager = new UpgradeManager(5, this);
+        addObject(upgradeManager, 0, 0);
         
         wave = 0;
         startWave();
@@ -93,5 +102,9 @@ public class GameWorld extends World {
                 break;
         }
         spawnTimer.mark();
+    }
+    
+    public void removeUpgrades() {
+        upgradeManager = null;
     }
 }

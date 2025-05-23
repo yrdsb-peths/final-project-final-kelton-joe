@@ -28,9 +28,30 @@ public class Upgrade extends Actor
         2.0
     };
     
-    public void act()
-    {
-         int num = Greenfoot.getRandomNumber(6);
-         Hero.hero.setStat(value[num], type[num]);
+    private int num;
+    
+    public UpgradeManager upgradeManager;
+    
+    public Label name;
+    
+    public Upgrade(UpgradeManager upgradeManager) {
+        this.upgradeManager = upgradeManager;
+        
+        GreenfootImage rectangle = new GreenfootImage("rectangle.png");
+        rectangle.scale(120, 140);
+        setImage(rectangle);
+    }
+    
+    protected void addedToWorld(World world) {
+        num = Greenfoot.getRandomNumber(6);
+        name = new Label(type[num] + "\nUP", 25);
+        GameWorld.gameWorld.addObject(name, getX(), getY() - 20);
+    }
+    
+    public void act() {
+        if (Greenfoot.mouseClicked(this)) {
+            Hero.hero.setStat(value[num], type[num]);
+            upgradeManager.isSelected = true;
+        }
     }
 }

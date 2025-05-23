@@ -110,18 +110,26 @@ public class Hero extends SmoothMover
         switch (stat) {
             case "attack":
                 attack += value;
+                break;
             case "health":
                 health += value;
+                GameWorld.healthBar.setValue(health + " hp");
+                break;
             case "attackSpeed":
                 attackSpeed += value;
+                break;
             case "attackRange":
                 attackRange += value;
+                break;
             case "speed":
                 speed += value;
+                break;
             case "critRate":
                 critRate += value;
+                break;
             case "critDamage":
                 critDamage += value;
+                break;
         }
     }
 }
