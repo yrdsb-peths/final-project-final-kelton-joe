@@ -37,7 +37,7 @@ public class GameWorld extends World {
         hero = new Hero();
         addObject(hero, 400, 300);
         
-        healthBar = new Label(Hero.hero.health + " hp", 40);
+        healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
         addObject(healthBar, 750, 20);
         
         waveLabel = new Label("Wave 0", 50);

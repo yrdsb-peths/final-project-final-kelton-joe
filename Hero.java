@@ -17,13 +17,15 @@ public class Hero extends SmoothMover
     
     // attack freq in ms
     private double attackSpeed = 500.0;
+    private final double maxAttackSpeed = 100.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
     private double attackRange = 75;
     
     // hero hp 
-    public int health = 3;
+    public int currentHp = 3;
+    public int maxHp = 3;
     
     // movement speed
     private double speed = 2.0;
@@ -112,8 +114,9 @@ public class Hero extends SmoothMover
                 attack += value;
                 break;
             case "health":
-                health += value;
-                GameWorld.healthBar.setValue(health + " hp");
+                maxHp += value;
+                currentHp += value;
+                GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 break;
             case "attackSpeed":
                 attackSpeed += value;
