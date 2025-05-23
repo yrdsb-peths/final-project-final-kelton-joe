@@ -27,6 +27,10 @@ public class Hero extends SmoothMover
     public int currentHp = 3;
     public int maxHp = 3;
     
+    public int regenInterval = 15000;
+    public int regenAmount = 1;
+    SimpleTimer regenCooldown = new SimpleTimer();
+    
     // movement speed
     private double speed = 2.0;
     
@@ -45,6 +49,7 @@ public class Hero extends SmoothMover
         this.hero = this;
         
         attackCooldown.mark();
+        regenCooldown.mark();
     }
     
     public void act()
@@ -76,6 +81,10 @@ public class Hero extends SmoothMover
                     Attack();
                     attackCooldown.mark();
                 }
+            }
+            if (regenCooldown.millisElapsed() >= regenInterval) {
+                currentHp = Math.min(regenAmount + currentHp, maxHp);
+                GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
             }
         }
     }
