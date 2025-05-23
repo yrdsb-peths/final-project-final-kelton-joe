@@ -19,7 +19,9 @@ public class Upgrade extends Actor
         "critRate", 
         "critDamage",
         "regenInterval",
-        "regenAmount"
+        "regenAmount",
+        "fullHeal",
+        "crit"
     };
     
     public static ArrayList<String> type;
@@ -33,34 +35,71 @@ public class Upgrade extends Actor
         3.0,
         6.0,
         -100.0,
+        1.0,
+        100.0,
         1.0
     };
     
     private int num;
     
+    // 0 = common, 1= uncommon, 2 = rare, 3 = epic, 4 = legendary, 5 = mythic
+    private int rarity;
+    
     public UpgradeManager upgradeManager;
     
     public Label name;
+    public Label theRarity;
     
     public Upgrade(UpgradeManager upgradeManager) {
         this.upgradeManager = upgradeManager;
         
+        // background for upgrades
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
-        rectangle.scale(120, 140);
+        rectangle.scale(200, 250);
         setImage(rectangle);
         
+        // converts string to arraylist
         type = new ArrayList<String>(Arrays.asList(typeString)); 
     }
     
     protected void addedToWorld(World world) {
+        // randomly generate an upgrade
         num = Greenfoot.getRandomNumber(type.size());
+        rarity = Greenfoot.getRandomNumber(5);
+        
+        // make label for generated upgrade
         name = new Label(type.get(num) + "\nUP", 25);
+        
+        // rarity label
+        switch (rarity) {
+            case 0:
+                theRarity = new Label("Common", 20);
+                break;
+            case 1:
+                theRarity = new Label("Uncommon", 20);
+                break;
+            case 2:
+                theRarity = new Label("Rare", 20);
+                break;
+            case 3:
+                theRarity = new Label("Epic", 20);
+                break;
+            case 4:
+                theRarity = new Label("Legendary", 20);
+                break;
+            case 5:
+                theRarity = new Label("Mythic", 20);
+                break;
+        }
+        
+        // adds the labels to the world
         GameWorld.gameWorld.addObject(name, getX(), getY() - 20);
+        GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 70);
     }
     
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            Hero.hero.setStat(value[num], type.get(num));
+            Hero.hero.setStat(value[num] * (rarity + 1), type.get(num));
             upgradeManager.isSelected = true;
         }
     }

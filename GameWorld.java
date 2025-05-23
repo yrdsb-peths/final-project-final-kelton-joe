@@ -60,7 +60,7 @@ public class GameWorld extends World {
             }
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
-            upgradeManager = new UpgradeManager(5, this);
+            upgradeManager = new UpgradeManager(3, this);
             addObject(upgradeManager, 0, 0);
         }
     }

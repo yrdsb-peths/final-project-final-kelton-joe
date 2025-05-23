@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class UpgradeManager extends Actor
 {
-    private final int upgradeSpacing = 150;
+    private final int upgradeSpacing = 250;
     
     public boolean isSelected;
     
@@ -30,6 +30,7 @@ public class UpgradeManager extends Actor
             for (Upgrade upgrade : upgrades) {
                 upgrade.upgradeManager = null;
                 GameWorld.gameWorld.removeObject(upgrade.name);
+                GameWorld.gameWorld.removeObject(upgrade.theRarity);
                 GameWorld.gameWorld.removeObject(upgrade);
             }
             

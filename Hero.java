@@ -11,11 +11,10 @@ public class Hero extends SmoothMover
 {
     public static Hero hero;
     
-    // hero stats
     // attack dmg in hp units
     private double attack = 1.0;
     
-    // attack freq in ms
+    // attack speed
     private double attackSpeed = 500.0;
     private final double maxAttackSpeed = 100.0;
     SimpleTimer attackCooldown = new SimpleTimer();
@@ -24,10 +23,11 @@ public class Hero extends SmoothMover
     private double attackRange = 75;
     private final double maxAttackRange = 200;
     
-    // hero hp 
+    // health
     public int currentHp = 3;
     public int maxHp = 3;
     
+    // natural health regeneration
     public int regenInterval = 15000;
     public final int minRegenInterval = 1000;
     public int regenAmount = 1;
@@ -127,7 +127,6 @@ public class Hero extends SmoothMover
                 break;
             case "health":
                 maxHp += value;
-                currentHp += value;
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 break;
             case "attackSpeed":
@@ -159,6 +158,13 @@ public class Hero extends SmoothMover
                 break;
             case "regenAmount":
                 regenAmount += value;
+                break;
+            case "fullHeal":
+                currentHp = maxHp;
+                break;
+            case "crit":
+                critRate += value;
+                critDamage += value * 2;
                 break;
         }
     }
