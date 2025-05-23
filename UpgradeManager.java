@@ -34,6 +34,9 @@ public class UpgradeManager extends Actor
             }
             
             GameWorld.gameWorld.removeUpgrades();
+            
+            GameWorld.gameWorld.startWave();
+            
             GameWorld.gameWorld.removeObject(this);
             
         }
