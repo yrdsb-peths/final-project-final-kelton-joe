@@ -16,11 +16,13 @@ public class TitleScreen extends World
     {    
         super(800, 600, 1);
         
-        Label gameName = new Label("Placeholder Game", 80);
+        setBackground(new GreenfootImage("titleScreen.jpg"));
+        
+        Label gameName = new Label("Project Nameless", 70);
         addObject(gameName, 400, 100);
         
-        Label start = new Label("Press space to start the game", 40);
-        addObject(start, 400, 200);
+        Label start = new Label("Press space to start the game", 35);
+        addObject(start, 400, 500);
     }
     
     public void act() {
