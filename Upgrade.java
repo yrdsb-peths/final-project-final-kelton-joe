@@ -55,7 +55,7 @@ public class Upgrade extends Actor
         
         // background for upgrades
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
-        rectangle.scale(200, 250);
+        rectangle.scale(200, 200);
         setImage(rectangle);
         
         // converts string to arraylist
@@ -68,27 +68,61 @@ public class Upgrade extends Actor
         rarity = Greenfoot.getRandomNumber(5);
         
         // make label for generated upgrade
-        name = new Label(type.get(num) + "\nUP", 25);
+        switch (num) {
+            case 0:
+                name = new Label("Health Boost", 25);
+                break;
+            case 1:
+                name = new Label("Attack Boost", 25);
+                break;
+            case 2:
+                name = new Label("Speed Boost", 25);
+                break;
+            case 3:
+                name = new Label("Attack Speed Boost", 25);
+                break;
+            case 4:
+                name = new Label("Attack Range Boost", 25);
+                break;
+            case 5:
+                name = new Label("Crit Rate Boost", 25);
+                break;
+            case 6:
+                name = new Label("Crit Damage Boost", 25);
+                break;
+            case 7:
+                name = new Label("Health Regen Cooldown \nBoost", 25);
+                break;
+            case 8:
+                name = new Label("Health Regen Amount \nBoost", 25);
+                break;
+            case 9:
+                name = new Label("Full Heal", 25);
+                break;
+            case 10:
+                name = new Label("Full Crit Boost", 25);
+                break;
+        }
         
         // rarity label
         switch (rarity) {
             case 0:
-                theRarity = new Label("Common", 20);
+                theRarity = new Label("Common", 30);
                 break;
             case 1:
-                theRarity = new Label("Uncommon", 20);
+                theRarity = new Label("Uncommon", 30);
                 break;
             case 2:
-                theRarity = new Label("Rare", 20);
+                theRarity = new Label("Rare", 30);
                 break;
             case 3:
-                theRarity = new Label("Epic", 20);
+                theRarity = new Label("Epic", 30);
                 break;
             case 4:
-                theRarity = new Label("Legendary", 20);
+                theRarity = new Label("Legendary", 30);
                 break;
             case 5:
-                theRarity = new Label("Mythic", 20);
+                theRarity = new Label("Mythic", 30);
                 break;
         }
         
