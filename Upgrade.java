@@ -27,17 +27,17 @@ public class Upgrade extends Actor
     public static ArrayList<String> type;
     
     private double[] value = {
-        1.0,
-        1.0,
-        0.25,
-        -25.0,
-        5,
-        3.0,
-        6.0,
-        -100.0,
-        1.0,
-        100.0,
-        1.0
+        1.0, // attack
+        1.0, // hp
+        0.05, // speed
+        -15.0, // attack speed
+        3, // attack range
+        1.0, //crit rate
+        2.0, // crit damage
+        -50.0, // hp regen interval
+        1.0, // hp regen amount
+        100.0, // full heal
+        0.5 // both crit buff
     };
     
     private int num;
