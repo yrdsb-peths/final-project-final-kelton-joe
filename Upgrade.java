@@ -15,7 +15,9 @@ public class Upgrade extends Actor
         "attackSpeed", 
         "attackRange",
         "critRate", 
-        "critDamage"
+        "critDamage",
+        "regenInterval",
+        "regenAmount"
     };
     
     private double[] value = {
@@ -25,7 +27,9 @@ public class Upgrade extends Actor
         -25.0,
         5,
         1.0,
-        2.0
+        2.0,
+        -50.0,
+        1.0
     };
     
     private int num;
@@ -43,7 +47,7 @@ public class Upgrade extends Actor
     }
     
     protected void addedToWorld(World world) {
-        num = Greenfoot.getRandomNumber(6);
+        num = Greenfoot.getRandomNumber(8);
         name = new Label(type[num] + "\nUP", 25);
         GameWorld.gameWorld.addObject(name, getX(), getY() - 20);
     }

@@ -22,12 +22,14 @@ public class Hero extends SmoothMover
     
     // attack range
     private double attackRange = 75;
+    private final double maxAttackRange = 200;
     
     // hero hp 
     public int currentHp = 3;
     public int maxHp = 3;
     
     public int regenInterval = 15000;
+    public final int minRegenInterval = 1000;
     public int regenAmount = 1;
     SimpleTimer regenCooldown = new SimpleTimer();
     
@@ -35,8 +37,8 @@ public class Hero extends SmoothMover
     private double speed = 2.0;
     
     // crit rate and damage
-    int critRate = 5;
-    int critDamage = 50;
+    double critRate = 5;
+    double critDamage = 50;
     
     // position of the hero
     int x, y;
@@ -128,10 +130,10 @@ public class Hero extends SmoothMover
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 break;
             case "attackSpeed":
-                attackSpeed += value;
+                attackSpeed = Math.max(attackSpeed + value, maxAttackSpeed);
                 break;
             case "attackRange":
-                attackRange += value;
+                attackRange = Math.min(attackRange + value, maxAttackRange);
                 break;
             case "speed":
                 speed += value;
@@ -141,6 +143,12 @@ public class Hero extends SmoothMover
                 break;
             case "critDamage":
                 critDamage += value;
+                break;
+            case "regenInterval":
+                regenInterval = Math.max(regenInterval + (int) value, minRegenInterval);
+                break;
+            case "regenAmount":
+                regenAmount += value;
                 break;
         }
     }
