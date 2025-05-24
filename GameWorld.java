@@ -76,15 +76,15 @@ public class GameWorld extends World {
             }
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
+            Hero.hero.currentHp = Hero.hero.maxHp;
+            
+            // spawns 3 upgrades
             upgradeManager = new UpgradeManager(3, this);
             addObject(upgradeManager, 0, 0);
         }
     }
     
     public void startWave() {
-        // full heal hero at the start of every wave
-        Hero.hero.currentHp = Hero.hero.maxHp;
-        
         // increase wave number every time it is called
         wave++;
         
