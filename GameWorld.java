@@ -13,7 +13,7 @@ public class GameWorld extends World {
     private int bonusAttack;
     private int bonusAttackSpeed;
     
-    private final int spawnInterval = 800;
+    private final int spawnInterval = 1000;
     
     private Hero hero;
     
