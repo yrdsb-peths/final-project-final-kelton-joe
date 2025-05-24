@@ -13,6 +13,7 @@ public class Enemy extends SmoothMover
     private double speed = 0.75;
     
     // health
+    public int maxHitpoints;
     public int hitpoints;
     
     // attack
@@ -24,11 +25,15 @@ public class Enemy extends SmoothMover
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // list of enemies
-    public static ArrayList<Enemy> enemies;
+    public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+    
+    private RedBar redBar;
+    private GreenBar greenBar;
     
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
+        maxHitpoints = hitpoints;
         this.hitpoints = hitpoints;
         this.speed += speed;
         this.attack += attack;
@@ -40,6 +45,16 @@ public class Enemy extends SmoothMover
         enemy.scale(25, 25);
         
         attackCooldown.mark();
+    }
+    
+    protected void addedToWorld(World world) {
+        double scale = 0.05;
+        
+        redBar = new RedBar(scale);
+        world.addObject(redBar, getX(), getY());
+        
+        greenBar = new GreenBar(scale);
+        world.addObject(greenBar, getX(), getY());
     }
     
     /**
@@ -64,11 +79,21 @@ public class Enemy extends SmoothMover
                 attackCooldown.mark();
             }
         }
+        
+        if (redBar != null && greenBar != null) {
+            redBar.setPos(getX(), getY());
+            greenBar.setPos(getX(), getY(), (double)hitpoints/(double)maxHitpoints);
+        }
     }
     
     public void removeHp(int damage) {
         hitpoints -= damage;
         if (hitpoints <= 0) {
+            GameWorld.gameWorld.removeObject(redBar);
+            GameWorld.gameWorld.removeObject(greenBar);
+            redBar = null;
+            greenBar = null;
+            
             getWorld().removeObject(this);
             enemies.remove(this);
         }

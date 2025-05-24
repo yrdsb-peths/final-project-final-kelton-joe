@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class UpgradeManager extends Actor
 {
-    private final int upgradeSpacing = 250;
+    private final int upgradeSpacing = 200;
     
     public boolean isSelected;
     
@@ -18,7 +18,15 @@ public class UpgradeManager extends Actor
     {
         isSelected = false;
         
-        for (double i = -upgrades/2; i <= upgrades/2; i++) {
+        double startIndex = -upgrades/2;
+        double endIndex = upgrades/2;
+        
+        if (upgrades % 2 == 0) {
+            startIndex += 0.5;
+            endIndex -= 0.5;
+        }
+        
+        for (double i = startIndex; i <= endIndex; i++) {
             Upgrade upgrade = new Upgrade(this);
             world.addObject(upgrade, world.getWidth()/2 + (int)(upgradeSpacing*i), world.getHeight()/2);
         }

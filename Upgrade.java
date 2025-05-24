@@ -61,7 +61,7 @@ public class Upgrade extends Actor
         
         // background for upgrades
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
-        rectangle.scale(200, 200);
+        rectangle.scale(150, 150);
         setImage(rectangle);
         
         // converts string to arraylist
@@ -87,62 +87,62 @@ public class Upgrade extends Actor
         // make label for generated upgrade
         switch (num) {
             case 0:
-                name = new Label("Health Boost", 25);
+                name = new Label("Health Boost", 20);
                 break;
             case 1:
-                name = new Label("Attack Boost", 25);
+                name = new Label("Attack Boost", 20);
                 break;
             case 2:
-                name = new Label("Speed Boost", 25);
+                name = new Label("Speed Boost", 20);
                 break;
             case 3:
-                name = new Label("Attack Speed Boost", 25);
+                name = new Label("Attack Speed Boost", 20);
                 break;
             case 4:
-                name = new Label("Attack Range Boost", 25);
+                name = new Label("Attack Range Boost", 20);
                 break;
             case 5:
-                name = new Label("Crit Rate Boost", 25);
+                name = new Label("Crit Rate Boost", 20);
                 break;
             case 6:
-                name = new Label("Crit Damage Boost", 25);
+                name = new Label("Crit Damage Boost", 20);
                 break;
             case 7:
-                name = new Label("Health Regen \nFrequency Boost", 25);
+                name = new Label("Health Regen \nFrequency Boost", 20);
                 break;
             case 8:
-                name = new Label("Health Regen \nAmount Boost", 25);
+                name = new Label("Health Regen \nAmount Boost", 20);
                 break;
             case 9:
-                name = new Label("Full Crit Boost", 25);
+                name = new Label("Full Crit Boost", 20);
                 break;
         }
         
         // rarity label
         switch (rarity) {
             case 0:
-                theRarity = new Label("Common", 30);
+                theRarity = new Label("Common", 25);
                 break;
             case 1:
-                theRarity = new Label("Uncommon", 30);
+                theRarity = new Label("Uncommon", 25);
                 break;
             case 2:
-                theRarity = new Label("Rare", 30);
+                theRarity = new Label("Rare", 25);
                 break;
             case 3:
-                theRarity = new Label("Epic", 30);
+                theRarity = new Label("Epic", 25);
                 break;
             case 4:
-                theRarity = new Label("Legendary", 30);
+                theRarity = new Label("Legendary", 25);
                 break;
             case 9:
-                theRarity = new Label("Mythic", 30);
+                theRarity = new Label("Mythic", 25);
                 break;
         }
         
         // adds the labels to the world
-        GameWorld.gameWorld.addObject(name, getX(), getY() - 20);
-        GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 70);
+        GameWorld.gameWorld.addObject(name, getX(), getY() - 10);
+        GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
     public void act() {

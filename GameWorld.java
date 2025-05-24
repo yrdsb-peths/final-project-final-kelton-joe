@@ -21,6 +21,10 @@ public class GameWorld extends World {
     private int waveMultiplier;
     private final int maxWaveMultiplier = 8;
     
+    private int waveDifficulty;
+    
+    private final int easyReward = 2;
+    
     private Label waveLabel;
     
     static boolean gameOver;
@@ -77,7 +81,7 @@ public class GameWorld extends World {
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
             // spawns 3 upgrades
-            upgradeManager = new UpgradeManager(3, this);
+            upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this);
             addObject(upgradeManager, 0, 0);
         }
     }
@@ -93,6 +97,34 @@ public class GameWorld extends World {
         
         enemiesToSpawn = wave + Greenfoot.getRandomNumber(2);
         
+        waveDifficulty = Greenfoot.getRandomNumber(3);
+        
+        switch (waveDifficulty) {
+            case 0:
+                enemiesToSpawn = wave;
+                bonusHp = 0;
+                break;
+            case 1:
+                switch (Greenfoot.getRandomNumber(2)) {
+                    case 0:
+                        enemiesToSpawn++;
+                        break;
+                    case 1:
+                        bonusHp++;
+                        break;
+                }
+                break;
+            case 2:
+                switch (Greenfoot.getRandomNumber(2)) {
+                    case 0:
+                        enemiesToSpawn += 2;
+                        break;
+                    case 1:
+                        bonusHp += 2;
+                        break;
+                }
+                break;
+        }
         spawnTimer.mark();
     }
     
