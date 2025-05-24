@@ -34,7 +34,7 @@ public class Hero extends SmoothMover
     SimpleTimer regenCooldown = new SimpleTimer();
     
     // movement speed
-    private double speed = 2.0;
+    private double speed = 1.0;
     
     // crit rate and damage
     double critRate = 5;

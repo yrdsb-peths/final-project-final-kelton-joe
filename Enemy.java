@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Enemy extends SmoothMover
 {
     // speed (default 1.5)
-    private double speed = 1.5;
+    private double speed = 0.75;
     
     // health
     public int hitpoints;
