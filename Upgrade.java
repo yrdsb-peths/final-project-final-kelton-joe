@@ -20,7 +20,6 @@ public class Upgrade extends Actor
         "critDamage",
         "regenInterval",
         "regenAmount",
-        "fullHeal",
         "crit"
     };
     
@@ -115,9 +114,6 @@ public class Upgrade extends Actor
                 name = new Label("Health Regen \nAmount Boost", 25);
                 break;
             case 9:
-                name = new Label("Full Heal", 25);
-                break;
-            case 10:
                 name = new Label("Full Crit Boost", 25);
                 break;
         }

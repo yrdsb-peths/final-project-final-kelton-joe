@@ -159,9 +159,6 @@ public class Hero extends SmoothMover
             case "regenAmount":
                 regenAmount += value;
                 break;
-            case "fullHeal":
-                currentHp = maxHp;
-                break;
             case "crit":
                 critRate += value;
                 critDamage += value * 2;
