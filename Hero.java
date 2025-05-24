@@ -15,18 +15,18 @@ public class Hero extends SmoothMover
     private double attack = 1.0;
     
     // attack speed
-    private double attackSpeed = 500.0;
+    private double attackSpeed = 600.0;
     private final double maxAttackSpeed = 100.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
-    private double attackRange = 75;
+    private double attackRange = 90;
     private final double maxAttackRange = 200;
     
     // health
-    public int currentHp = 3;
-    public int maxHp = 3;
-    
+    public int currentHp = 5;
+    public int maxHp = 5;
+
     // natural health regeneration
     public int regenInterval = 10000;
     public final int minRegenInterval = 1000;
@@ -34,7 +34,7 @@ public class Hero extends SmoothMover
     SimpleTimer regenCooldown = new SimpleTimer();
     
     // movement speed
-    private double speed = 1.0;
+    private double speed = 0.7;
     
     // crit rate and damage
     double critRate = 5;
