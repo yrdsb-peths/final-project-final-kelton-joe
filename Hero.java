@@ -28,7 +28,7 @@ public class Hero extends SmoothMover
     public int maxHp = 3;
     
     // natural health regeneration
-    public int regenInterval = 15000;
+    public int regenInterval = 10000;
     public final int minRegenInterval = 1000;
     public int regenAmount = 1;
     SimpleTimer regenCooldown = new SimpleTimer();

@@ -107,7 +107,7 @@ public class Upgrade extends Actor
                 name = new Label("Crit Damage Boost", 25);
                 break;
             case 7:
-                name = new Label("Health Regen \nCooldown Boost", 25);
+                name = new Label("Health Regen \nFrequency Boost", 25);
                 break;
             case 8:
                 name = new Label("Health Regen \nAmount Boost", 25);
