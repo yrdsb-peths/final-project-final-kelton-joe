@@ -25,10 +25,12 @@ public class Enemy extends SmoothMover
     // list of enemies
     public static ArrayList<Enemy> enemies;
     
-    public Enemy(int hitpoints) {
+    public Enemy(int hitpoints, double speed, int attack) {
         setImage("images/balloon1.png");
         
         this.hitpoints = hitpoints;
+        this.speed += speed;
+        this.attack += attack;
         
         enemies.add(this);
         

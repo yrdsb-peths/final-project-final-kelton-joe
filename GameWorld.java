@@ -7,9 +7,12 @@ public class GameWorld extends World {
     SimpleTimer spawnTimer = new SimpleTimer();
     
     private int enemiesToSpawn;
-    private int bonusHp;
     
-    private final int spawnInterval = 500;
+    private int bonusHp;
+    private double bonusSpeed;
+    private int bonusAttack;
+    
+    private final int spawnInterval = 800;
     
     private Hero hero;
     
@@ -52,7 +55,10 @@ public class GameWorld extends World {
     public void act() {
         if (enemiesToSpawn > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
-                Enemy enemy = new Enemy(wave + bonusHp);
+                bonusSpeed = ((double) Greenfoot.getRandomNumber(2)) / 10.0;
+                bonusHp = Greenfoot.getRandomNumber(2);
+                bonusAttack = Greenfoot.getRandomNumber(2);
+                Enemy enemy = new Enemy(wave + bonusHp, bonusSpeed, bonusAttack);
                 addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
                 
                 enemiesToSpawn--;
@@ -70,35 +76,8 @@ public class GameWorld extends World {
         
         waveLabel.setValue("Wave " + wave);
         
-        enemiesToSpawn = wave;
-        bonusHp = 0;
+        enemiesToSpawn = wave + Greenfoot.getRandomNumber(2);
         
-        switch (Greenfoot.getRandomNumber(3)) {
-            case 0:
-                enemiesToSpawn = wave;
-                bonusHp = 0;
-                break;
-            case 1:
-                switch (Greenfoot.getRandomNumber(2)) {
-                    case 0:
-                        enemiesToSpawn++;
-                        break;
-                    case 1:
-                        bonusHp++;
-                        break;
-                }
-                break;
-            case 2:
-                switch (Greenfoot.getRandomNumber(2)) {
-                    case 0:
-                        enemiesToSpawn += 2;
-                        break;
-                    case 1:
-                        bonusHp += 2;
-                        break;
-                }
-                break;
-        }
         spawnTimer.mark();
     }
     
