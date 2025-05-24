@@ -12,29 +12,29 @@ public class Hero extends SmoothMover
     public static Hero hero;
     
     // attack dmg in hp units
-    private double attack = 1.0;
+    private double attack;
     
     // attack speed
-    private double attackSpeed = 600.0;
+    private double attackSpeed;
     private final double maxAttackSpeed = 100.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
-    private double attackRange = 90;
+    private double attackRange;
     private final double maxAttackRange = 200;
     
     // health
-    public int currentHp = 5;
-    public int maxHp = 5;
+    public int currentHp;
+    public int maxHp;
 
     // natural health regeneration
-    public int regenInterval = 10000;
+    public int regenInterval;
     public final int minRegenInterval = 1000;
-    public int regenAmount = 1;
+    public int regenAmount;
     SimpleTimer regenCooldown = new SimpleTimer();
     
     // movement speed
-    private double speed = 1.0;
+    private double speed;
     
     // crit rate and damage
     double critRate = 5;
@@ -50,6 +50,15 @@ public class Hero extends SmoothMover
         
         this.hero = this;
         
+        currentHp = 5;
+        maxHp = 5;
+        speed = 1.0;
+        attackRange = 60;
+        regenInterval = 10000;
+        regenAmount = 1;
+        attackSpeed = 600.0;
+        attack = 1.0;
+        
         attackCooldown.mark();
         regenCooldown.mark();
     }
@@ -59,7 +68,8 @@ public class Hero extends SmoothMover
         if (GameWorld.gameOver) {
             EndScreen endScreen = new EndScreen();
             Greenfoot.setWorld(endScreen);
-        } else {
+        } 
+        else {
             // movement
             if (Greenfoot.isKeyDown("w")) {
                 this.setLocation(getExactX(), getExactY() - speed);
@@ -84,6 +94,7 @@ public class Hero extends SmoothMover
                     attackCooldown.mark();
                 }
             }
+            
             if (regenCooldown.millisElapsed() >= regenInterval) {
                 currentHp = Math.min(regenAmount + currentHp, maxHp);
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");

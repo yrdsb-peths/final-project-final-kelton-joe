@@ -87,6 +87,7 @@ public class GameWorld extends World {
         wave++;
         
         Hero.hero.currentHp = Hero.hero.maxHp;
+        GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         waveLabel.setValue("Wave " + wave);
         
