@@ -19,18 +19,20 @@ public class Enemy extends SmoothMover
     private int attack = 1;
     
     // attack speed
-    private int attackSpeed = 1000;
+    private int attackSpeed = 1200;
+    private int maxAttackSpeed = 300;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // list of enemies
     public static ArrayList<Enemy> enemies;
     
-    public Enemy(int hitpoints, double speed, int attack) {
+    public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
         this.hitpoints = hitpoints;
         this.speed += speed;
         this.attack += attack;
+        this.attackSpeed -= Math.max(attackSpeed, maxAttackSpeed);
         
         enemies.add(this);
         

@@ -45,7 +45,7 @@ public class Upgrade extends Actor
     
     private int rarity;
     private int[] probability = {
-        50, // 0: 50%
+        45, // 0: 45%
         70, // 1: 25%
         85, // 2: 15%
         95, // 3: 10%

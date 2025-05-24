@@ -11,6 +11,7 @@ public class GameWorld extends World {
     private int bonusHp;
     private double bonusSpeed;
     private int bonusAttack;
+    private int bonusAttackSpeed;
     
     private final int spawnInterval = 800;
     
@@ -64,9 +65,10 @@ public class GameWorld extends World {
                 bonusSpeed = ((double) Greenfoot.getRandomNumber(waveMultiplier)) / 10.0;
                 bonusHp = Greenfoot.getRandomNumber(waveMultiplier);
                 bonusAttack = Greenfoot.getRandomNumber(waveMultiplier);
+                bonusAttackSpeed = Greenfoot.getRandomNumber(waveMultiplier) * 10;
                 
                 // spawn enemy with buffs
-                Enemy enemy = new Enemy(wave + bonusHp, bonusSpeed, bonusAttack);
+                Enemy enemy = new Enemy(wave + bonusHp, bonusSpeed, bonusAttack, bonusAttackSpeed);
                 addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
                 
                 enemiesToSpawn--;
