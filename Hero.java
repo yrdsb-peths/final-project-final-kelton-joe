@@ -90,7 +90,7 @@ public class Hero extends SmoothMover
             // attack
             if (Greenfoot.isKeyDown("space")) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
-                    Attack();
+                    attack();
                     attackCooldown.mark();
                 }
             }
@@ -127,8 +127,24 @@ public class Hero extends SmoothMover
     /**
      * attacks the closest enemy in range 
      */
-    public void Attack() {
-        if (isInRange() != null && isInRange().hitpoints > 0) isInRange().removeHp((int) attack);
+    public void attack() {
+        Enemy closestEnemy = isInRange();
+        
+        if (closestEnemy != null && closestEnemy.hitpoints > 0) {
+            faceEnemy(closestEnemy);
+            closestEnemy.removeHp((int) attack);
+        }
+    }
+    
+    private void faceEnemy(Enemy enemy) {
+        double dx = enemy.getExactX() - getExactX();
+        double dy = enemy.getExactY() - getExactY();
+    
+        // Calculate the angle in degrees
+        double angle = Math.toDegrees(Math.atan2(dy, dx));
+    
+        // Rotate the hero's image to face the enemy
+        setRotation((int) angle);
     }
     
     public void setStat(double value, String stat) {
