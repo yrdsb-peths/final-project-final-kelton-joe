@@ -76,8 +76,6 @@ public class GameWorld extends World {
             }
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
-            Hero.hero.currentHp = Hero.hero.maxHp;
-            
             // spawns 3 upgrades
             upgradeManager = new UpgradeManager(3, this);
             addObject(upgradeManager, 0, 0);
@@ -87,6 +85,8 @@ public class GameWorld extends World {
     public void startWave() {
         // increase wave number every time it is called
         wave++;
+        
+        Hero.hero.currentHp = Hero.hero.maxHp;
         
         waveLabel.setValue("Wave " + wave);
         
