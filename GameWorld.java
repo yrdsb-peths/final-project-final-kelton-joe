@@ -82,6 +82,10 @@ public class GameWorld extends World {
     }
     
     public void startWave() {
+        // full heal hero at the start of every wave
+        Hero.hero.currentHp = Hero.hero.maxHp;
+        
+        // increase wave number every time it is called
         wave++;
         
         waveLabel.setValue("Wave " + wave);
