@@ -42,15 +42,14 @@ public class Upgrade extends Actor
     
     private int num;
     
-    
     private int rarity;
     private int[] probability = {
-        45, // 0: 45%
-        70, // 1: 25%
-        85, // 2: 15%
-        95, // 3: 10%
-        99, // 4: 4%
-        100 // 5: 1%
+        45, // 0: 45% common
+        70, // 1: 25% uncommon
+        85, // 2: 15% rare
+        95, // 3: 10% epic
+        98, // 4: 3% legendary
+        99 // 5(9): 2% mythic
     };
     
     public UpgradeManager upgradeManager;
@@ -82,6 +81,9 @@ public class Upgrade extends Actor
                 break;
             }
         }
+        
+        // increase mythic multiplier
+        if (rarity == 5) rarity = 9;
         
         // make label for generated upgrade
         switch (num) {
@@ -137,7 +139,7 @@ public class Upgrade extends Actor
             case 4:
                 theRarity = new Label("Legendary", 30);
                 break;
-            case 5:
+            case 9:
                 theRarity = new Label("Mythic", 30);
                 break;
         }
