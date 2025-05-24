@@ -42,8 +42,16 @@ public class Upgrade extends Actor
     
     private int num;
     
-    // 0 = common, 1= uncommon, 2 = rare, 3 = epic, 4 = legendary, 5 = mythic
+    
     private int rarity;
+    private int[] probability = {
+        50, // 0: 50%
+        70, // 1: 25%
+        85, // 2: 15%
+        95, // 3: 10%
+        99, // 4: 4%
+        100 // 5: 1%
+    };
     
     public UpgradeManager upgradeManager;
     
@@ -65,7 +73,15 @@ public class Upgrade extends Actor
     protected void addedToWorld(World world) {
         // randomly generate an upgrade
         num = Greenfoot.getRandomNumber(type.size());
-        rarity = Greenfoot.getRandomNumber(5);
+        
+        // rarity with probability
+        rarity = Greenfoot.getRandomNumber(100);
+        for (int i = 0; i < probability.length; i++) {
+            if (rarity <= probability[i]) {
+                rarity = i;
+                break;
+            }
+        }
         
         // make label for generated upgrade
         switch (num) {
