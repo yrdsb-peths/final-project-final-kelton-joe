@@ -2,14 +2,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
- * Write a description of class Enemy here.
+ * Enemy class
  * 
  * @author Kelton and Joe
  * @version May 2025
+ * 
+ * Uses smooth mover for more precise movements
  */
 public class Enemy extends SmoothMover
 {
-    // speed (default 1.5)
+    // speed
     private double speed = 0.75;
     
     // health
@@ -27,23 +29,28 @@ public class Enemy extends SmoothMover
     // list of enemies
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
+    // health bars
     private RedBar redBar;
     private GreenBar greenBar;
     
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
+        // stat increases
         maxHitpoints = hitpoints;
         this.hitpoints = hitpoints;
         this.speed += speed;
         this.attack += attack;
         this.attackSpeed -= Math.max(attackSpeed, maxAttackSpeed);
         
+        // add to list of all current enemies
         enemies.add(this);
         
+        // enemy image
         GreenfootImage enemy = getImage();
         enemy.scale(25, 25);
         
+        // marks attack cooldown timer
         attackCooldown.mark();
     }
     
@@ -57,10 +64,6 @@ public class Enemy extends SmoothMover
         world.addObject(greenBar, getX(), getY());
     }
     
-    /**
-     * Act - do whatever the Enemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     public void act()
     {
         double dx = Hero.hero.getExactX() - getExactX();

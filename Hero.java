@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * 
  * @author Kelton and Joe
  * @version May 2025
+ * 
+ * Uses smooth mover class for more accurate movements
  */
 public class Hero extends SmoothMover
 {
@@ -44,9 +46,18 @@ public class Hero extends SmoothMover
     double critRate = 5;
     double critDamage = 20;
     
+    // crit rate and damage as a percent
+    private double critMultiplier;
+    
     // position of the hero
     int x, y;
     
+    // damage dealt calculation variable
+    double damageDealt;
+    
+    /**
+     * Constructor for Hero Class
+     */
     public Hero() {
         setImage("images/bee.png");
         GreenfootImage hero = getImage();
@@ -54,6 +65,7 @@ public class Hero extends SmoothMover
         
         this.hero = this;
         
+        // initializes default stats
         currentHp = 5;
         maxHp = 5;
         speed = 1.0;
@@ -63,11 +75,16 @@ public class Hero extends SmoothMover
         attackSpeed = 600.0;
         attack = 1.0;
         projectileSpeed = 2.0;
+        critRate = 10.0;
+        critDamage = 100.0;
         
         attackCooldown.mark();
         regenCooldown.mark();
     }
     
+    /**
+     * Hero movements, attacks and health updates
+     */
     public void act()
     {
         if (GameWorld.gameOver) {
@@ -109,9 +126,11 @@ public class Hero extends SmoothMover
     }
     
     /**
-     * finds the closest enemy in range of the Hero
+     * Method to find the closest enemy in range
+     * 
+     * @return closest enemy in range of hero
      */
-    public Enemy isInRange() {
+    public Enemy findClosestEnemy() {
         Enemy closestEnemy = null;
         double smallestDistance = attackRange;
         
@@ -133,16 +152,29 @@ public class Hero extends SmoothMover
      * attacks the closest enemy in range 
      */
     public void attack() {
-        Enemy closestEnemy = isInRange();
+        Enemy closestEnemy = findClosestEnemy();
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             faceEnemy(closestEnemy);
             
-            fireProjectile(closestEnemy);
+            
+            // crit generation
+            if (Greenfoot.getRandomNumber(100) <= critRate) {
+                critMultiplier = 1.0 + (critDamage/100.0);
+                damageDealt = attack * critMultiplier;
+            }
+            else damageDealt = attack;
+            
+            fireProjectile(damageDealt, closestEnemy);
             //closestEnemy.removeHp((int) attack);
         }
     }
     
+    /**
+     * Face an enemy
+     * 
+     * @param enemy: enemy to face
+     */
     private void faceEnemy(Enemy enemy) {
         double dx = enemy.getExactX() - getExactX();
         double dy = enemy.getExactY() - getExactY();
@@ -154,7 +186,7 @@ public class Hero extends SmoothMover
         setRotation((int) angle);
     }
     
-    private void fireProjectile(Enemy enemy) {
+    private void fireProjectile(double damage, Enemy enemy) {
         double dx = enemy.getExactX() - getExactX();
         double dy = enemy.getExactY() - getExactY();
         
@@ -163,10 +195,16 @@ public class Hero extends SmoothMover
         double normalizedX = dx / magnitude;
         double normalizedY = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, attack);
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
+    /**
+     * Changes a stat for the Hero
+     * 
+     * @param value: value of the stat to be changed by
+     * @param stat: the stat to be changed
+     */
     public void setStat(double value, String stat) {
         switch (stat) {
             case "attack":
@@ -198,6 +236,10 @@ public class Hero extends SmoothMover
                 break;
             case "critRate":
                 critRate += value;
+                while (critRate > 100.0) {
+                    critRate--;
+                    critDamage += 3;
+                }
                 break;
             case "critDamage":
                 critDamage += value;
@@ -213,7 +255,11 @@ public class Hero extends SmoothMover
                 break;
             case "crit":
                 critRate += value;
-                critDamage += value * 2;
+                while (critRate > 100.0) {
+                    critRate--;
+                    critDamage += 3;
+                }
+                critDamage += value * 2.0;
                 break;
         }
     }

@@ -10,6 +10,7 @@ import java.util.Arrays;
  */
 public class Upgrade extends Actor
 {
+    // all types of upgrades
     public static String[] typeString = {
         "health", 
         "attack", 
@@ -23,9 +24,9 @@ public class Upgrade extends Actor
         "regenAmount",
         "crit"
     };
-    
     public static ArrayList<String> type;
     
+    // values of upgrades
     private double[] value = {
         1.0, // attack
         1.0, // hp
@@ -33,30 +34,41 @@ public class Upgrade extends Actor
         -15.0, // attack speed
         3, // attack range
         0.2, // projectile speed
-        1.0, //crit rate
-        2.0, // crit damage
+        3.0, //crit rate
+        6.0, // crit damage
         -50.0, // hp regen interval
         1.0, // hp regen amount
-        0.5 // both crit buff
+        100.0, // full heal
+        2.0 // both crit buff
     };
     
+    // randomly generated number
     private int num;
     
+    // rarity and probability for each rarity
     private int rarity;
-    private int[] probability = {
-        45, // 0: 45% common
-        70, // 1: 25% uncommon
-        85, // 2: 15% rare
-        95, // 3: 10% epic
-        98, // 4: 3% legendary
-        99 // 5(9): 2% mythic
+    private int[] probability = { 
+            // rarity number: chance name multiplier
+        45, // 0: 45% common 1x
+        70, // 1: 25% uncommon 2x
+        85, // 2: 15% rare 3x
+        95, // 3: 10% epic 4x
+        98, // 4: 3% legendary 5x 
+        99 // 5: 2% mythic 10x
     };
     
+    // upgrade manager
     public UpgradeManager upgradeManager;
     
+    // labels for name and rarity
     public Label name;
     public Label theRarity;
     
+    /**
+     * Upgrade Constructor
+     * 
+     * @param upgradeManager: manages the upgrades
+     */
     public Upgrade(UpgradeManager upgradeManager) {
         this.upgradeManager = upgradeManager;
         
@@ -69,8 +81,13 @@ public class Upgrade extends Actor
         type = new ArrayList<String>(Arrays.asList(typeString)); 
     }
     
+    /**
+     * Adds upgrade to the world
+     * 
+     * @param world: world the upgrade is added to
+     */
     protected void addedToWorld(World world) {
-        // randomly generate an upgrade
+        // randomly generate an upgrade type
         num = Greenfoot.getRandomNumber(type.size());
         
         // rarity with probability
@@ -149,6 +166,9 @@ public class Upgrade extends Actor
         GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
+    /**
+     * Select upgrade if clicked
+     */
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
             Hero.hero.setStat(value[num] * (rarity + 1), type.get(num));
