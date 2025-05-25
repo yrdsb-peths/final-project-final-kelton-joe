@@ -37,9 +37,9 @@ public class Hero extends SmoothMover
     private double speed;
     
     // crit rate and damage as a percent
-    double critRate = 10;
-    double critDamage = 100;
-    double critMultiplier = 1.0 + (critDamage/100.0);
+    private double critRate;
+    private double critDamage;
+    private double critMultiplier;
     
     // position of the hero
     int x, y;
@@ -54,6 +54,7 @@ public class Hero extends SmoothMover
         
         this.hero = this;
         
+        // initializes default stats
         currentHp = 5;
         maxHp = 5;
         speed = 1.0;
@@ -62,6 +63,8 @@ public class Hero extends SmoothMover
         regenAmount = 1;
         attackSpeed = 600.0;
         attack = 1.0;
+        critRate = 10.0;
+        critDamage = 100.0;
         
         attackCooldown.mark();
         regenCooldown.mark();
@@ -139,6 +142,7 @@ public class Hero extends SmoothMover
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
+                critMultiplier = 1.0 + (critDamage/100.0);
                 damageDealt = attack * critMultiplier;
             }
             else damageDealt = attack;
@@ -184,9 +188,9 @@ public class Hero extends SmoothMover
                 break;
             case "critRate":
                 critRate += value;
-                if (critRate >= 100.0) {
-                    Upgrade.type.remove("critRate");
-                    Upgrade.type.remove("crit");
+                while (critRate > 100.0) {
+                    critRate--;
+                    critDamage += 3;
                 }
                 break;
             case "critDamage":
@@ -203,6 +207,10 @@ public class Hero extends SmoothMover
                 break;
             case "crit":
                 critRate += value;
+                while (critRate > 100.0) {
+                    critRate--;
+                    critDamage += 3;
+                }
                 critDamage += value * 2.0;
                 break;
         }
