@@ -143,23 +143,30 @@ public class Upgrade extends Actor
         switch (rarity) {
             case 0:
                 theRarity = new Label("Common", 25);
+                getImage().setColor(new greenfoot.Color(169, 169, 169));
                 break;
             case 1:
                 theRarity = new Label("Uncommon", 25);
+                getImage().setColor(new greenfoot.Color(50, 205, 50));
                 break;
             case 2:
                 theRarity = new Label("Rare", 25);
+                getImage().setColor(new greenfoot.Color(0, 150, 255));
                 break;
             case 3:
                 theRarity = new Label("Epic", 25);
+                getImage().setColor(new greenfoot.Color(191, 64, 191));
                 break;
             case 4:
                 theRarity = new Label("Legendary", 25);
+                getImage().setColor(new greenfoot.Color(255, 191, 0));
                 break;
             case 9:
                 theRarity = new Label("Mythic", 25);
+                getImage().setColor(new greenfoot.Color(255, 117, 24));
                 break;
         }
+        getImage().fill();
         
         // adds the labels to the world
         GameWorld.gameWorld.addObject(name, getX(), getY() - 10);
