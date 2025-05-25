@@ -226,7 +226,7 @@ public class Hero extends SmoothMover
                 }
                 break;
             case "projectileSpeed":
-                projectileSpeed = Math.min(attackRange + value, maxProjectileSpeed);
+                projectileSpeed = Math.min(projectileSpeed + value, maxProjectileSpeed);
                 if (attackRange == maxProjectileSpeed) {
                     Upgrade.type.remove("projectileSpeed");
                 }
