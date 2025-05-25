@@ -55,6 +55,13 @@ public class Hero extends SmoothMover
     // damage dealt calculation variable
     double damageDealt;
     
+    boolean isDashing;
+    SimpleTimer dashTimer = new SimpleTimer();
+    double dashLength;
+    double dashMultiplier;
+    int dashCooldown;
+    
+    
     /**
      * Constructor for Hero Class
      */
@@ -78,8 +85,15 @@ public class Hero extends SmoothMover
         critRate = 10.0;
         critDamage = 100.0;
         
+        isDashing = false;
+        dashLength = 500;
+        dashMultiplier = 1.0;
+        dashCooldown = 2000;
+        
         attackCooldown.mark();
         regenCooldown.mark();
+        
+        dashTimer.mark();
     }
     
     /**
@@ -93,20 +107,32 @@ public class Hero extends SmoothMover
         } 
         else {
             // movement
+            if (Greenfoot.isKeyDown("z")) {
+                if (dashTimer.millisElapsed() >= dashCooldown) {
+                    isDashing = true;
+                    dashMultiplier = 2.0;
+                    dashTimer.mark();
+                }
+            }
+            if (dashTimer.millisElapsed() >= dashLength) {
+                isDashing = false;
+                dashMultiplier = 1.0;
+            }
+            
             if (Greenfoot.isKeyDown("w")) {
-                this.setLocation(getExactX(), getExactY() - speed);
+                this.setLocation(getExactX(), getExactY() - speed*dashMultiplier);
             }
             
             if (Greenfoot.isKeyDown("s")) {
-                this.setLocation(getExactX(), getExactY() + speed);
+                this.setLocation(getExactX(), getExactY() + speed*dashMultiplier);
             }
             
             if (Greenfoot.isKeyDown("a")) {
-                this.setLocation(getExactX() - speed, getExactY());
+                this.setLocation(getExactX() - speed*dashMultiplier, getExactY());
             }
             
             if (Greenfoot.isKeyDown("d")) {
-                this.setLocation(getExactX() + speed, getExactY());
+                this.setLocation(getExactX() + speed*dashMultiplier, getExactY());
             }
             
             // attack
