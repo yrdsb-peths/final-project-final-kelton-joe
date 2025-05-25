@@ -55,6 +55,7 @@ public class Hero extends SmoothMover
     // damage dealt calculation variable
     double damageDealt;
     
+    // dash
     boolean isDashing;
     SimpleTimer dashTimer = new SimpleTimer();
     double dashLength;
@@ -107,7 +108,7 @@ public class Hero extends SmoothMover
         } 
         else {
             // movement
-            if (Greenfoot.isKeyDown("z")) {
+            if (Greenfoot.isKeyDown("e")) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
                     isDashing = true;
                     dashMultiplier = 2.0;
@@ -191,6 +192,7 @@ public class Hero extends SmoothMover
             else damageDealt = attack;
             
             fireProjectile(damageDealt, closestEnemy);
+
             //closestEnemy.removeHp((int) attack);
         }
     }
