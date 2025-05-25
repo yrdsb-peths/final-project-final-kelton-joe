@@ -141,6 +141,7 @@ public class Hero extends SmoothMover
             if (Greenfoot.getRandomNumber(100) <= critRate) {
                 damageDealt = attack * (1 + critMultiplier);
             }
+            else damageDealt = attack;
             
             closestEnemy.removeHp((int) damageDealt);
         }
@@ -183,6 +184,10 @@ public class Hero extends SmoothMover
                 break;
             case "critRate":
                 critRate += value;
+                if (critRate >= 100.0) {
+                    Upgrade.type.remove("critRate");
+                    Upgrade.type.remove("crit");
+                }
                 break;
             case "critDamage":
                 critDamage += value;
