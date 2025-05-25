@@ -31,8 +31,8 @@ public class Upgrade extends Actor
         0.05, // speed
         -15.0, // attack speed
         3, // attack range
-        2.0, //crit rate
-        5.0, // crit damage
+        3.0, //crit rate
+        6.0, // crit damage
         -50.0, // hp regen interval
         1.0, // hp regen amount
         100.0, // full heal
@@ -43,12 +43,12 @@ public class Upgrade extends Actor
     
     private int rarity;
     private int[] probability = {
-        45, // 0: 45% common
-        70, // 1: 25% uncommon
-        85, // 2: 15% rare
-        95, // 3: 10% epic
-        98, // 4: 3% legendary
-        99 // 5(10x multiplier): 2% mythic
+        45, // 0: 45% common 1x
+        70, // 1: 25% uncommon 2x
+        85, // 2: 15% rare 3x
+        95, // 3: 10% epic 4x
+        98, // 4: 3% legendary 5x 
+        99 // 5: 2% mythic 10x
     };
     
     public UpgradeManager upgradeManager;

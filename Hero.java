@@ -139,7 +139,7 @@ public class Hero extends SmoothMover
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
-                damageDealt = attack * (1 + critMultiplier);
+                damageDealt = attack * critMultiplier;
             }
             else damageDealt = attack;
             
@@ -203,7 +203,7 @@ public class Hero extends SmoothMover
                 break;
             case "crit":
                 critRate += value;
-                critDamage += value * 2;
+                critDamage += value * 2.0;
                 break;
         }
     }
