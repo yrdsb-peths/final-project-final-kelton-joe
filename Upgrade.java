@@ -57,6 +57,17 @@ public class Upgrade extends Actor
         99 // 5: 2% mythic 10x
     };
     
+    private String[] uniqueTraits = {
+        "Frostbite", // slows enemies
+                    // upgraded - freezes enemies on hit
+        "Scorch", // burn damage to enemies overtime
+                    // upgraded - increases burn damage
+        "Sharpshot", // projectile speed maxed and pierce through enemies
+                    // upgraded - gives Hero maxed range
+        "Vampire" // Hero gets temporary hp from kills
+                    //upgraded - hp from kills has a chance to be permanent
+    };
+    
     // upgrade manager
     public UpgradeManager upgradeManager;
     
