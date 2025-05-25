@@ -16,6 +16,7 @@ public class Upgrade extends Actor
         "speed", 
         "attackSpeed", 
         "attackRange",
+        "projectileSpeed",
         "critRate", 
         "critDamage",
         "regenInterval",
@@ -31,11 +32,11 @@ public class Upgrade extends Actor
         0.05, // speed
         -15.0, // attack speed
         3, // attack range
+        0.2, // projectile speed
         1.0, //crit rate
         2.0, // crit damage
         -50.0, // hp regen interval
         1.0, // hp regen amount
-        100.0, // full heal
         0.5 // both crit buff
     };
     
@@ -102,18 +103,21 @@ public class Upgrade extends Actor
                 name = new Label("Attack Range Boost", 20);
                 break;
             case 5:
-                name = new Label("Crit Rate Boost", 20);
+                name = new Label("Projectile Speed Boost", 20);
                 break;
             case 6:
-                name = new Label("Crit Damage Boost", 20);
+                name = new Label("Crit Rate Boost", 20);
                 break;
             case 7:
-                name = new Label("Health Regen \nFrequency Boost", 20);
+                name = new Label("Crit Damage Boost", 20);
                 break;
             case 8:
-                name = new Label("Health Regen \nAmount Boost", 20);
+                name = new Label("Health Regen \nFrequency Boost", 20);
                 break;
             case 9:
+                name = new Label("Health Regen \nAmount Boost", 20);
+                break;
+            case 10:
                 name = new Label("Full Crit Boost", 20);
                 break;
         }

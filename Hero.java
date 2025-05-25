@@ -23,6 +23,10 @@ public class Hero extends SmoothMover
     private double attackRange;
     private final double maxAttackRange = 200;
     
+    // projectile speed
+    private double projectileSpeed;
+    private final double maxProjectileSpeed = 10.0;
+    
     // health
     public int currentHp;
     public int maxHp;
@@ -38,7 +42,7 @@ public class Hero extends SmoothMover
     
     // crit rate and damage
     double critRate = 5;
-    double critDamage = 50;
+    double critDamage = 20;
     
     // position of the hero
     int x, y;
@@ -53,11 +57,12 @@ public class Hero extends SmoothMover
         currentHp = 5;
         maxHp = 5;
         speed = 1.0;
-        attackRange = 60;
+        attackRange = 600;
         regenInterval = 10000;
         regenAmount = 1;
         attackSpeed = 600.0;
         attack = 1.0;
+        projectileSpeed = 2.0;
         
         attackCooldown.mark();
         regenCooldown.mark();
@@ -132,7 +137,9 @@ public class Hero extends SmoothMover
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             faceEnemy(closestEnemy);
-            closestEnemy.removeHp((int) attack);
+            
+            fireProjectile(closestEnemy);
+            //closestEnemy.removeHp((int) attack);
         }
     }
     
@@ -145,6 +152,19 @@ public class Hero extends SmoothMover
     
         // Rotate the hero's image to face the enemy
         setRotation((int) angle);
+    }
+    
+    private void fireProjectile(Enemy enemy) {
+        double dx = enemy.getExactX() - getExactX();
+        double dy = enemy.getExactY() - getExactY();
+        
+        double magnitude = Math.sqrt(dx*dx + dy*dy);
+        
+        double normalizedX = dx / magnitude;
+        double normalizedY = dy / magnitude;
+        
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, attack);
+        GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
     public void setStat(double value, String stat) {
@@ -168,6 +188,11 @@ public class Hero extends SmoothMover
                     Upgrade.type.remove("attackRange");
                 }
                 break;
+            case "projectileSpeed":
+                projectileSpeed = Math.min(attackRange + value, maxProjectileSpeed);
+                if (attackRange == maxProjectileSpeed) {
+                    Upgrade.type.remove("projectileSpeed");
+                }
             case "speed":
                 speed += value;
                 break;
