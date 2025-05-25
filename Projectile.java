@@ -50,12 +50,7 @@ public class Projectile extends SmoothMover
     }
     
     private void attack(Enemy enemy) {
-        if (Greenfoot.getRandomNumber(101) <= Hero.hero.critRate) {
-            enemy.removeHp((int)(damage + Hero.hero.critDamage));
-        } else {
-            enemy.removeHp((int)damage);
-        }
-        
+        enemy.removeHp((int)damage);
         
         durability--;
         if (durability == 0) {
