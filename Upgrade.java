@@ -120,7 +120,7 @@ public class Upgrade extends Actor
                 name = new Label("Attack Range Boost", 20);
                 break;
             case 5:
-                name = new Label("Projectile Speed Boost", 20);
+                name = new Label("Projectile Speed \nBoost", 20);
                 break;
             case 6:
                 name = new Label("Crit Rate Boost", 20);

@@ -23,7 +23,7 @@ public class Hero extends SmoothMover
     
     // attack range
     private double attackRange;
-    private final double maxAttackRange = 200;
+    private final double maxAttackRange = 500;
     
     // projectile speed
     private double projectileSpeed;
@@ -43,8 +43,8 @@ public class Hero extends SmoothMover
     private double speed;
     
     // crit rate and damage
-    double critRate = 5;
-    double critDamage = 20;
+    double critRate;
+    double critDamage;
     
     // crit rate and damage as a percent
     private double critMultiplier;
@@ -69,12 +69,12 @@ public class Hero extends SmoothMover
         currentHp = 5;
         maxHp = 5;
         speed = 1.0;
-        attackRange = 600;
+        attackRange = 200;
         regenInterval = 10000;
         regenAmount = 1;
-        attackSpeed = 600.0;
+        attackSpeed = 1200.0;
         attack = 1.0;
-        projectileSpeed = 2.0;
+        projectileSpeed = 1.5;
         critRate = 10.0;
         critDamage = 100.0;
         
@@ -156,7 +156,6 @@ public class Hero extends SmoothMover
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             faceEnemy(closestEnemy);
-            
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
