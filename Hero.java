@@ -36,12 +36,16 @@ public class Hero extends SmoothMover
     // movement speed
     private double speed;
     
-    // crit rate and damage
-    double critRate = 5;
-    double critDamage = 50;
+    // crit rate and damage as a percent
+    double critRate = 10;
+    double critDamage = 100;
+    double critMultiplier = 1.0 + (critDamage/100.0);
     
     // position of the hero
     int x, y;
+    
+    // damage dealt calculation variable
+    double damageDealt;
     
     public Hero() {
         setImage("images/bee.png");
@@ -132,7 +136,13 @@ public class Hero extends SmoothMover
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             faceEnemy(closestEnemy);
-            closestEnemy.removeHp((int) attack);
+            
+            // crit generation
+            if (Greenfoot.getRandomNumber(100) <= critRate) {
+                damageDealt = attack * (1 + critMultiplier);
+            }
+            
+            closestEnemy.removeHp((int) damageDealt);
         }
     }
     

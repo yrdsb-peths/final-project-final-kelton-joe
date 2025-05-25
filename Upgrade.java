@@ -31,12 +31,12 @@ public class Upgrade extends Actor
         0.05, // speed
         -15.0, // attack speed
         3, // attack range
-        1.0, //crit rate
-        2.0, // crit damage
+        2.0, //crit rate
+        5.0, // crit damage
         -50.0, // hp regen interval
         1.0, // hp regen amount
         100.0, // full heal
-        0.5 // both crit buff
+        2.0 // both crit buff
     };
     
     private int num;
@@ -48,7 +48,7 @@ public class Upgrade extends Actor
         85, // 2: 15% rare
         95, // 3: 10% epic
         98, // 4: 3% legendary
-        99 // 5(9): 2% mythic
+        99 // 5(10x multiplier): 2% mythic
     };
     
     public UpgradeManager upgradeManager;
