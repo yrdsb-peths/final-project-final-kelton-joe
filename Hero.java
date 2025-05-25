@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * 
  * @author Kelton and Joe
  * @version May 2025
+ * 
+ * Uses smooth mover class for more accurate movements
  */
 public class Hero extends SmoothMover
 {
@@ -47,6 +49,9 @@ public class Hero extends SmoothMover
     // damage dealt calculation variable
     double damageDealt;
     
+    /**
+     * Constructor for Hero Class
+     */
     public Hero() {
         setImage("images/bee.png");
         GreenfootImage hero = getImage();
@@ -70,6 +75,9 @@ public class Hero extends SmoothMover
         regenCooldown.mark();
     }
     
+    /**
+     * Hero movements, attacks and health updates
+     */
     public void act()
     {
         if (GameWorld.gameOver) {
@@ -111,9 +119,11 @@ public class Hero extends SmoothMover
     }
     
     /**
-     * finds the closest enemy in range of the Hero
+     * Method to find the closest enemy in range
+     * 
+     * @return closest enemy in range of hero
      */
-    public Enemy isInRange() {
+    public Enemy findClosestEnemy() {
         Enemy closestEnemy = null;
         double smallestDistance = attackRange;
         
@@ -135,7 +145,7 @@ public class Hero extends SmoothMover
      * attacks the closest enemy in range 
      */
     public void attack() {
-        Enemy closestEnemy = isInRange();
+        Enemy closestEnemy = findClosestEnemy();
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             faceEnemy(closestEnemy);
@@ -151,6 +161,11 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Face an enemy
+     * 
+     * @param enemy: enemy to face
+     */
     private void faceEnemy(Enemy enemy) {
         double dx = enemy.getExactX() - getExactX();
         double dy = enemy.getExactY() - getExactY();
@@ -162,6 +177,12 @@ public class Hero extends SmoothMover
         setRotation((int) angle);
     }
     
+    /**
+     * Changes a stat for the Hero
+     * 
+     * @param value: value of the stat to be changed by
+     * @param stat: the stat to be changed
+     */
     public void setStat(double value, String stat) {
         switch (stat) {
             case "attack":
