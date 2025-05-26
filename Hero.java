@@ -79,11 +79,11 @@ public class Hero extends SmoothMover
         // initializes default stats
         currentHp = 5;
         maxHp = 5;
-        speed = 1.0;
+        speed = 1.15;
         attackRange = 200;
-        regenInterval = 10000;
+        regenInterval = 6000;
         regenAmount = 1;
-        attackSpeed = 1200.0;
+        attackSpeed = 1000.0;
         attack = 1.0;
         projectileSpeed = 1.5;
         critRate = 10.0;
