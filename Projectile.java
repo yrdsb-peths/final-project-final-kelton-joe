@@ -58,7 +58,7 @@ public class Projectile extends SmoothMover
     }
     
     private void attack(Enemy enemy) {
-        enemy.removeHp((int)damage, isCrit);
+        enemy.removeHp((int)damage, isCrit, Color.GRAY);
         frostbite(enemy);
         scorch(enemy);
         

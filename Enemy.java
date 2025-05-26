@@ -85,7 +85,7 @@ public class Enemy extends SmoothMover
         
         if (scorchTimer.millisElapsed() >= 1000) {
             if (burnTicks > 0) {
-                removeHp((int)burnDamage, false);
+                removeHp((int)burnDamage, false, Color.RED);
                 burnTicks--;
                 scorchTimer.mark();
                 
@@ -116,10 +116,12 @@ public class Enemy extends SmoothMover
         }
     }
     
-    public void removeHp(int damage, boolean isCrit) {
+    public void removeHp(int damage, boolean isCrit, Color color) {
         hitpoints -= damage;
         
-        DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
+        if (isCrit) color = Color.ORANGE;
+        
+        DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit, color);
         GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
         
         if (hitpoints <= 0) {

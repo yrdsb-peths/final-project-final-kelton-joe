@@ -11,8 +11,10 @@ public class DamageIndicator extends Label
     private final int lifeTime = 250;
     SimpleTimer lifeTimer = new SimpleTimer();
     
-    public DamageIndicator(int damage, boolean isCrit) {
+    public DamageIndicator(int damage, boolean isCrit, Color color) {
         super(damage, isCrit ? 30 : 20);
+        this.setLineColor(color);
+        this.setFillColor(color);
         lifeTimer.mark();
     }
     
