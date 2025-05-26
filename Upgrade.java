@@ -69,6 +69,7 @@ public class Upgrade extends Actor
         "Vampire" // Hero gets temporary hp from kills
                     //upgraded - hp from kills has a chance to be permanent
     };
+    private String uniqueTrait;
     
     // upgrade manager
     public UpgradeManager upgradeManager;
@@ -205,6 +206,7 @@ public class Upgrade extends Actor
     private void uniqueUpgrade() {
         int trait = Greenfoot.getRandomNumber(uniqueTraits.length);
         
+        uniqueTrait = uniqueTraits[trait];
         name = new Label(uniqueTraits[trait], 20);
         theRarity = new Label("Unique", 25);
         
@@ -221,6 +223,7 @@ public class Upgrade extends Actor
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
             if (isUnique) {
+                Hero.hero.setStat(uniqueTrait);
                 upgradeManager.isSelected = true;
             } else {
                 Hero.hero.setStat(theValue * (rarity + 1), type.get(num));

@@ -16,7 +16,10 @@ public class Projectile extends SmoothMover
     
     private boolean isRemoved;
     
-    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
+    private int frostbiteLvl;
+    
+    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit,
+                        int frostbiteLvl) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -29,6 +32,7 @@ public class Projectile extends SmoothMover
         this.speed = speed;
         this.damage = damage;
         this.isCrit = isCrit;
+        this.frostbiteLvl = frostbiteLvl;
         
         this. durability = 1;
         
@@ -53,6 +57,7 @@ public class Projectile extends SmoothMover
     
     private void attack(Enemy enemy) {
         enemy.removeHp((int)damage);
+        frostbite(enemy);
         
         durability--;
         if (durability == 0) {
@@ -62,5 +67,9 @@ public class Projectile extends SmoothMover
             DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
             GameWorld.gameWorld.addObject(dmgIndicator, (int) enemy.getExactX(), (int) enemy.getExactY());
         }
+    }
+    
+    private void frostbite(Enemy enemy) {
+        if(frostbiteLvl > 0) enemy.frostbite();
     }
 }

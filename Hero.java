@@ -63,6 +63,8 @@ public class Hero extends SmoothMover
     double dashMultiplier;
     int dashCooldown;
     
+    int frostbiteLvl;
+    
     
     /**
      * Constructor for Hero Class
@@ -91,6 +93,8 @@ public class Hero extends SmoothMover
         dashLength = 500;
         dashMultiplier = 1.0;
         dashCooldown = 2000;
+        
+        frostbiteLvl = 0;
         
         attackCooldown.mark();
         regenCooldown.mark();
@@ -227,7 +231,8 @@ public class Hero extends SmoothMover
         double normalizedX = dx / magnitude;
         double normalizedY = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit);
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed,
+                                            damage, isCrit, frostbiteLvl);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
@@ -292,6 +297,14 @@ public class Hero extends SmoothMover
                     critDamage += 3;
                 }
                 critDamage += value * 2.0;
+                break;
+        }
+    }
+    
+    public void setStat(String uniqueTrait) {
+        switch(uniqueTrait) {
+            case "Frostbite":
+                if (frostbiteLvl < 2) frostbiteLvl++;
                 break;
         }
     }

@@ -33,6 +33,9 @@ public class Enemy extends SmoothMover
     private RedBar redBar;
     private GreenBar greenBar;
     
+    private boolean isSlowed;
+    private SimpleTimer frostbiteTimer = new SimpleTimer();
+    
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
@@ -74,7 +77,15 @@ public class Enemy extends SmoothMover
         double normalizedDx = dx / magnitude;
         double normalizedDy = dy / magnitude;
         
-        setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
+        if (frostbiteTimer.millisElapsed() >= 5000) {
+            isSlowed = false;
+        }
+        
+        if (isSlowed) {
+            setLocation(getExactX() + (normalizedDx * speed/2), getExactY() + (normalizedDy * speed/2));
+        } else {
+            setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
+        }
         
         if (this.isTouching(Hero.class)) {
             if (attackCooldown.millisElapsed() >= attackSpeed) {
@@ -107,5 +118,10 @@ public class Enemy extends SmoothMover
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         if (Hero.hero.currentHp <= 0) GameWorld.gameOver = true;
+    }
+    
+    public void frostbite() {
+        isSlowed = true;
+        frostbiteTimer.mark();
     }
 }
