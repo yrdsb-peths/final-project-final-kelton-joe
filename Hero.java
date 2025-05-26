@@ -101,9 +101,9 @@ public class Hero extends SmoothMover
     public boolean isHurt = false;
     
     // dash bar cooldown
-    private final double dashBarScale = 0.3;
-    private final int barX = 715;
-    private final int barY = 50;
+    private final double dashBarScale = 0.2;
+    private final int barX = 730;
+    private final int barY = 40;
     RedBar redBar = new RedBar(dashBarScale);
     GreenBar greenBar = new GreenBar(dashBarScale);
     double cooldownPercent;
