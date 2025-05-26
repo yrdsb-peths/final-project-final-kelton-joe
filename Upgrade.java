@@ -46,7 +46,7 @@ public class Upgrade extends Actor
         50.0, // dash length
         0.05, // dash mult
         5.0, // projectile
-        20.0
+        50.0 // dash cooldown
     };
     
     private double theValue;
