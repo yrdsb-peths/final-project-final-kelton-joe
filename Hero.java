@@ -63,16 +63,80 @@ public class Hero extends SmoothMover
     double dashMultiplier;
     int dashCooldown;
     
+    // unique upgrades
     int frostbiteLvl;
     int scorchLvl;
+    
+    // facing direction
+    String facing = "right";
+    
+    private final int xScale = 40;
+    private final int yScale = 40;
+    
+    // idle animations
+    GreenfootImage[] idleLeft = new GreenfootImage[4];
+    GreenfootImage[] idleRight = new GreenfootImage[4];
+    SimpleTimer idleAnimationTimer = new SimpleTimer();
+    private int idleImageIndex = 0;
+    SimpleTimer lastAttackTimer = new SimpleTimer();
+    
+    // death animations
+    GreenfootImage[] death = new GreenfootImage[6];
+    SimpleTimer deathAnimationTimer = new SimpleTimer();
+    public boolean isDead = false;
+    private int deathImageIndex = 0;
+    
+    // attack animations
+    GreenfootImage[] heroLeft = new GreenfootImage[6];
+    GreenfootImage[] heroRight = new GreenfootImage[6];
+    SimpleTimer heroAnimationTimer = new SimpleTimer();
+    private int heroImageIndex = 0;
+    
+    // hurt animations
+    GreenfootImage[] hurtLeft = new GreenfootImage[4];
+    GreenfootImage[] hurtRight = new GreenfootImage[4];
+    SimpleTimer hurtAnimationTimer = new SimpleTimer();
+    private int hurtImageIndex = 0;
+    public boolean isHurt = false;
     
     /**
      * Constructor for Hero Class
      */
     public Hero() {
-        setImage("images/bee.png");
-        GreenfootImage hero = getImage();
-        hero.scale(25, 25);
+        for (int i = 0; i < idleLeft.length; i++) {
+            idleRight[i] = new GreenfootImage("images/idle/idle" + i + ".png");
+            idleRight[i].scale(xScale, yScale);
+            
+            idleLeft[i] = new GreenfootImage("images/idle/idle" + i + ".png");
+            idleLeft[i].mirrorHorizontally();
+            idleLeft[i].scale(xScale, yScale);
+        }
+        
+        for (int i = 0; i < death.length; i++) {
+            death[i] = new GreenfootImage("images/death/death" + i + ".png");
+            death[i].scale(xScale, yScale);
+        }
+        
+        for (int i = 0; i < heroLeft.length; i++) {
+            heroRight[i] = new GreenfootImage("images/hero/hero" + i + ".png");
+            heroRight[i].scale(xScale,yScale);
+            
+            heroLeft[i] = new GreenfootImage("images/hero/hero" + i + ".png");
+            heroLeft[i].mirrorHorizontally();
+            heroLeft[i].scale(xScale, yScale);
+        }
+        
+        for (int i = 0; i < hurtLeft.length; i++) {
+            hurtRight[i] = new GreenfootImage("images/hurt/hurt" + i + ".png");
+            hurtRight[i].scale(xScale, yScale);
+            
+            hurtLeft[i] = new GreenfootImage("images/hurt/hurt" + i + ".png");
+            hurtLeft[i].mirrorHorizontally();
+            hurtLeft[i].scale(xScale, yScale);
+        }
+        
+        idleAnimationTimer.mark();
+        setImage(idleRight[0]);
         
         this.hero = this;
         
@@ -108,10 +172,7 @@ public class Hero extends SmoothMover
      */
     public void act()
     {
-        if (GameWorld.gameOver) {
-            EndScreen endScreen = new EndScreen();
-            Greenfoot.setWorld(endScreen);
-        } 
+        if (isDead) animateDeath();
         else {
             // movement
             if (Greenfoot.isKeyDown("e")) {
@@ -136,10 +197,12 @@ public class Hero extends SmoothMover
             
             if (Greenfoot.isKeyDown("a")) {
                 this.setLocation(getExactX() - speed*dashMultiplier, getExactY());
+                facing = "left";
             }
             
             if (Greenfoot.isKeyDown("d")) {
                 this.setLocation(getExactX() + speed*dashMultiplier, getExactY());
+                facing = "right";
             }
             
             // attack
@@ -147,6 +210,7 @@ public class Hero extends SmoothMover
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
                     attack();
                     attackCooldown.mark();
+                    lastAttackTimer.mark();
                 }
             }
             
@@ -155,6 +219,14 @@ public class Hero extends SmoothMover
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 regenCooldown.mark();
             }
+            // first check if hurt
+            if (isHurt) animateHurt();
+            
+            // then check if idle
+            else if (lastAttackTimer.millisElapsed() >= 3000) animateIdle();
+            
+            // otherwise animate attack
+            else animateHero();
         }
     }
     
@@ -331,6 +403,67 @@ public class Hero extends SmoothMover
                 break;
             case "Scorch":
                 if (scorchLvl < 2) scorchLvl++;
+        }
+    }
+    
+    public void animateIdle() {
+        if (idleAnimationTimer.millisElapsed() < 100) return;
+        idleAnimationTimer.mark();
+        
+        if (facing.equals("right")) {
+            setImage(idleRight[idleImageIndex]);
+            idleImageIndex = (idleImageIndex + 1) % idleRight.length;
+        }
+        else {
+            setImage(idleLeft[idleImageIndex]);
+            idleImageIndex = (idleImageIndex + 1) % idleLeft.length;
+        }
+    }
+    
+    public void animateDeath() {
+        Enemy.removeAll();
+        
+        if (deathAnimationTimer.millisElapsed() < 200) return;
+        deathAnimationTimer.mark();
+        
+        if (deathImageIndex < death.length) {
+            setImage(death[deathImageIndex]);
+            deathImageIndex++;
+        }
+        else {
+            GameWorld.gameWorld.gameOver = true;
+            
+            EndScreen endScreen = new EndScreen();
+            Greenfoot.setWorld(endScreen);
+        }
+    }
+    
+    public void animateHero() {
+        if (heroAnimationTimer.millisElapsed() < 150) return;
+        heroAnimationTimer.mark();
+        
+        if (facing.equals("right")) {
+            setImage(heroRight[heroImageIndex]);
+            heroImageIndex = (heroImageIndex + 1) % heroRight.length;
+        }
+        else {
+            setImage(heroLeft[heroImageIndex]);
+            heroImageIndex = (heroImageIndex + 1) % heroLeft.length;
+        }
+    }
+    
+    public void animateHurt() {
+        if (hurtAnimationTimer.millisElapsed() < 150) return;
+        hurtAnimationTimer.mark();
+        
+        if (hurtImageIndex < hurtLeft.length) {
+            if (facing.equals("right")) setImage(hurtRight[hurtImageIndex]);
+            else setImage(hurtLeft[hurtImageIndex]);
+            hurtImageIndex++;
+        }
+        else {
+            isHurt = false;
+            hurtImageIndex = 0;
         }
     }
 }

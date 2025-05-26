@@ -137,7 +137,8 @@ public class Enemy extends SmoothMover
         Hero.hero.currentHp-= this.attack;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
-        if (Hero.hero.currentHp <= 0) GameWorld.gameOver = true;
+        if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
+        else Hero.hero.isHurt = true;
     }
     
     public void frostbite() {
@@ -149,5 +150,16 @@ public class Enemy extends SmoothMover
         this.burnDamage = burnDamage;
         burnTicks = 3;
         scorchTimer.mark();
+    }
+    
+    public static void removeAll() {
+        if (enemies.size() > 0) {
+            GameWorld.gameWorld.removeObject(enemies.get(0).redBar);
+            GameWorld.gameWorld.removeObject(enemies.get(0).greenBar);
+            enemies.get(0).redBar = null;
+            enemies.get(0).greenBar = null;
+            GameWorld.gameWorld.removeObject(enemies.get(0));
+            enemies.remove(enemies.get(0));
+        }
     }
 }

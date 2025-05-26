@@ -76,14 +76,16 @@ public class GameWorld extends World {
             }
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
-            if (wave % 10 == 0) {
-                upgradeManager = new UpgradeManager(2, this, true);
-            } else {
-                // spawns 3 upgrades
-                upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this, false);
+            if (!Hero.hero.isDead) {
+                if (wave % 10 == 0) {
+                    upgradeManager = new UpgradeManager(2, this, true);
+                } else {
+                    // spawns 3 upgrades
+                    upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this, false);
+                }
+                
+                addObject(upgradeManager, 0, 0);
             }
-            
-            addObject(upgradeManager, 0, 0);
         }
     }
     
