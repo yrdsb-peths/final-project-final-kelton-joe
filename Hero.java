@@ -116,7 +116,7 @@ public class Hero extends SmoothMover
             if (Greenfoot.isKeyDown("e")) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
                     isDashing = true;
-                    dashMultiplier = 2.0;
+                    dashMultiplier = 2.5;
                     dashTimer.mark();
                 }
             }
@@ -265,7 +265,7 @@ public class Hero extends SmoothMover
                 break;
             case "projectileSpeed":
                 projectileSpeed = Math.min(projectileSpeed + value, maxProjectileSpeed);
-                if (attackRange == maxProjectileSpeed) {
+                if (projectileSpeed == maxProjectileSpeed) {
                     Upgrade.type.remove("projectileSpeed");
                 }
             case "speed":
@@ -303,6 +303,22 @@ public class Hero extends SmoothMover
                 break;
             case "dashMultiplier":
                 dashMultiplier += value;
+                break;
+            case "projectile":
+                projectileSpeed = Math.min(projectileSpeed + value/100.0, maxProjectileSpeed);
+                if (projectileSpeed == maxProjectileSpeed) {
+                    Upgrade.type.remove("projectileSpeed");
+                }
+                
+                attackRange = Math.min(attackRange + value, maxAttackRange);
+                if (attackRange == maxAttackRange) {
+                    Upgrade.type.remove("attackRange");
+                }
+                
+                attackSpeed = Math.max(attackSpeed - value*5.0, maxAttackSpeed);
+                if (attackSpeed == maxAttackSpeed) {
+                    Upgrade.type.remove("attackSpeed");
+                }
                 break;
         }
     }

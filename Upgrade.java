@@ -24,7 +24,8 @@ public class Upgrade extends Actor
         "regenAmount", // 9
         "crit", // 10
         "dashLength", // 11
-        "dashMultiplier" // 12
+        "dashMultiplier", // 12
+        "projectile" // 13
     };
     public static ArrayList<String> type;
     
@@ -34,7 +35,7 @@ public class Upgrade extends Actor
         1.0, // attack
         0.05, // speed
         -50.0, // attack speed
-        3, // attack range
+        10, // attack range
         0.1, // projectile speed
         3.0, //crit rate
         6.0, // crit damage
@@ -42,7 +43,8 @@ public class Upgrade extends Actor
         1.0, // hp regen amount
         2.0, // both crit buff
         50.0, // dash length
-        0.05 // dash mult
+        0.05, // dash mult
+        5.0 // projectile
     };
     
     private double theValue;
@@ -178,6 +180,10 @@ public class Upgrade extends Actor
             case 12:
                 name = new Label("Dash Speed \nMultiplier Boost", 20);
                 theValue = value[12];
+                break;
+            case 13:
+                name = new Label("Projecitle Mastery", 20);
+                theValue = value[13];
                 break;
         }
         
