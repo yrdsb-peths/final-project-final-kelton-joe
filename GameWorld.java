@@ -18,8 +18,7 @@ public class GameWorld extends World {
     private Hero hero;
     
     public int wave;
-    private int waveMultiplier;
-    private final int maxWaveMultiplier = 8;
+    private final int maxSpeedMultiplier = 8;
     
     private int waveDifficulty;
     
@@ -62,14 +61,11 @@ public class GameWorld extends World {
     public void act() {
         if (enemiesToSpawn > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
-                // sets wave multiplier
-                waveMultiplier = Math.min(wave, maxWaveMultiplier);
-                
-                // randomly generate buffs based on wave multiplier
-                bonusSpeed = ((double) Greenfoot.getRandomNumber(waveMultiplier)) / 10.0;
-                bonusHp = Greenfoot.getRandomNumber(waveMultiplier);
-                bonusAttack = Greenfoot.getRandomNumber(waveMultiplier);
-                bonusAttackSpeed = Greenfoot.getRandomNumber(waveMultiplier) * 10;
+                // randomly generate buffs based on wave number
+                bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
+                bonusHp = Greenfoot.getRandomNumber(wave);
+                bonusAttack = Greenfoot.getRandomNumber(wave);
+                bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
                 
                 // spawn enemy with buffs
                 Enemy enemy = new Enemy(wave + bonusHp, bonusSpeed, bonusAttack, bonusAttackSpeed);
