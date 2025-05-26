@@ -42,6 +42,8 @@ public class Upgrade extends Actor
         2.0 // both crit buff
     };
     
+    private double theValue;
+    
     // randomly generated number
     private int num;
     
@@ -123,36 +125,47 @@ public class Upgrade extends Actor
         switch (num) {
             case 0:
                 name = new Label("Health Boost", 20);
+                theValue = value[0];
                 break;
             case 1:
                 name = new Label("Attack Boost", 20);
+                theValue = value[1];
                 break;
             case 2:
                 name = new Label("Speed Boost", 20);
+                theValue = value[2];
                 break;
             case 3:
                 name = new Label("Attack Speed Boost", 20);
+                theValue = value[3];
                 break;
             case 4:
                 name = new Label("Attack Range Boost", 20);
+                theValue = value[4];
                 break;
             case 5:
                 name = new Label("Projectile Speed \nBoost", 20);
+                theValue = value[5];
                 break;
             case 6:
                 name = new Label("Crit Rate Boost", 20);
+                theValue = value[6];
                 break;
             case 7:
                 name = new Label("Crit Damage Boost", 20);
+                theValue = value[7];
                 break;
             case 8:
                 name = new Label("Health Regen \nFrequency Boost", 20);
+                theValue = value[8];
                 break;
             case 9:
                 name = new Label("Health Regen \nAmount Boost", 20);
+                theValue = value[9];
                 break;
             case 10:
                 name = new Label("Full Crit Boost", 20);
+                theValue = value[10];
                 break;
         }
         
@@ -211,7 +224,7 @@ public class Upgrade extends Actor
             if (isUnique) {
                 upgradeManager.isSelected = true;
             } else {
-                Hero.hero.setStat(value[num] * (rarity + 1), type.get(num));
+                Hero.hero.setStat(theValue * (rarity + 1), type.get(num));
                 upgradeManager.isSelected = true;
             }
         }
