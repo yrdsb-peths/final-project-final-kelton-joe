@@ -12,17 +12,19 @@ public class Upgrade extends Actor
 {
     // all types of upgrades
     public static String[] typeString = {
-        "health", 
-        "attack", 
-        "speed", 
-        "attackSpeed", 
-        "attackRange",
-        "projectileSpeed",
-        "critRate", 
-        "critDamage",
-        "regenInterval",
-        "regenAmount",
-        "crit"
+        "health", // 0
+        "attack", // 1
+        "speed", // 2
+        "attackSpeed", // 3 
+        "attackRange", // 4
+        "projectileSpeed", // 5
+        "critRate", // 6
+        "critDamage", // 7
+        "regenInterval", // 8
+        "regenAmount", // 9
+        "crit", // 10
+        "dashLength", // 11
+        "dashMultiplier" // 12
     };
     public static ArrayList<String> type;
     
@@ -31,14 +33,16 @@ public class Upgrade extends Actor
         1.0, // hp
         1.0, // attack
         0.05, // speed
-        -15.0, // attack speed
+        -50.0, // attack speed
         3, // attack range
         0.1, // projectile speed
         3.0, //crit rate
         6.0, // crit damage
         -50.0, // hp regen interval
         1.0, // hp regen amount
-        2.0 // both crit buff
+        2.0, // both crit buff
+        50.0, // dash length
+        0.05 // dash mult
     };
     
     private double theValue;
@@ -166,6 +170,14 @@ public class Upgrade extends Actor
             case 10:
                 name = new Label("Full Crit Boost", 20);
                 theValue = value[10];
+                break;
+            case 11:
+                name = new Label("Dash Length Boost", 20);
+                theValue = value[11];
+                break;
+            case 12:
+                name = new Label("Dash Speed \nMultiplier Boost", 20);
+                theValue = value[12];
                 break;
         }
         

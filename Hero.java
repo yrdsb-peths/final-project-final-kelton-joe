@@ -298,6 +298,12 @@ public class Hero extends SmoothMover
                 }
                 critDamage += value * 2.0;
                 break;
+            case "dashLength":
+                dashLength += value;
+                break;
+            case "dashMultiplier":
+                dashMultiplier += value;
+                break;
         }
     }
     
