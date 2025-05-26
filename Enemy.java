@@ -36,6 +36,10 @@ public class Enemy extends SmoothMover
     private boolean isSlowed;
     private SimpleTimer frostbiteTimer = new SimpleTimer();
     
+    private int burnTicks;
+    private double burnDamage;
+    private SimpleTimer scorchTimer = new SimpleTimer();
+    
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
@@ -69,6 +73,8 @@ public class Enemy extends SmoothMover
     
     public void act()
     {
+        if (hitpoints <= 0) return;
+        
         double dx = Hero.hero.getExactX() - getExactX();
         double dy = Hero.hero.getExactY() - getExactY();
         
@@ -76,6 +82,16 @@ public class Enemy extends SmoothMover
         
         double normalizedDx = dx / magnitude;
         double normalizedDy = dy / magnitude;
+        
+        if (scorchTimer.millisElapsed() >= 1000) {
+            if (burnTicks > 0) {
+                removeHp((int)burnDamage, false);
+                burnTicks--;
+                scorchTimer.mark();
+                
+                if (hitpoints <= 0) return;
+            }
+        }
         
         if (frostbiteTimer.millisElapsed() >= 5000) {
             isSlowed = false;
@@ -100,8 +116,12 @@ public class Enemy extends SmoothMover
         }
     }
     
-    public void removeHp(int damage) {
+    public void removeHp(int damage, boolean isCrit) {
         hitpoints -= damage;
+        
+        DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
+        GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
+        
         if (hitpoints <= 0) {
             GameWorld.gameWorld.removeObject(redBar);
             GameWorld.gameWorld.removeObject(greenBar);
@@ -123,5 +143,11 @@ public class Enemy extends SmoothMover
     public void frostbite() {
         isSlowed = true;
         frostbiteTimer.mark();
+    }
+    
+    public void scorch(double burnDamage) {
+        this.burnDamage = burnDamage;
+        burnTicks = 3;
+        scorchTimer.mark();
     }
 }

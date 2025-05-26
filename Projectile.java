@@ -17,9 +17,10 @@ public class Projectile extends SmoothMover
     private boolean isRemoved;
     
     private int frostbiteLvl;
+    private int scorchLvl;
     
     public Projectile(double nx, double ny, double speed, double damage, boolean isCrit,
-                        int frostbiteLvl) {
+                        int frostbiteLvl, int scorchLvl) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -33,6 +34,7 @@ public class Projectile extends SmoothMover
         this.damage = damage;
         this.isCrit = isCrit;
         this.frostbiteLvl = frostbiteLvl;
+        this.scorchLvl = scorchLvl;
         
         this. durability = 1;
         
@@ -56,20 +58,22 @@ public class Projectile extends SmoothMover
     }
     
     private void attack(Enemy enemy) {
-        enemy.removeHp((int)damage);
+        enemy.removeHp((int)damage, isCrit);
         frostbite(enemy);
+        scorch(enemy);
         
         durability--;
         if (durability == 0) {
             GameWorld.gameWorld.removeObject(this);
             isRemoved = true;
-            
-            DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
-            GameWorld.gameWorld.addObject(dmgIndicator, (int) enemy.getExactX(), (int) enemy.getExactY());
         }
     }
     
     private void frostbite(Enemy enemy) {
-        if(frostbiteLvl > 0) enemy.frostbite();
+        if (frostbiteLvl > 0) enemy.frostbite();
+    }
+    
+    private void scorch(Enemy enemy) {
+        if (scorchLvl > 0) enemy.scorch(damage * 0.5);
     }
 }

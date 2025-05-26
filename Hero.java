@@ -64,7 +64,7 @@ public class Hero extends SmoothMover
     int dashCooldown;
     
     int frostbiteLvl;
-    
+    int scorchLvl;
     
     /**
      * Constructor for Hero Class
@@ -95,6 +95,7 @@ public class Hero extends SmoothMover
         dashCooldown = 2000;
         
         frostbiteLvl = 0;
+        scorchLvl = 0;
         
         attackCooldown.mark();
         regenCooldown.mark();
@@ -232,7 +233,7 @@ public class Hero extends SmoothMover
         double normalizedY = dy / magnitude;
         
         Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed,
-                                            damage, isCrit, frostbiteLvl);
+                                            damage, isCrit, frostbiteLvl, scorchLvl);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
@@ -328,6 +329,8 @@ public class Hero extends SmoothMover
             case "Frostbite":
                 if (frostbiteLvl < 2) frostbiteLvl++;
                 break;
+            case "Scorch":
+                if (scorchLvl < 2) scorchLvl++;
         }
     }
 }

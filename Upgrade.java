@@ -182,7 +182,7 @@ public class Upgrade extends Actor
                 theValue = value[12];
                 break;
             case 13:
-                name = new Label("Projecitle Mastery", 20);
+                name = new Label("Projectile Mastery", 20);
                 theValue = value[13];
                 break;
         }
