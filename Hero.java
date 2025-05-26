@@ -444,7 +444,7 @@ public class Hero extends SmoothMover
     public void animateDeath() {
         Enemy.removeAll();
         
-        if (deathAnimationTimer.millisElapsed() < 200) return;
+        if (deathAnimationTimer.millisElapsed() < 250) return;
         deathAnimationTimer.mark();
         
         if (deathImageIndex < death.length) {
