@@ -142,8 +142,8 @@ public class Hero extends SmoothMover
         this.hero = this;
         
         // initializes default stats
-        currentHp = 5;
-        maxHp = 5;
+        currentHp = 3;
+        maxHp = 3;
         speed = 1.15;
         attackRange = 200;
         regenInterval = 5000;
