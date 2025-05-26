@@ -22,6 +22,6 @@ public class GreenBar extends SmoothMover
     public void setPos(double x, double y, double percentage) {
         if (percentage <= 0) return;
         setLocation(x - ((int)startWidth*(1-percentage)/2), y + 20);
-        image.scale((int)(startWidth*percentage), image.getHeight());
+        image.scale(Math.max(1, (int)(startWidth*percentage)), image.getHeight());
     }
 }

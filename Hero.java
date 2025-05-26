@@ -100,6 +100,14 @@ public class Hero extends SmoothMover
     private int hurtImageIndex = 0;
     public boolean isHurt = false;
     
+    // dash bar cooldown
+    private final double dashBarScale = 0.3;
+    private final int barX = 715;
+    private final int barY = 50;
+    RedBar redBar = new RedBar(dashBarScale);
+    GreenBar greenBar = new GreenBar(dashBarScale);
+    double cooldownPercent;
+    
     /**
      * Constructor for Hero Class
      */
@@ -166,6 +174,9 @@ public class Hero extends SmoothMover
         regenCooldown.mark();
         
         dashTimer.mark();
+        
+        GameWorld.gameWorld.addObject(redBar, barX, barY);
+        GameWorld.gameWorld.addObject(greenBar, barX, barY);
     }
     
     /**
@@ -175,6 +186,12 @@ public class Hero extends SmoothMover
     {
         if (isDead) animateDeath();
         else {
+            redBar.setPos(barX, barY);
+            cooldownPercent = (double) dashTimer.millisElapsed() / (double) dashCooldown;
+            cooldownPercent = Math.min(cooldownPercent, 1);
+            cooldownPercent = Math.max(cooldownPercent, 0);
+            greenBar.setPos(barX, barY, cooldownPercent);
+            
             // movement
             if (Greenfoot.isKeyDown("e")) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
