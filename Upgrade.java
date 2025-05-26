@@ -25,7 +25,8 @@ public class Upgrade extends Actor
         "crit", // 10
         "dashLength", // 11
         "dashMultiplier", // 12
-        "projectile" // 13
+        "projectile", // 13
+        "dashCooldown" // 14
     };
     public static ArrayList<String> type;
     
@@ -44,7 +45,8 @@ public class Upgrade extends Actor
         2.0, // both crit buff
         50.0, // dash length
         0.05, // dash mult
-        5.0 // projectile
+        5.0, // projectile
+        20.0
     };
     
     private double theValue;
@@ -182,8 +184,12 @@ public class Upgrade extends Actor
                 theValue = value[12];
                 break;
             case 13:
-                name = new Label("Projectile Mastery", 20);
+                name = new Label("Weapon Mastery", 20);
                 theValue = value[13];
+                break;
+            case 14:
+                name = new Label("Dash Cooldown \nReduction", 20);
+                theValue = value[14];
                 break;
         }
         

@@ -48,7 +48,7 @@ public class Enemy extends SmoothMover
         this.hitpoints = hitpoints;
         this.speed += speed;
         this.attack += attack;
-        this.attackSpeed -= Math.max(attackSpeed, maxAttackSpeed);
+        this.attackSpeed -= Math.min(attackSpeed, maxAttackSpeed);
         
         // add to list of all current enemies
         enemies.add(this);

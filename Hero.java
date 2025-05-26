@@ -61,6 +61,7 @@ public class Hero extends SmoothMover
     SimpleTimer dashTimer = new SimpleTimer();
     double dashLength;
     double dashMultiplier;
+    final int minDashCooldown = 800;
     int dashCooldown;
     
     // unique upgrades
@@ -145,18 +146,18 @@ public class Hero extends SmoothMover
         maxHp = 5;
         speed = 1.15;
         attackRange = 200;
-        regenInterval = 6000;
+        regenInterval = 5000;
         regenAmount = 1;
         attackSpeed = 1000.0;
         attack = 1.0;
-        projectileSpeed = 1.5;
+        projectileSpeed = 1.0;
         critRate = 10.0;
         critDamage = 100.0;
         
         isDashing = false;
-        dashLength = 500;
+        dashLength = 300;
         dashMultiplier = 1.0;
-        dashCooldown = 2000;
+        dashCooldown = 3000;
         
         frostbiteLvl = 0;
         scorchLvl = 0;
@@ -392,6 +393,9 @@ public class Hero extends SmoothMover
                 if (attackSpeed == maxAttackSpeed) {
                     Upgrade.type.remove("attackSpeed");
                 }
+                break;
+            case "dashCooldown":
+                dashCooldown = Math.max(dashCooldown - (int) value, minDashCooldown);
                 break;
         }
     }
