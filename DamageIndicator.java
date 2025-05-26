@@ -6,22 +6,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class DamageIndicator extends Actor
+public class DamageIndicator extends Label
 {
-    Label damageIndicator;
-    private final int lifeTime = 800;
-    private int size;
+    private final int lifeTime = 250;
     SimpleTimer lifeTimer = new SimpleTimer();
     
     public DamageIndicator(int damage, boolean isCrit) {
-        if (isCrit) size = 30;
-        else size = 20;
-        
-        this.damageIndicator = new Label(damage, size);
-    }
-    
-    public void addToWorld(int x, int y) {
-        GameWorld.gameWorld.addObject(this.damageIndicator, x, y);
+        super(damage, isCrit ? 30 : 20);
         lifeTimer.mark();
     }
     

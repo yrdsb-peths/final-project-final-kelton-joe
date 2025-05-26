@@ -60,7 +60,7 @@ public class Projectile extends SmoothMover
             isRemoved = true;
             
             DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
-            dmgIndicator.addToWorld((int) enemy.getExactX(), (int) enemy.getExactY());
+            GameWorld.gameWorld.addObject(dmgIndicator, (int) enemy.getExactX(), (int) enemy.getExactY());
         }
     }
 }
