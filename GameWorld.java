@@ -80,8 +80,13 @@ public class GameWorld extends World {
             }
         } 
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
-            // spawns 3 upgrades
-            upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this);
+            if (wave % 10 == 0) {
+                upgradeManager = new UpgradeManager(2, this, true);
+            } else {
+                // spawns 3 upgrades
+                upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this, false);
+            }
+            
             addObject(upgradeManager, 0, 0);
         }
     }

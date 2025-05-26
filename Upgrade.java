@@ -57,6 +57,7 @@ public class Upgrade extends Actor
         99 // 5: 2% mythic 10x
     };
     
+    private boolean isUnique;
     private String[] uniqueTraits = {
         "Frostbite", // slows enemies
                     // upgraded - freezes enemies on hit
@@ -80,8 +81,9 @@ public class Upgrade extends Actor
      * 
      * @param upgradeManager: manages the upgrades
      */
-    public Upgrade(UpgradeManager upgradeManager) {
+    public Upgrade(UpgradeManager upgradeManager, boolean isUnique) {
         this.upgradeManager = upgradeManager;
+        this.isUnique = isUnique;
         
         // background for upgrades
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
@@ -98,6 +100,10 @@ public class Upgrade extends Actor
      * @param world: world the upgrade is added to
      */
     protected void addedToWorld(World world) {
+        if (isUnique) {
+            uniqueUpgrade();
+            return;
+        }
         // randomly generate an upgrade type
         num = Greenfoot.getRandomNumber(type.size());
         
@@ -184,13 +190,30 @@ public class Upgrade extends Actor
         GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
+    private void uniqueUpgrade() {
+        int trait = Greenfoot.getRandomNumber(uniqueTraits.length);
+        
+        name = new Label(uniqueTraits[trait], 20);
+        theRarity = new Label("Unique", 25);
+        
+        getImage().setColor(new greenfoot.Color(215, 0, 64));
+        getImage().fill();
+        
+        GameWorld.gameWorld.addObject(name, getX(), getY() - 10);
+        GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
+    }
+    
     /**
      * Select upgrade if clicked
      */
     public void act() {
         if (Greenfoot.mouseClicked(this)) {
-            Hero.hero.setStat(value[num] * (rarity + 1), type.get(num));
-            upgradeManager.isSelected = true;
+            if (isUnique) {
+                upgradeManager.isSelected = true;
+            } else {
+                Hero.hero.setStat(value[num] * (rarity + 1), type.get(num));
+                upgradeManager.isSelected = true;
+            }
         }
     }
 }

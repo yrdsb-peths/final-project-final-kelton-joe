@@ -13,10 +13,12 @@ public class UpgradeManager extends Actor
     private final int upgradeSpacing = 200;
     
     public boolean isSelected;
+    private boolean isUnique;
     
-    public UpgradeManager(int upgrades, World world)
+    public UpgradeManager(int upgrades, World world, boolean isUnique)
     {
         isSelected = false;
+        this.isUnique = isUnique;
         
         double startIndex = -upgrades/2;
         double endIndex = upgrades/2;
@@ -27,7 +29,7 @@ public class UpgradeManager extends Actor
         }
         
         for (double i = startIndex; i <= endIndex; i++) {
-            Upgrade upgrade = new Upgrade(this);
+            Upgrade upgrade = new Upgrade(this, isUnique);
             world.addObject(upgrade, world.getWidth()/2 + (int)(upgradeSpacing*i), world.getHeight()/2);
         }
     }
