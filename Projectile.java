@@ -12,10 +12,11 @@ public class Projectile extends SmoothMover
     private double speed;
     private double damage;
     private int durability;
+    private boolean isCrit;
     
     private boolean isRemoved;
     
-    public Projectile(double nx, double ny, double speed, double damage) {
+    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -27,6 +28,7 @@ public class Projectile extends SmoothMover
         this.ny = ny;
         this.speed = speed;
         this.damage = damage;
+        this.isCrit = isCrit;
         
         this. durability = 1;
         
@@ -56,6 +58,9 @@ public class Projectile extends SmoothMover
         if (durability == 0) {
             GameWorld.gameWorld.removeObject(this);
             isRemoved = true;
+            
+            DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit);
+            dmgIndicator.addToWorld((int) enemy.getExactX(), (int) enemy.getExactY());
         }
     }
 }

@@ -48,6 +48,7 @@ public class Hero extends SmoothMover
     
     // crit rate and damage as a percent
     private double critMultiplier;
+    private boolean isCrit;
     
     // position of the hero
     int x, y;
@@ -186,10 +187,14 @@ public class Hero extends SmoothMover
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
+                isCrit = true;
                 critMultiplier = 1.0 + (critDamage/100.0);
                 damageDealt = attack * critMultiplier;
             }
-            else damageDealt = attack;
+            else {
+              damageDealt = attack;
+              isCrit = false;
+            }
             
             fireProjectile(damageDealt, closestEnemy);
 
@@ -222,7 +227,7 @@ public class Hero extends SmoothMover
         double normalizedX = dx / magnitude;
         double normalizedY = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage);
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
