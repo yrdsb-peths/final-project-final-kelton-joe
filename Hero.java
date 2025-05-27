@@ -74,8 +74,8 @@ public class Hero extends SmoothMover
     // facing direction
     String facing = "right";
     
-    private final int xScale = 40;
-    private final int yScale = 40;
+    public final int xScale = 40;
+    public final int yScale = 40;
     
     // idle animations
     GreenfootImage[] idleLeft = new GreenfootImage[4];
@@ -102,6 +102,8 @@ public class Hero extends SmoothMover
     SimpleTimer hurtAnimationTimer = new SimpleTimer();
     private int hurtImageIndex = 0;
     public boolean isHurt = false;
+    
+    public boolean isAttacking;
     
     // dash bar cooldown
     private final double dashBarScale = 0.2;
@@ -241,11 +243,12 @@ public class Hero extends SmoothMover
                 facing = "right";
             }
             
-            heroArm.setPos(getExactX(), getExactY());
+            heroArm.setPos(getExactX(), getExactY(), facing);
             
             // attack
             if (Greenfoot.isKeyDown("space")) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
+                    isAttacking = true;
                     attack();
                     attackCooldown.mark();
                     lastAttackTimer.mark();
@@ -257,11 +260,14 @@ public class Hero extends SmoothMover
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 regenCooldown.mark();
             }
-            // first check if hurt
-            if (isHurt) animateHurt();
+            // first check if attacking
+            if (isAttacking) heroArm.animateBow(facing);
+            
+            // check if hurt
+            else if (isHurt) animateHurt();
             
             // then check if idle
-            else if (lastAttackTimer.millisElapsed() >= 3000) animateIdle();
+            //else if (lastAttackTimer.millisElapsed() >= 3000) animateIdle();
             
             // otherwise animate attack
             else animateHero();
@@ -299,7 +305,9 @@ public class Hero extends SmoothMover
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             heroArm.faceEnemy(closestEnemy);
-            heroArm.animationTimer.mark();
+            
+            heroArm.bowImageIndex = 0;
+            heroArm.animateBow(facing);
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {

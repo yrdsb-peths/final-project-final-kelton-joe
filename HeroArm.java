@@ -13,33 +13,46 @@ public class HeroArm extends SmoothMover
     
     private GreenfootImage bowImage;
     
-    public SimpleTimer animationTimer = new SimpleTimer();
+    public SimpleTimer bowAnimationTimer = new SimpleTimer();
     
-    private int bowIndex;
+    public int bowImageIndex = 0;
     
     public HeroArm() {
         for (int i = 0; i < 6; i++) {
             bowLeft[i] = new GreenfootImage("bow/bow" + i + ".png");
-            bowLeft[i].mirrorVertically();
+            bowLeft[i].mirrorHorizontally();
+            
             bowRight[i] = new GreenfootImage("bow/bow" + i + ".png");
             
-            bowLeft[i].scale((int)(bowLeft[i].getWidth() * 0.5), (int)(bowLeft[i].getHeight() * 0.5));
-            bowRight[i].scale((int)(bowRight[i].getWidth() * 0.5), (int)(bowRight[i].getHeight() * 0.5));
+            //bowLeft[i].scale((int)(bowLeft[i].getWidth() * 0.5), (int)(bowLeft[i].getHeight() * 0.5));
+            //bowRight[i].scale((int)(bowRight[i].getWidth() * 0.5), (int)(bowRight[i].getHeight() * 0.5));
+            bowLeft[i].scale(200, 200);
+            bowRight[i].scale(200,200);
         }
         
         this.bowImage = bowRight[3];
         setImage(bowImage);
+    }
+    
+    public void act() { 
+        bowAnimationTimer.mark();
+    }
+    
+    public void setPos(double x, double y, String facing) {
+        if (facing.equals("right")) x += 5;
+        else x -= 5;
+        setLocation(x, y);
+    }
+    
+    public void animateBow(String facing) {
+        if (bowAnimationTimer.millisElapsed() < 150) return;
+        bowAnimationTimer.mark();
         
-        animationTimer.mark();
-    }
-    
-    public void act() {        
-        bowImage = bowLeft[bowIndex];
-        setImage(bowImage);
-    }
-    
-    public void setPos(double x, double y) {
-        setLocation(x, y + 5.0);
+        if (bowImageIndex < bowRight.length) {
+            if (facing.equals("right")) setImage(bowRight[bowImageIndex]);
+            else setImage(bowLeft[bowImageIndex]);
+            bowImageIndex++;
+        }
     }
     
     /**
