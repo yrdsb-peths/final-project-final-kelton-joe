@@ -34,7 +34,7 @@ public class Upgrade extends Actor
     private double[] value = {
         1.0, // hp
         1.0, // attack
-        5000.0, // speed
+        0.05, // speed
         -50.0, // attack speed
         10, // attack range
         0.1, // projectile speed
