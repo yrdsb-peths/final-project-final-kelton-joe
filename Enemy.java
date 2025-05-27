@@ -130,7 +130,10 @@ public class Enemy extends SmoothMover
     public void removeHp(int damage, boolean isCrit, Color color, int size) {
         hitpoints -= damage;
         
-        if (isCrit) color = Color.ORANGE;
+        if (isCrit) {
+            color = Color.ORANGE;
+            size = 35;
+        }
         
         DamageIndicator dmgIndicator = new DamageIndicator((int) damage, size, color);
         GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
