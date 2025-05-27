@@ -78,7 +78,7 @@ public class Upgrade extends Actor
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows
                          // upgraded: guaranteed explosive arrows in larger area
-        "Rogue",         // much increased speed and crit, but low range and hp
+        //"Rogue",         // much increased speed and crit, but low range and hp
                          // upgraded: chance to fully dodge attacks, attack speed buff
         //"Jester",        // chance to teleport enemies to random location on hit
                          // upgraded: higher teleport chance + stun (unable to move/attack) on teleport
