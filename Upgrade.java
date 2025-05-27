@@ -72,32 +72,33 @@ public class Upgrade extends Actor
                          // upgraded: freezes enemies on hit (they can still attack)
         "Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
-        // "Sharpshot",     // projectile speed maxed and pierce through enemies
-                         // upgraded: gives Hero maxed range
+        // "Sharpshot",     // pierce through enemies
         "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows
-                         // upgraded: guaranteed explosive arrows in larger area
         "Rogue",         // much increased speed and crit, but low range and hp
                          // upgraded: chance to fully dodge attacks, attack speed buff
         "Jester",        // chance to teleport enemies to random location on hit
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
-        //"Stormcaller",   // chance to chain enemies on hit 
-                         // upgraded: also chance to stun
-        //"Thornsoul",     // chance to rebound damage
-                         // upgraded: damage reduction + more rebound damage
+        //"Stormcaller",   // chance to chain and stun enemies on hit 
+        //"Thornsoul",     // chance to rebound damage, damage reduction
         //"Spectral Veil", // chance to become immune to damage for a short time when hit
-                         // upgraded: increases chance and duration
         //"Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
-                         // upgraded: full strength repeat + higher chance
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active
-        //"Soulforge",     // damage and speed buff on kill
-                         // upgraded: longer duration, more max stacks, chance to get on attack
-        //"Iron Will",     // hero takes reduced crowd control buffs
-                         // upgraded: immune to crowd control + damage resistance
-        //"Windborne"      // arrows have a chance to ricochet
-                         // upgraded: also targets nearby enemies
+        //"Iron Will",     // immune to crowd control
+        //"Windborne",      // tracks nearby enemies
+        // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
+        // "Saviors Sacrifice", // attacks consume health to deal additional damage
+                         // upgraded: increased damage and resistance on low health
+        //"Violent Vortex"         // grants vortex skill: pull nearby enemies
+                         // upgraded: vortex also deals damage, slows, and weakens
+        // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
+        // "Lifebloom",     // damage also increases depending on max health
+        // "Time Rift",       // chance for hero to bypass maximum attack when attacking
+        // "Vengeful Spirit",  // after getting hit, next attack becomes much stronger
+        // "Concentration"    // much slower attacks that deal much increased damage
+        
     };
     private String uniqueTrait;
     
