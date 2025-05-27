@@ -44,6 +44,9 @@ public class Enemy extends SmoothMover
     
     private boolean isDodged;
     
+    private boolean isStunned;
+    SimpleTimer stunTimer = new SimpleTimer();
+    
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
@@ -99,18 +102,19 @@ public class Enemy extends SmoothMover
         
         if (frostbiteTimer.millisElapsed() >= 5000) isSlowed = false;
         if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
+        if (stunTimer.millisElapsed() >= 800) isStunned = false;
         
         if (isSlowed) {
             setLocation(getExactX() + (normalizedDx * speed/2), getExactY() + (normalizedDy * speed/2));
         } 
-        else if (isFrozen) {
+        else if (isFrozen || isStunned) {
             setLocation(getExactX(), getExactY());
         }
         else {
             setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
         }
         
-        if (this.isTouching(Hero.class)) {
+        if (this.isTouching(Hero.class) && !isStunned) {
             if (attackCooldown.millisElapsed() >= attackSpeed) {
                 attack();
                 attackCooldown.mark();
@@ -169,6 +173,13 @@ public class Enemy extends SmoothMover
         this.burnDamage = burnDamage;
         burnTicks = 3;
         scorchTimer.mark();
+    }
+    
+    public void jester(int stun) {
+        if (stun > 0) {
+            this.isStunned = true;
+            stunTimer.mark();
+        }
     }
     
     public static void removeAll() {

@@ -68,9 +68,9 @@ public class Upgrade extends Actor
     
     private boolean isUnique;
     private String[] uniqueTraits = {
-        "Frostbite",     // slows enemies
-                         // upgraded: freezes enemies on hit
-        ////"Scorch",        // burn damage to enemies overtime
+        //"Frostbite",     // slows enemies
+                         // upgraded: freezes enemies on hit (they can still attack)
+        //"Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
         // "Sharpshot",     // projectile speed maxed and pierce through enemies
                          // upgraded: gives Hero maxed range
@@ -80,22 +80,22 @@ public class Upgrade extends Actor
                          // upgraded: guaranteed explosive arrows in larger area
         //"Rogue",         // much increased speed and crit, but low range and hp
                          // upgraded: chance to fully dodge attacks, attack speed buff
-        //"Jester",        // chance to teleport enemies to random location on hit
-                         // upgraded: higher teleport chance + stun (unable to move/attack) on teleport
+        "Jester",        // chance to teleport enemies to random location on hit
+                         // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
         //"Stormcaller",   // chance to chain enemies on hit 
-                         // upgraded: also chance to stun temporarily
+                         // upgraded: also chance to stun
         //"Thornsoul",     // chance to rebound damage
                          // upgraded: damage reduction + more rebound damage
-        //"Spectral Veil", // chance to become immune to damage when hit
+        //"Spectral Veil", // chance to become immune to damage for a short time when hit
                          // upgraded: increases chance and duration
-        //"Arcane Echo",   // attacks have a chance to repeat at weaker
-                         // upgraded: full strength repeat + more damage
+        //"Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
+                         // upgraded: full strength repeat + higher chance
         //"Blightroot",    // apply poison on hit
-                         // upgraded: poison damage spreads
+                         // upgraded: poison damage spreads and increases the longer it is active
         //"Soulforge",     // damage and speed buff on kill
-                         // upgraded: longer duration and + max stacks
+                         // upgraded: longer duration, more max stacks, chance to get on attack
         //"Iron Will",     // hero takes reduced crowd control buffs
-                         // upgraded: immune + damage resistance
+                         // upgraded: immune to crowd control + damage resistance
         //"Windborne"      // arrows have a chance to ricochet
                          // upgraded: also targets nearby enemies
     };

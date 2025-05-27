@@ -69,6 +69,7 @@ public class Hero extends SmoothMover
     int scorchLvl;
     int vampireLvl;
     int rogueLvl;
+    int jesterLvl;
     
     // facing direction
     String facing = "right";
@@ -330,8 +331,7 @@ public class Hero extends SmoothMover
         double normalizedX = dx / magnitude;
         double normalizedY = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed,
-                                            damage, isCrit, frostbiteLvl, scorchLvl, vampireLvl);
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
@@ -456,6 +456,10 @@ public class Hero extends SmoothMover
                         Upgrade.type.remove("attackSpeed");
                     }
                 }
+                break;
+            case "Jester":
+                if (jesterLvl < 2) jesterLvl++;
+                break;
         }
     }
     

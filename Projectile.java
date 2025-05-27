@@ -16,13 +16,9 @@ public class Projectile extends SmoothMover
     
     private boolean isRemoved;
     
-    private int frostbiteLvl;
-    private int scorchLvl;
-    private int vampireLvl;
     private boolean addHealth;
     
-    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit,
-                        int frostbiteLvl, int scorchLvl, int vampireLvl) {
+    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -35,9 +31,6 @@ public class Projectile extends SmoothMover
         this.speed = speed;
         this.damage = damage;
         this.isCrit = isCrit;
-        this.frostbiteLvl = frostbiteLvl;
-        this.scorchLvl = scorchLvl;
-        this.vampireLvl = vampireLvl;
         
         this. durability = 1;
         
@@ -65,6 +58,7 @@ public class Projectile extends SmoothMover
         frostbite(enemy);
         scorch(enemy);
         vampire();
+        jester(enemy);
         
         durability--;
         if (durability == 0) {
@@ -74,28 +68,36 @@ public class Projectile extends SmoothMover
     }
     
     private void frostbite(Enemy enemy) {
-        if (frostbiteLvl > 0) enemy.frostbite();
+        if (Hero.hero.frostbiteLvl > 0) enemy.frostbite();
     }
     
     private void scorch(Enemy enemy) {
-        if (scorchLvl > 0) enemy.scorch(damage * 0.5 * ((Hero.hero.scorchLvl - 1.0) * 4.0));
+        if (Hero.hero.scorchLvl > 0) enemy.scorch(damage * 0.5 * ((Hero.hero.scorchLvl - 1.0) * 4.0));
     }
     
     private void vampire() {
-        if (vampireLvl == 1) {
+        if (Hero.hero.vampireLvl == 1) {
             Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
-        else if (vampireLvl == 2) {
-            if (Greenfoot.getRandomNumber(5) == 1) addHealth = true;
-            else addHealth = false;
-            
-            if (addHealth) {
+        else if (Hero.hero.vampireLvl == 2) {
+            if (Greenfoot.getRandomNumber(5) == 1) {
                 Hero.hero.maxHp++;
                 Hero.hero.currentHp++;
             }
             else Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        }
+    }
+    
+    private void jester(Enemy enemy) {
+        if (Hero.hero.jesterLvl > 0) {
+            if (Greenfoot.getRandomNumber(2) > 0) {
+                enemy.setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+            }
+            if (Hero.hero.jesterLvl == 2) {
+                enemy.jester(Greenfoot.getRandomNumber(2));
+            }
         }
     }
 }
