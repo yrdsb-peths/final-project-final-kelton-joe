@@ -421,6 +421,9 @@ public class Hero extends SmoothMover
                 break;
             case "dashCooldown":
                 dashCooldown = Math.max(dashCooldown - (int) value, minDashCooldown);
+                if (dashCooldown == minDashCooldown) {
+                    Upgrade.type.remove("dashCooldown");
+                }
                 break;
         }
     }
@@ -440,10 +443,11 @@ public class Hero extends SmoothMover
                 if (rogueLvl < 2) {
                     rogueLvl++;
                     if (rogueLvl == 1) {
-                        critRate = 100.0; // more crit chance
-                        critDamage += 50.0; // more crit damage
-                        speed *= 1.5; // more speed
-                        dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); // lower dash cooldown
+                        critRate = Math.min(critRate + 30.0, 100.0); 
+                        attackSpeed = Math.max(attackSpeed - 300.0, maxAttackSpeed);
+                        critDamage += 60.0; 
+                        speed += 0.5; 
+                        dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
                         attackRange = 125;
                         currentHp = 3;
                         maxHp = 3;
@@ -452,8 +456,13 @@ public class Hero extends SmoothMover
                         Upgrade.type.remove("attackRange");
                     }
                     else {
+                        critRate = 100.0;
+                        critDamage += 100.0;
+                        speed *= 1.5;
+                        dashCooldown = minDashCooldown;
                         attackSpeed = maxAttackSpeed;
                         Upgrade.type.remove("attackSpeed");
+                        Upgrade.type.remove("dashCooldown");
                     }
                 }
                 break;
