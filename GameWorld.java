@@ -16,6 +16,7 @@ public class GameWorld extends World {
     private final int spawnInterval = 1000;
     
     private Hero hero;
+    private HeroArm heroArm;
     
     public int wave;
     private final int maxSpeedMultiplier = 8;
@@ -43,8 +44,12 @@ public class GameWorld extends World {
         
         gameOver = false;
         
-        hero = new Hero();
+        heroArm = new HeroArm();
+        
+        hero = new Hero(heroArm);
         addObject(hero, 400, 300);
+        
+        addObject(heroArm, 0, 0);
         
         healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
         addObject(healthBar, 730, 20);

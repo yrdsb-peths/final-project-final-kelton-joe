@@ -17,7 +17,7 @@ public class Hero extends SmoothMover
     public double attack;
     
     // attack speed
-    private double attackSpeed;
+    public double attackSpeed;
     private final double maxAttackSpeed = 200.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
@@ -26,7 +26,7 @@ public class Hero extends SmoothMover
     private final double maxAttackRange = 500;
     
     // projectile speed
-    private double projectileSpeed;
+    public double projectileSpeed;
     private final double maxProjectileSpeed = 10.0;
     
     // health
@@ -48,7 +48,7 @@ public class Hero extends SmoothMover
     
     // crit rate and damage as a percent
     private double critMultiplier;
-    private boolean isCrit;
+    public boolean isCrit;
     
     // position of the hero
     int x, y;
@@ -111,10 +111,12 @@ public class Hero extends SmoothMover
     GreenBar greenBar = new GreenBar(dashBarScale);
     double cooldownPercent;
     
+    private HeroArm heroArm;
+    
     /**
      * Constructor for Hero Class
      */
-    public Hero() {
+    public Hero(HeroArm heroArm) {
         for (int i = 0; i < idleLeft.length; i++) {
             idleRight[i] = new GreenfootImage("images/idle/idle" + i + ".png");
             idleRight[i].scale(xScale, yScale);
@@ -185,6 +187,8 @@ public class Hero extends SmoothMover
         
         GameWorld.gameWorld.addObject(redBar, barX, barY);
         GameWorld.gameWorld.addObject(greenBar, barX, barY);
+        
+        this.heroArm = heroArm;
     }
     
     /**
@@ -236,6 +240,8 @@ public class Hero extends SmoothMover
                 this.setLocation(getExactX() + speed*dashMultiplier, getExactY());
                 facing = "right";
             }
+            
+            heroArm.setPos(getExactX(), getExactY());
             
             // attack
             if (Greenfoot.isKeyDown("space")) {
@@ -292,7 +298,8 @@ public class Hero extends SmoothMover
         Enemy closestEnemy = findClosestEnemy();
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
-            faceEnemy(closestEnemy);
+            heroArm.faceEnemy(closestEnemy);
+            heroArm.animationTimer.mark();
             
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
