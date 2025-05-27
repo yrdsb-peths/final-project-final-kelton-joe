@@ -34,7 +34,7 @@ public class Upgrade extends Actor
     private double[] value = {
         1.0, // hp
         1.0, // attack
-        0.05, // speed
+        5000.0, // speed
         -50.0, // attack speed
         10, // attack range
         0.1, // projectile speed
@@ -49,13 +49,13 @@ public class Upgrade extends Actor
         50.0 // dash cooldown
     };
     
-    private double theValue;
+    public double theValue;
     
     // randomly generated number
-    private int num;
+    public int num;
     
     // rarity and probability for each rarity
-    private int rarity;
+    public int rarity;
     private int[] probability = { 
             // rarity number: chance name multiplier
         45, // 0: 45% common 1x
@@ -66,8 +66,8 @@ public class Upgrade extends Actor
         99 // 5: 2% mythic 10x
     };
     
-    private boolean isUnique;
-    private String[] uniqueTraits = {
+    public boolean isUnique;
+    public String[] uniqueTraits = {
         "Frostbite",     // slows enemies
                          // upgraded: freezes enemies on hit (they can still attack)
         "Scorch",        // burn damage to enemies overtime
@@ -100,7 +100,7 @@ public class Upgrade extends Actor
         // "Concentration"    // much slower attacks that deal much increased damage
         
     };
-    private String uniqueTrait;
+    public String uniqueTrait;
     
     // upgrade manager
     public UpgradeManager upgradeManager;
@@ -108,6 +108,13 @@ public class Upgrade extends Actor
     // labels for name and rarity
     public Label name;
     public Label theRarity;
+    
+    private boolean isHovered;
+    private int mouseX;
+    private int mouseY;
+    
+    private boolean isSelected;
+    public static int numSelections = 1;
     
     /**
      * Upgrade Constructor
@@ -264,18 +271,43 @@ public class Upgrade extends Actor
         GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
+    public Boolean isMouseOver() {
+        mouseX = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getX() : -1;
+        mouseY = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getY() : -1;
+        
+        return mouseX >= getX() - getImage().getWidth() / 2
+                      && mouseX <= getX() + getImage().getWidth() / 2
+                      && mouseY >= getY() - getImage().getHeight() / 2
+                      && mouseY <= getY() + getImage().getHeight() / 2;
+    }
+    
     /**
      * Select upgrade if clicked
      */
     public void act() {
+        if (isMouseOver() && !isHovered) {
+            getImage().setTransparency(128);
+            isHovered = true;
+        }
+        
+        else if (!isMouseOver() && isHovered) {
+            getImage().setTransparency(255);
+            isHovered = false;
+        }
+        
         if (Greenfoot.mouseClicked(this)) {
-            if (isUnique) {
-                Hero.hero.setStat(uniqueTrait);
-                upgradeManager.isSelected = true;
-            } else {
-                Hero.hero.setStat(theValue * (rarity + 1), type.get(num));
-                upgradeManager.isSelected = true;
+            if (!isSelected && numSelections > 0) {
+                isSelected = true;
+                numSelections--;
+                upgradeManager.addSelectedUpgrade(this);
+            }
+            else if (isSelected) {
+                isSelected = false;
+                numSelections++;
+                upgradeManager.removeSelectedUpgrade(this);
             }
         }
+        
+        if (isSelected) getImage().setTransparency(128);
     }
 }
