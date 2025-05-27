@@ -68,9 +68,9 @@ public class Upgrade extends Actor
     
     private boolean isUnique;
     private String[] uniqueTraits = {
-        //"Frostbite",     // slows enemies
+        "Frostbite",     // slows enemies
                          // upgraded: freezes enemies on hit
-        //"Scorch",        // burn damage to enemies overtime
+        ////"Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
         // "Sharpshot",     // projectile speed maxed and pierce through enemies
                          // upgraded: gives Hero maxed range

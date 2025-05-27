@@ -34,6 +34,8 @@ public class Enemy extends SmoothMover
     private GreenBar greenBar;
     
     private boolean isSlowed;
+    private boolean isFrozen;
+    private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
     private SimpleTimer frostbiteTimer = new SimpleTimer();
     
     private int burnTicks;
@@ -95,13 +97,16 @@ public class Enemy extends SmoothMover
             }
         }
         
-        if (frostbiteTimer.millisElapsed() >= 5000) {
-            isSlowed = false;
-        }
+        if (frostbiteTimer.millisElapsed() >= 5000) isSlowed = false;
+        if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
         
         if (isSlowed) {
             setLocation(getExactX() + (normalizedDx * speed/2), getExactY() + (normalizedDy * speed/2));
-        } else {
+        } 
+        else if (isFrozen) {
+            setLocation(getExactX(), getExactY());
+        }
+        else {
             setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
         }
         
@@ -150,8 +155,14 @@ public class Enemy extends SmoothMover
     }
     
     public void frostbite() {
-        isSlowed = true;
-        frostbiteTimer.mark();
+        if (Hero.hero.frostbiteLvl == 1) {
+            isSlowed = true;
+            frostbiteTimer.mark();
+        }   
+        else if (Hero.hero.frostbiteLvl == 2) {
+            isFrozen = true;
+            frostbiteFreezeTimer.mark();
+        }
     }
     
     public void scorch(double burnDamage) {
