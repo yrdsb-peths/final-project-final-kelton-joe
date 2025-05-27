@@ -98,9 +98,9 @@ public class Upgrade extends Actor
         // "Time Rift",       // chance for hero to bypass maximum attack when attacking
         // "Vengeful Spirit",  // after getting hit, next attack becomes much stronger
         // "Concentration"    // much slower attacks that deal much increased damage
-        
     };
     public String uniqueTrait;
+    public static ArrayList<String> uniques;
     
     // upgrade manager
     public UpgradeManager upgradeManager;
@@ -132,6 +132,7 @@ public class Upgrade extends Actor
         
         // converts string to arraylist
         type = new ArrayList<String>(Arrays.asList(typeString)); 
+        uniques = new ArrayList<String>(Arrays.asList(uniqueTraits));
     }
     
     /**
@@ -258,10 +259,10 @@ public class Upgrade extends Actor
     }
     
     private void uniqueUpgrade() {
-        int trait = Greenfoot.getRandomNumber(uniqueTraits.length);
+        int trait = Greenfoot.getRandomNumber(uniques.size());
         
-        uniqueTrait = uniqueTraits[trait];
-        name = new Label(uniqueTraits[trait], 20);
+        uniqueTrait = uniques.get(trait);
+        name = new Label(uniques.get(trait), 20);
         theRarity = new Label("Unique", 25);
         
         getImage().setColor(new greenfoot.Color(215, 0, 64));

@@ -437,15 +437,21 @@ public class Hero extends SmoothMover
         switch(uniqueTrait) {
             case "Frostbite":
                 if (frostbiteLvl < 2) frostbiteLvl++;
+                else Upgrade.uniques.remove("Frostbite");
                 break;
             case "Scorch":
-                if (scorchLvl < 2) scorchLvl++;
+                if (scorchLvl < 2) {
+                    scorchLvl++;
+                    attack += 5;
+                }
+                else Upgrade.uniques.remove("Scorch");
                 break;
             case "Vampire":
                 if (vampireLvl < 2) {
                     vampireLvl++;
-                    speed -= 0.3;
+                    speed -= 0.1;
                 }
+                else Upgrade.uniques.remove("Vampire");
                 break;
             case "Rogue":
                 if (rogueLvl < 2) {
@@ -473,9 +479,11 @@ public class Hero extends SmoothMover
                         Upgrade.type.remove("dashCooldown");
                     }
                 }
+                else Upgrade.uniques.remove("Rogue");
                 break;
             case "Jester":
                 if (jesterLvl < 2) jesterLvl++;
+                else Upgrade.uniques.remove("Jester");
                 break;
         }
     }

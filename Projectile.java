@@ -81,7 +81,7 @@ public class Projectile extends SmoothMover
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
         else if (Hero.hero.vampireLvl == 2) {
-            if (Greenfoot.getRandomNumber(5) == 1) {
+            if (Greenfoot.getRandomNumber(3) == 1) {
                 Hero.hero.maxHp++;
                 Hero.hero.currentHp++;
             }
