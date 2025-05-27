@@ -18,9 +18,11 @@ public class Projectile extends SmoothMover
     
     private int frostbiteLvl;
     private int scorchLvl;
+    private int vampireLvl;
+    private boolean addHealth;
     
     public Projectile(double nx, double ny, double speed, double damage, boolean isCrit,
-                        int frostbiteLvl, int scorchLvl) {
+                        int frostbiteLvl, int scorchLvl, int vampireLvl) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -35,6 +37,7 @@ public class Projectile extends SmoothMover
         this.isCrit = isCrit;
         this.frostbiteLvl = frostbiteLvl;
         this.scorchLvl = scorchLvl;
+        this.vampireLvl = vampireLvl;
         
         this. durability = 1;
         
@@ -61,6 +64,7 @@ public class Projectile extends SmoothMover
         enemy.removeHp((int)damage, isCrit, Color.GRAY);
         frostbite(enemy);
         scorch(enemy);
+        vampire();
         
         durability--;
         if (durability == 0) {
@@ -75,5 +79,23 @@ public class Projectile extends SmoothMover
     
     private void scorch(Enemy enemy) {
         if (scorchLvl > 0) enemy.scorch(damage * 0.5);
+    }
+    
+    private void vampire() {
+        if (vampireLvl == 1) {
+            Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        }
+        else if (vampireLvl == 2) {
+            if (Greenfoot.getRandomNumber(5) == 1) addHealth = true;
+            else addHealth = false;
+            
+            if (addHealth) {
+                Hero.hero.maxHp++;
+                Hero.hero.currentHp++;
+            }
+            else Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        }
     }
 }

@@ -68,14 +68,36 @@ public class Upgrade extends Actor
     
     private boolean isUnique;
     private String[] uniqueTraits = {
-        "Frostbite", // slows enemies
-                    // upgraded - freezes enemies on hit
-        "Scorch", // burn damage to enemies overtime
-                    // upgraded - increases burn damage
-        "Sharpshot", // projectile speed maxed and pierce through enemies
-                    // upgraded - gives Hero maxed range
-        "Vampire" // Hero gets temporary hp from kills
-                    //upgraded - hp from kills has a chance to be permanent
+        "Frostbite",     // slows enemies
+                         // upgraded: freezes enemies on hit
+        "Scorch",        // burn damage to enemies overtime
+                         // upgraded: increases burn damage
+        // "Sharpshot",     // projectile speed maxed and pierce through enemies
+                         // upgraded: gives Hero maxed range
+        "Vampire",       // Hero heals hp on hit
+                         // upgraded: chance to increase max hp on hit
+        //"Explosive Shot",// chance to shoot explosive arrows
+                         // upgraded: guaranteed explosive arrows in larger area
+        //"Rogue",         // much increased speed and crit, but low range and hp
+                         // upgraded: chance to fully dodget attacks
+        //"Jester",        // chance to teleport enemies to random location on hit
+                         // upgraded: higher teleport chance + stun (unable to move/attack) on teleport
+        //"Stormcaller",   // chance to chain enemies on hit 
+                         // upgraded: also chance to stun temporarily
+        //"Thornsoul",     // chance to rebound damage
+                         // upgraded: damage reduction + more rebound damage
+        //"Spectral Veil", // chance to become immune to damage when hit
+                         // upgraded: increases chance and duration
+        //"Arcane Echo",   // attacks have a chance to repeat at weaker
+                         // upgraded: full strength repeat + more damage
+        //"Blightroot",    // apply poison on hit
+                         // upgraded: poison damage spreads
+        //"Soulforge",     // damage and speed buff on kill
+                         // upgraded: longer duration and + max stacks
+        //"Iron Will",     // hero takes reduced crowd control buffs
+                         // upgraded: immune + damage resistance
+        //"Windborne"      // arrows have a chance to ricochet
+                         // upgraded: also targets nearby enemies
     };
     private String uniqueTrait;
     

@@ -67,6 +67,7 @@ public class Hero extends SmoothMover
     // unique upgrades
     int frostbiteLvl;
     int scorchLvl;
+    int vampireLvl;
     
     // facing direction
     String facing = "right";
@@ -186,6 +187,7 @@ public class Hero extends SmoothMover
     {
         if (isDead) animateDeath();
         else {
+            // dash bar
             redBar.setPos(barX, barY);
             cooldownPercent = (double) dashTimer.millisElapsed() / (double) dashCooldown;
             cooldownPercent = Math.min(cooldownPercent, 1);
@@ -323,7 +325,7 @@ public class Hero extends SmoothMover
         double normalizedY = dy / magnitude;
         
         Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed,
-                                            damage, isCrit, frostbiteLvl, scorchLvl);
+                                            damage, isCrit, frostbiteLvl, scorchLvl, vampireLvl);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
@@ -424,6 +426,11 @@ public class Hero extends SmoothMover
                 break;
             case "Scorch":
                 if (scorchLvl < 2) scorchLvl++;
+                break;
+            case "Vampire":
+                if (vampireLvl < 2) vampireLvl++;
+                break;
+            
         }
     }
     
