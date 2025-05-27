@@ -442,7 +442,10 @@ public class Hero extends SmoothMover
                 if (scorchLvl < 2) scorchLvl++;
                 break;
             case "Vampire":
-                if (vampireLvl < 2) vampireLvl++;
+                if (vampireLvl < 2) {
+                    vampireLvl++;
+                    speed -= 0.3;
+                }
                 break;
             case "Rogue":
                 if (rogueLvl < 2) {
@@ -453,7 +456,7 @@ public class Hero extends SmoothMover
                         critDamage += 60.0; 
                         speed += 0.5; 
                         dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
-                        attackRange = 125;
+                        attackRange = 80;
                         currentHp = 3;
                         maxHp = 3;
                         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
