@@ -104,11 +104,11 @@ public class Enemy extends SmoothMover
         if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
         if (stunTimer.millisElapsed() >= 800) isStunned = false;
         
-        if (isSlowed) {
-            setLocation(getExactX() + (normalizedDx * speed/2), getExactY() + (normalizedDy * speed/2));
-        } 
-        else if (isFrozen || isStunned) {
+        if (isFrozen || isStunned) {
             setLocation(getExactX(), getExactY());
+        }
+        else if (isSlowed) {
+            setLocation(getExactX() + (normalizedDx * speed/2), getExactY() + (normalizedDy * speed/2));
         }
         else {
             setLocation(getExactX() + (normalizedDx * speed), getExactY() + (normalizedDy * speed));
@@ -162,11 +162,11 @@ public class Enemy extends SmoothMover
     }
     
     public void frostbite() {
-        if (Hero.hero.frostbiteLvl == 1) {
+        if (Hero.hero.frostbiteLvl > 0) {
             isSlowed = true;
             frostbiteTimer.mark();
         }   
-        else if (Hero.hero.frostbiteLvl == 2) {
+        if (Hero.hero.frostbiteLvl > 1) {
             isFrozen = true;
             frostbiteFreezeTimer.mark();
         }
