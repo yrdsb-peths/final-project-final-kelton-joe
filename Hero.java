@@ -459,7 +459,6 @@ public class Hero extends SmoothMover
             case "Scorch":
                 if (scorchLvl < 2) {
                     scorchLvl++;
-                    attack += 5;
                 }
                 else Upgrade.uniques.remove("Scorch");
                 break;

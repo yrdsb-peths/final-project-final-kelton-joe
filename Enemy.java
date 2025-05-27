@@ -173,9 +173,11 @@ public class Enemy extends SmoothMover
     }
     
     public void scorch(double burnDamage) {
-        this.burnDamage = burnDamage;
+        this.burnDamage = (int) (burnDamage + 0.5);
         burnTicks = 3;
         scorchTimer.mark();
+        
+        removeHp((int)this.burnDamage, false, Color.RED, 25);
     }
     
     public void jester(int stun, int stunDamage) {

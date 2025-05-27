@@ -87,7 +87,7 @@ public class Projectile extends SmoothMover
     }
     
     private void scorch(Enemy enemy) {
-        if (Hero.hero.scorchLvl > 0) enemy.scorch(damage * 0.5 * ((Hero.hero.scorchLvl - 1.0) * 4.0));
+        if (Hero.hero.scorchLvl > 0) enemy.scorch(damage * 0.5 * Hero.hero.scorchLvl);
     }
     
     private void vampire() {

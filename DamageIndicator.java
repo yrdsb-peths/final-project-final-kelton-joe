@@ -20,6 +20,8 @@ public class DamageIndicator extends Label
     
     public void act()
     {
+        setLocation(getX() + Greenfoot.getRandomNumber(3) - 1, getY() - 1);
+        
         if (lifeTimer.millisElapsed() > lifeTime) {
             GameWorld.gameWorld.removeObject(this);
         }
