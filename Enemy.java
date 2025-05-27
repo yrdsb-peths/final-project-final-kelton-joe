@@ -40,6 +40,8 @@ public class Enemy extends SmoothMover
     private double burnDamage;
     private SimpleTimer scorchTimer = new SimpleTimer();
     
+    private boolean isDodged;
+    
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
         
@@ -136,11 +138,15 @@ public class Enemy extends SmoothMover
     }
     
     public void attack() {
-        Hero.hero.currentHp-= this.attack;
+        if (Hero.hero.rogueLvl == 2) {
+            if (Greenfoot.getRandomNumber(5) == 1) isDodged = true;
+            else isDodged = false;
+        }
+        if (!isDodged) Hero.hero.currentHp -= this.attack;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
-        else Hero.hero.isHurt = true;
+        else if (!isDodged) Hero.hero.isHurt = true;
     }
     
     public void frostbite() {

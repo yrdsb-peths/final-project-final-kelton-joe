@@ -18,7 +18,7 @@ public class Hero extends SmoothMover
     
     // attack speed
     private double attackSpeed;
-    private final double maxAttackSpeed = 100.0;
+    private final double maxAttackSpeed = 200.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
@@ -61,13 +61,14 @@ public class Hero extends SmoothMover
     SimpleTimer dashTimer = new SimpleTimer();
     double dashLength;
     double dashMultiplier;
-    final int minDashCooldown = 800;
+    final int minDashCooldown = 600;
     int dashCooldown;
     
     // unique upgrades
     int frostbiteLvl;
     int scorchLvl;
     int vampireLvl;
+    int rogueLvl;
     
     // facing direction
     String facing = "right";
@@ -193,6 +194,11 @@ public class Hero extends SmoothMover
             cooldownPercent = Math.min(cooldownPercent, 1);
             cooldownPercent = Math.max(cooldownPercent, 0);
             greenBar.setPos(barX, barY, cooldownPercent);
+            
+            if (rogueLvl > 0) {
+                maxHp = 3;
+                GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+            }
             
             // movement
             if (Greenfoot.isKeyDown("e")) {
@@ -430,7 +436,26 @@ public class Hero extends SmoothMover
             case "Vampire":
                 if (vampireLvl < 2) vampireLvl++;
                 break;
-            
+            case "Rogue":
+                if (rogueLvl < 2) {
+                    rogueLvl++;
+                    if (rogueLvl == 1) {
+                        critRate = 100.0; // more crit chance
+                        critDamage += 50.0; // more crit damage
+                        speed *= 1.5; // more speed
+                        dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); // lower dash cooldown
+                        attackRange = 125;
+                        currentHp = 3;
+                        maxHp = 3;
+                        GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                        Upgrade.type.remove("health");
+                        Upgrade.type.remove("attackRange");
+                    }
+                    else {
+                        attackSpeed = maxAttackSpeed;
+                        Upgrade.type.remove("attackSpeed");
+                    }
+                }
         }
     }
     
