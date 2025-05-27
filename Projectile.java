@@ -54,7 +54,7 @@ public class Projectile extends SmoothMover
     }
     
     private void attack(Enemy enemy) {
-        enemy.removeHp((int)damage, isCrit, Color.GRAY);
+        enemy.removeHp((int)damage, isCrit, Color.GRAY, 20);
         frostbite(enemy);
         scorch(enemy);
         vampire();
@@ -96,7 +96,7 @@ public class Projectile extends SmoothMover
                 enemy.setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
             }
             if (Hero.hero.jesterLvl == 2) {
-                enemy.jester(Greenfoot.getRandomNumber(2));
+                enemy.jester(Greenfoot.getRandomNumber(2), Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1));
             }
         }
     }

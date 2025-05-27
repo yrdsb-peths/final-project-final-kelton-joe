@@ -14,7 +14,7 @@ public class Hero extends SmoothMover
     public static Hero hero;
     
     // attack dmg in hp units
-    private double attack;
+    public double attack;
     
     // attack speed
     private double attackSpeed;

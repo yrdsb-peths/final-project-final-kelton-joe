@@ -92,7 +92,7 @@ public class Enemy extends SmoothMover
         
         if (scorchTimer.millisElapsed() >= 1000) {
             if (burnTicks > 0) {
-                removeHp((int)burnDamage, false, Color.RED);
+                removeHp((int)burnDamage, false, Color.RED, 25);
                 burnTicks--;
                 scorchTimer.mark();
                 
@@ -127,12 +127,12 @@ public class Enemy extends SmoothMover
         }
     }
     
-    public void removeHp(int damage, boolean isCrit, Color color) {
+    public void removeHp(int damage, boolean isCrit, Color color, int size) {
         hitpoints -= damage;
         
         if (isCrit) color = Color.ORANGE;
         
-        DamageIndicator dmgIndicator = new DamageIndicator((int) damage, isCrit, color);
+        DamageIndicator dmgIndicator = new DamageIndicator((int) damage, size, color);
         GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
         
         if (hitpoints <= 0) {
@@ -141,7 +141,7 @@ public class Enemy extends SmoothMover
             redBar = null;
             greenBar = null;
             
-            getWorld().removeObject(this);
+            GameWorld.gameWorld.removeObject(this);
             enemies.remove(this);
         }
     }
@@ -175,9 +175,10 @@ public class Enemy extends SmoothMover
         scorchTimer.mark();
     }
     
-    public void jester(int stun) {
+    public void jester(int stun, int stunDamage) {
         if (stun > 0) {
             this.isStunned = true;
+            removeHp(stunDamage, false, Color.MAGENTA, 30);
             stunTimer.mark();
         }
     }
