@@ -72,7 +72,7 @@ public class Upgrade extends Actor
                          // upgraded: freezes enemies on hit (they can still attack)
         "Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
-        // "Sharpshot",     // pierce through enemies
+        "Sharpshot",     // pierce through enemies
         "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows

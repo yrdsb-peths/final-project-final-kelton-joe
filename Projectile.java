@@ -1,4 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.HashSet;
 
 /**
  * Write a description of class Projectile here.
@@ -18,6 +19,8 @@ public class Projectile extends SmoothMover
     
     private boolean addHealth;
     
+    private HashSet<Enemy> enemiesHit;
+    
     public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
@@ -32,9 +35,13 @@ public class Projectile extends SmoothMover
         this.damage = damage;
         this.isCrit = isCrit;
         
-        this. durability = 1;
+        if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
+        else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
+        else this.durability = 1;
         
         isRemoved = false;
+        
+        enemiesHit = new HashSet<Enemy>();
     }
     
     public void act()
@@ -54,6 +61,14 @@ public class Projectile extends SmoothMover
     }
     
     private void attack(Enemy enemy) {
+        if (!enemiesHit.contains(enemy)) {
+            enemyHit(enemy);
+        }
+    }
+    
+    private void enemyHit(Enemy enemy) {
+        enemiesHit.add(enemy);
+        
         enemy.removeHp((int)damage, isCrit, Color.GRAY, 20);
         frostbite(enemy);
         scorch(enemy);

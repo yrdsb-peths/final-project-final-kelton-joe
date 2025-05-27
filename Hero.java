@@ -70,6 +70,7 @@ public class Hero extends SmoothMover
     int vampireLvl;
     int rogueLvl;
     int jesterLvl;
+    int sharpshotLvl;
     
     // facing direction
     String facing = "right";
@@ -179,6 +180,7 @@ public class Hero extends SmoothMover
         
         frostbiteLvl = 0;
         scorchLvl = 0;
+        sharpshotLvl = 0;
         
         attackCooldown.mark();
         regenCooldown.mark();
@@ -452,6 +454,21 @@ public class Hero extends SmoothMover
                     attack += 5;
                 }
                 else Upgrade.uniques.remove("Scorch");
+                break;
+            case "Sharpshot":
+                switch (sharpshotLvl) {
+                    case 0:
+                        sharpshotLvl++;
+                        projectileSpeed = maxProjectileSpeed;
+                        Upgrade.type.remove("projectileSpeed");
+                            break;
+                    case 1:
+                        sharpshotLvl++;
+                        attackRange = maxAttackRange;
+                        Upgrade.type.remove("attackRange");
+                        Upgrade.uniques.remove("Sharpshot");
+                        break;
+                }
                 break;
             case "Vampire":
                 if (vampireLvl < 2) {
