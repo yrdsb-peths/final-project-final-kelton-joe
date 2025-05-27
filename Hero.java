@@ -152,6 +152,11 @@ public class Hero extends SmoothMover
         
         this.hero = this;
         
+        redBar.getImage().setColor(new greenfoot.Color(137, 148, 153));
+        redBar.getImage().fill();
+        greenBar.getImage().setColor(new greenfoot.Color(15, 82, 186));
+        greenBar.getImage().fill();
+        
         // initializes default stats
         currentHp = 3;
         maxHp = 3;
