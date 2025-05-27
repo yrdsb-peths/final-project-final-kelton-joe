@@ -68,17 +68,17 @@ public class Upgrade extends Actor
     
     private boolean isUnique;
     private String[] uniqueTraits = {
-        //"Frostbite",     // slows enemies
+        "Frostbite",     // slows enemies
                          // upgraded: freezes enemies on hit (they can still attack)
-        //"Scorch",        // burn damage to enemies overtime
+        "Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
         // "Sharpshot",     // projectile speed maxed and pierce through enemies
                          // upgraded: gives Hero maxed range
-        //"Vampire",       // Hero heals hp on hit
+        "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows
                          // upgraded: guaranteed explosive arrows in larger area
-        //"Rogue",         // much increased speed and crit, but low range and hp
+        "Rogue",         // much increased speed and crit, but low range and hp
                          // upgraded: chance to fully dodge attacks, attack speed buff
         "Jester",        // chance to teleport enemies to random location on hit
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
