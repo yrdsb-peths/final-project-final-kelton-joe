@@ -72,8 +72,8 @@ public class Upgrade extends Actor
                          // upgraded: freezes enemies on hit (they can still attack)
         "Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
-        //"Sharpshot",     // pierce through enemies
         "Sharpshot",     // pierce through enemies
+        //"Sharpshot",     // pierce through enemies
         "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows
@@ -83,10 +83,10 @@ public class Upgrade extends Actor
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
         //"Stormcaller",   // chance to chain and stun enemies on hit 
         //"Thornsoul",     // chance to rebound damage, damage reduction
-        //"Spectral Veil", // chance to become immune to damage for a short time when hit
-        //"Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
         "Spectral Veil", // chance to become immune to damage for a short time when hit
         "Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
+                         // chance to become immune to damage for a short time when hit
+                         // attacks have a chance to repeat a second time but are weaker
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active
         //"Iron Will",     // immune to crowd control
@@ -94,7 +94,7 @@ public class Upgrade extends Actor
         // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
         // "Saviors Sacrifice", // attacks consume health to deal additional damage
                          // upgraded: increased damage and resistance on low health
-        //"Violent Vortex"         // grants vortex skill: pull nearby enemies
+        "Violent Vortex"         // grants vortex skill: pull nearby enemies
                          // upgraded: vortex also deals damage, slows, and weakens
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
         // "Lifebloom",     // damage also increases depending on max health

@@ -73,6 +73,7 @@ public class Hero extends SmoothMover
     int sharpshotLvl;
     int arcaneEchoLvl;
     int spectralVeilLvl;
+    int vortexLvl;
     
     // arcane echo
     int echoChance;
@@ -87,6 +88,9 @@ public class Hero extends SmoothMover
     int immuneDuration;
     SimpleTimer immunityTimer = new SimpleTimer();
     SpectralVeilActive indicator = new SpectralVeilActive();
+    
+    // violent vortex
+    int tornadoChance;
     
     // facing direction
     String facing = "right";
@@ -356,13 +360,13 @@ public class Hero extends SmoothMover
             fireProjectile(damageDealt, closestEnemy);
 
             if (!echo && arcaneEchoLvl > 0) {
-            if (Greenfoot.getRandomNumber(100) < echoChance) {
-                echoTimer.mark();       // start the timer
-                hasEchoed = false;      // allow echo to happen
-            } else {
-                hasEchoed = true;       // no echo will happen
+                if (Greenfoot.getRandomNumber(100) < echoChance) {
+                    echoTimer.mark();       // start the timer
+                    hasEchoed = false;      // allow echo to happen
+                } else {
+                    hasEchoed = true;       // no echo will happen
+                }
             }
-        }
         }
     }
     
@@ -577,6 +581,13 @@ public class Hero extends SmoothMover
                     immuneDuration = 1200;
                 }
                 break;
+            case "Violent Vortex":
+                if (vortexLvl < 2) {
+                    vortexLvl++;
+                    if (vortexLvl == 1) tornadoChance = 25;
+                    else tornadoChance = 65;
+                    break;
+                }
         }
     }
     

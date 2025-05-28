@@ -33,10 +33,11 @@ public class Enemy extends SmoothMover
     private RedBar redBar;
     private GreenBar greenBar;
     
-    private boolean isSlowed;
+    public boolean isSlowed;
+    public int slowDuration;
     private boolean isFrozen;
     private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
-    private SimpleTimer frostbiteTimer = new SimpleTimer();
+    public SimpleTimer frostbiteTimer = new SimpleTimer();
     
     private int burnTicks;
     private double burnDamage;
@@ -46,6 +47,10 @@ public class Enemy extends SmoothMover
     
     private boolean isStunned;
     SimpleTimer stunTimer = new SimpleTimer();
+    
+    public String target = "hero";
+    
+    public double dx, dy;
     
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
@@ -80,10 +85,15 @@ public class Enemy extends SmoothMover
     
     public void act()
     {
+        if (!isSlowed) target = "hero";
+        else if (Hero.hero.vortexLvl > 0) target = "vortex";
+        
         if (hitpoints <= 0) return;
         
-        double dx = Hero.hero.getExactX() - getExactX();
-        double dy = Hero.hero.getExactY() - getExactY();
+        if (!target.equals("vortex")) {
+            dx = Hero.hero.getExactX() - getExactX();
+            dy = Hero.hero.getExactY() - getExactY();
+        }
         
         double magnitude = Math.sqrt(dx * dx + dy * dy);
         
@@ -100,7 +110,7 @@ public class Enemy extends SmoothMover
             }
         }
         
-        if (frostbiteTimer.millisElapsed() >= 5000) isSlowed = false;
+        if (frostbiteTimer.millisElapsed() >= slowDuration) isSlowed = false;
         if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
         if (stunTimer.millisElapsed() >= 800) isStunned = false;
         
@@ -171,6 +181,7 @@ public class Enemy extends SmoothMover
     public void frostbite() {
         if (Hero.hero.frostbiteLvl > 0) {
             isSlowed = true;
+            slowDuration = 4000;
             frostbiteTimer.mark();
         }   
         if (Hero.hero.frostbiteLvl > 1) {

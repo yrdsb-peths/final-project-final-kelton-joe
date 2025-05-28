@@ -50,9 +50,11 @@ public class Projectile extends SmoothMover
             setLocation(getExactX() + nx*speed, getExactY() + ny*speed);
             
             Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
+            
             if (enemy != null) {
                 attack(enemy);
-            } else if (getX() <= 5 || getX() >= GameWorld.gameWorld.getWidth() - 5 ||
+            } 
+            else if (getX() <= 5 || getX() >= GameWorld.gameWorld.getWidth() - 5 ||
                 getY() <= 5 || getY() >= GameWorld.gameWorld.getHeight() - 5) {
                 GameWorld.gameWorld.removeObject(this);
                 isRemoved = true;
@@ -74,6 +76,7 @@ public class Projectile extends SmoothMover
         scorch(enemy);
         vampire(enemy);
         jester(enemy);
+        tornado(enemy);
         
         durability--;
         if (durability == 0) {
@@ -115,6 +118,20 @@ public class Projectile extends SmoothMover
             if (Hero.hero.jesterLvl == 2) {
                 enemy.jester(Greenfoot.getRandomNumber(2), Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1));
             }
+        }
+    }
+    
+    private void tornado(Enemy enemy) {
+        if (Hero.hero.vortexLvl > 0 && Greenfoot.getRandomNumber(100) <= Hero.hero.tornadoChance) {
+            Tornado vortex = new Tornado((int) damage);
+            
+            vortex.numCycles = Hero.hero.vortexLvl * 5;
+            vortex.tornadoIndex = 0;
+            vortex.attackTimer.mark();
+            
+            enemy.target = "vortex";
+            
+            GameWorld.gameWorld.addObject(vortex, (int) enemy.getExactX(), (int) enemy.getExactY());
         }
     }
 }
