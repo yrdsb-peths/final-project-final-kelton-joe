@@ -94,7 +94,7 @@ public class Upgrade extends Actor
         // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
         // "Saviors Sacrifice", // attacks consume health to deal additional damage
                          // upgraded: increased damage and resistance on low health
-        "Violent Vortex"         // grants vortex skill: pull nearby enemies
+        "Violent Vortex" // grants vortex skill on hit: pull nearby enemies
                          // upgraded: vortex also deals damage, slows, and weakens
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
         // "Lifebloom",     // damage also increases depending on max health
