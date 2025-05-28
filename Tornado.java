@@ -26,7 +26,8 @@ public class Tornado extends SmoothMover
     public Tornado(int damage) {
         for (int i = 0; i < tornadoImage.length; i++) {
             tornadoImage[i] = new GreenfootImage("tornado/tornado" + i + ".png");
-            tornadoImage[i].scale(90, 90);
+            if (Hero.hero.vortexLvl > 0) tornadoImage[i].scale(90, 90);
+            if (Hero.hero.vortexLvl > 1) tornadoImage[i].scale(125, 125);
             
             this.damage = damage;
             attackTimer.mark();
