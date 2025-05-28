@@ -73,20 +73,16 @@ public class Upgrade extends Actor
         "Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
         "Sharpshot",     // pierce through enemies
-        //"Sharpshot",     // pierce through enemies
+                         // pierce through enemies
         "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
-        //"Explosive Shot",// chance to shoot explosive arrows
         "Rogue",         // much increased speed and crit, but low range and hp
                          // upgraded: chance to fully dodge attacks, attack speed buff
         "Jester",        // chance to teleport enemies to random location on hit
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
-        //"Stormcaller",   // chance to chain and stun enemies on hit 
-        //"Thornsoul",     // chance to rebound damage, damage reduction
         "Spectral Veil", // chance to become immune to damage for a short time when hit
         "Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
                          // chance to become immune to damage for a short time when hit
-                         // attacks have a chance to repeat a second time but are weaker
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active
         //"Iron Will",     // immune to crowd control
@@ -94,13 +90,23 @@ public class Upgrade extends Actor
         // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
         // "Saviors Sacrifice", // attacks consume health to deal additional damage
                          // upgraded: increased damage and resistance on low health
-        "Violent Vortex" // grants vortex skill on hit: pull nearby enemies
-                         // upgraded: vortex also deals damage, slows, and weakens
+        "Violent Vortex" // grants vortex skill on hit: pull nearby enemies and slows them
+                         // upgraded: vortex also deals damage and becomes bigger
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
         // "Lifebloom",     // damage also increases depending on max health
-        // "Time Rift",       // chance for hero to bypass maximum attack when attacking
+                         // upgraded: converts arrows to "lifebloom" attack, consuming health and dealing additonal crit damage
+        // "Time Rift",       // chance for hero to bypass maximum attack speed when attacking
         // "Vengeful Spirit",  // after getting hit, next attack becomes much stronger
         // "Concentration"    // much slower attacks that deal much increased damage
+        //"Stormcaller",   // chance to chain and stun enemies on hit 
+        //"Thornsoul",     // chance to rebound damage, damage reduction
+        //"Shadow Step",   // teleport to mouse location
+        //"Pheonix Flame", // deal fire damage when dying + 1 revive per game
+        //"Enduring Strike"// critical hits deal additional damage to enemies that have damage on them
+        //"Shrapnel Shot"  // after projectiles hit enemies, fire shrapnels with lower speed, damage, and range
+                           // upgraded: shrapnels have max speed and range, and can additionally pierce
+        //"Hydro Burst"    // projectiles are infused with water and weaken enemies
+                           // upgraded: blasts additionally slows and deal additional damage to enemies below 50% health
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;
