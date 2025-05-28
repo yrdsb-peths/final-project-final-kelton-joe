@@ -21,6 +21,9 @@ public class UpgradeManager extends Actor
     
     private ArrayList<Upgrade> selectedUpgrades = new ArrayList<>();
     
+    private Button confirmButton;
+    private Button resetButton;
+    
     public UpgradeManager(int upgrades, World world, boolean isUnique)
     {
         isConfirmed = false;
@@ -41,18 +44,21 @@ public class UpgradeManager extends Actor
         
         Upgrade.numSelections = 1;
         
-        Button confirmButton = new Button("Confirm");
+        confirmButton = new Button("Confirm");
         GameWorld.gameWorld.addObject(confirmButton, 500, 450);
         
-        Button resetButton = new Button("Rerolls");
+        resetButton = new Button("Rerolls");
         GameWorld.gameWorld.addObject(resetButton, 300, 450);
         
         resetButton.image.drawString(resetButton.type + ": " + UpgradeManager.numRerolls, 50, 30);
-        setImage(resetButton.image);
+        resetButton.setImage(resetButton.image);
     }
     
     public void act() {
         if (isConfirmed) {
+            GameWorld.gameWorld.removeObject(resetButton);
+            GameWorld.gameWorld.removeObject(confirmButton);
+            
             for (Upgrade upgrade : selectedUpgrades) {
                 if (upgrade.isUnique) Hero.hero.setStat(upgrade.uniqueTrait);
                 else Hero.hero.setStat(upgrade.theValue * (upgrade.rarity + 1), upgrade.type.get(upgrade.num));
@@ -86,8 +92,9 @@ public class UpgradeManager extends Actor
     }
     
     public void rerollUpgrades() {
-        if (numRerolls > 0) {
+        if (numRerolls > 0 && GameWorld.gameWorld.upgradeManager != null) {
             numRerolls--;
+            
             List<Upgrade> upgrades = new ArrayList<>(GameWorld.gameWorld.getObjects(Upgrade.class));
             
             for (Upgrade upgrade : upgrades) {

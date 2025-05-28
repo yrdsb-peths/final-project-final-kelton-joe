@@ -27,15 +27,25 @@ public class Button extends Actor
     
     public void act()
     {
+        if (GameWorld.gameWorld.upgradeManager == null) GameWorld.gameWorld.removeObject(this);
+        
         if (Greenfoot.mouseClicked(this) && type.equals("Confirm")) {
             UpgradeManager upgradeManager = (UpgradeManager) getWorld().getObjects(UpgradeManager.class).get(0);
             upgradeManager.isConfirmed = true;  
+            
             GameWorld.gameWorld.removeObject(this);
         }
         else if (Greenfoot.mouseClicked(this) && type.equals("Rerolls")) {
             GameWorld.gameWorld.upgradeManager.rerollUpgrades();
+            
+            image.clear();
+            image.setColor(Color.GRAY);
+            image.fill();
+            image.setColor(Color.BLACK);
             image.drawString(type + ": " + UpgradeManager.numRerolls, 50, 30);
             setImage(image);
+            
+            GameWorld.gameWorld.removeObject(this);
         }
     }
 }
