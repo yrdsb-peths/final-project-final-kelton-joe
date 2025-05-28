@@ -74,6 +74,7 @@ public class Hero extends SmoothMover
     int arcaneEchoLvl;
     int spectralVeilLvl;
     int vortexLvl;
+    int bloodPactLvl;
     
     // arcane echo
     int echoChance;
@@ -135,6 +136,8 @@ public class Hero extends SmoothMover
     double cooldownPercent;
     
     private HeroArm heroArm;
+    
+    double dx, dy, angle;
     
     /**
      * Constructor for Hero Class
@@ -206,7 +209,7 @@ public class Hero extends SmoothMover
         
         attackCooldown.mark();
         regenCooldown.mark();
-        
+        lastAttackTimer.mark();
         dashTimer.mark();
         
         GameWorld.gameWorld.addObject(redBar, barX, barY);
@@ -229,6 +232,7 @@ public class Hero extends SmoothMover
                 isImmune = false;
                 GameWorld.gameWorld.removeObject(indicator);
             }
+            
             else {
                 GameWorld.gameWorld.addObject(indicator, 50, 550);
             }
@@ -363,7 +367,25 @@ public class Hero extends SmoothMover
             
             if (echo) damageDealt *= echoMult;
             
-            fireProjectile(damageDealt, closestEnemy);
+            if (bloodPactLvl == 0) fireProjectile(damageDealt, closestEnemy);
+            else {
+                if (isCrit) {
+                    critMultiplier = 1.0 + (critDamage/100.0);
+                    damageDealt = maxHp * 0.9 * critMultiplier;
+                }
+                else damageDealt = maxHp * 0.4;
+                
+                Slash slash = new Slash(damageDealt, isCrit);
+                
+                dx = closestEnemy.getExactX() - getExactX();
+                dy = closestEnemy.getExactY() - getExactY();
+                angle = Math.toDegrees(Math.atan2(dy, dx));
+                
+                slash.setRotation((int) angle - 90);
+                
+                GameWorld.gameWorld.addObject(slash, (int) getExactX(), (int) getExactY());
+            }
+            
             lastAttackTimer.mark();
 
             if (!echo && arcaneEchoLvl > 0) {
@@ -375,22 +397,6 @@ public class Hero extends SmoothMover
                 }
             }
         }
-    }
-    
-    /**
-     * Face an enemy
-     * 
-     * @param enemy: enemy to face
-     */
-    private void faceEnemy(Enemy enemy) {
-        double dx = enemy.getExactX() - getExactX();
-        double dy = enemy.getExactY() - getExactY();
-    
-        // Calculate the angle in degrees
-        double angle = Math.toDegrees(Math.atan2(dy, dx));
-    
-        // Rotate the hero's image to face the enemy
-        setRotation((int) angle);
     }
     
     private void fireProjectile(double damage, Enemy enemy) {
@@ -532,8 +538,11 @@ public class Hero extends SmoothMover
                 if (vampireLvl == 0) {
                     vampireLvl++;
                     speed -= 0.1;
-                }   else if (vampireLvl == 1) {
+                    maxHp += 3;
+                } 
+                else if (vampireLvl == 1) {
                     vampireLvl++;
+                    maxHp += 3;
                 }
                 else Upgrade.uniques.remove("Vampire");
                 break;
@@ -589,13 +598,25 @@ public class Hero extends SmoothMover
                     immuneChance = 40;
                     immuneDuration = 1200;
                 }
+                else Upgrade.uniques.remove("Spectral Veil");
                 break;
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
                     tornadoChance = 10 * vortexLvl;
-                    break;
                 }
+                else Upgrade.uniques.remove("Violent Vortex");
+                break;
+            case "Blood Pact":
+                if (bloodPactLvl < 2) {
+                    bloodPactLvl++;
+                    maxHp += 3;
+                    critDamage += 30;
+                    attackRange = 150;
+                    Upgrade.type.remove("attackRange");
+                }
+                else Upgrade.uniques.remove("Blood Pact");
+                break;
         }
     }
     

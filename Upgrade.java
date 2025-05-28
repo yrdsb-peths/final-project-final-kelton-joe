@@ -90,11 +90,10 @@ public class Upgrade extends Actor
         // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
         // "Saviors Sacrifice", // attacks consume health to deal additional damage
                          // upgraded: increased damage and resistance on low health
-        "Violent Vortex" // grants vortex skill on hit: pull nearby enemies and slows them
+        "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
                          // upgraded: vortex also deals damage and becomes bigger
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
-        // "Lifebloom",     // damage also increases depending on max health
-                         // upgraded: converts arrows to "lifebloom" attack, consuming health and dealing additonal crit damage
+        "Blood Pact"     // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
         // "Time Rift",       // chance for hero to bypass maximum attack speed when attacking
         // "Vengeful Spirit",  // after getting hit, next attack becomes much stronger
         // "Concentration"    // much slower attacks that deal much increased damage

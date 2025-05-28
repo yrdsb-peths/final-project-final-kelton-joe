@@ -1,91 +1,88 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Write a description of class Projectile here.
+ * Write a description of class Slash here.
  * 
- * @author Kelton and Joe
- * @version May 2024
+ * @author (your name) 
+ * @version (a version number or a date)
  */
-public class Projectile extends SmoothMover
+public class Slash extends SmoothMover
 {
-    private double nx, ny;
-    private double speed;
-    private double damage;
-    private int durability;
-    private boolean isCrit;
+    GreenfootImage[] slash = new GreenfootImage[7];
     
-    private boolean isRemoved;
+    SimpleTimer slashTimer = new SimpleTimer();
+    int slashIndex = 0;
     
-    private boolean addHealth;
+    double damage;
+    boolean isCrit;
+    static double totalSelfDamage;
     
-    private HashSet<Enemy> enemiesHit;
+    List<Enemy> enemies = new ArrayList<Enemy>();
+    Set<Enemy> enemiesHitSet = new HashSet<>();
     
-    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
-        GreenfootImage image = new GreenfootImage("arrow.png");
-        setImage(image);
-        image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
+    public Slash(double damage, boolean isCrit) {
+        for (int i = 0; i < slash.length; i++) {
+            slash[i] = new GreenfootImage("bloodslash/slash" + i + ".png");
+            slash[i].scale(125, 125);
+            if (isCrit) slash[i].scale(160, 160);
+        }
         
-        double angle = Math.toDegrees(Math.atan2(ny, nx));
-        setRotation((int)angle);
-        
-        this.nx = nx;
-        this.ny = ny;
-        this.speed = speed;
         this.damage = damage;
         this.isCrit = isCrit;
-        
-        if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
-        else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
-        else this.durability = 1;
-        
-        isRemoved = false;
-        
-        enemiesHit = new HashSet<Enemy>();
+        totalSelfDamage = 0;
     }
     
-    public void act()
-    {
-        if (!isRemoved) {
-            setLocation(getExactX() + nx*speed, getExactY() + ny*speed);
-            
-            Enemy enemy = (Enemy) getOneIntersectingObject(Enemy.class);
-            
-            if (enemy != null) {
-                attack(enemy);
-            } 
-            else if (getX() <= 5 || getX() >= GameWorld.gameWorld.getWidth() - 5 ||
-                getY() <= 5 || getY() >= GameWorld.gameWorld.getHeight() - 5) {
-                GameWorld.gameWorld.removeObject(this);
-                isRemoved = true;
+    public void act() {
+        animateSlash();
+        
+        enemies = getIntersectingObjects(Enemy.class);
+        
+        for (Enemy enemy : enemies) {
+            if (enemy != null && slashIndex == 3 && !enemiesHitSet.contains(enemy)) {
+                if (isCrit) enemy.removeHp((int) this.damage, false, Color.RED, 35);
+                else enemy.removeHp((int) this.damage, false, Color.RED, 25);
+                
+                enemiesHitSet.add(enemy);
+                
+                totalSelfDamage += Math.min(this.damage * 0.2, Hero.hero.maxHp * 0.2);
+                
+                if ((int) Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
+                
+                vampire(enemy);
+                GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                
+                frostbite(enemy);
+                scorch(enemy);
+                jester(enemy);
+                tornado(enemy);
             }
         }
-    }
-    
-    private void attack(Enemy enemy) {
-        if (!enemiesHit.contains(enemy)) {
-            enemyHit(enemy);
-        }
-    }
-    
-    private void enemyHit(Enemy enemy) {
-        enemiesHit.add(enemy);
         
-        enemy.removeHp((int)(damage + 0.5), isCrit, Color.GRAY, 20);
-        frostbite(enemy);
-        scorch(enemy);
-        vampire(enemy);
-        jester(enemy);
-        tornado(enemy);
-        
-        durability--;
-        if (durability == 0) {
+        if (slashIndex == slash.length) {
             GameWorld.gameWorld.removeObject(this);
-            isRemoved = true;
+            enemiesHitSet.clear();
+            
+            Hero.hero.currentHp -= totalSelfDamage;
+            
+            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
     }
     
-    private void frostbite(Enemy enemy) {
+    public void animateSlash() {
+        if (slashTimer.millisElapsed() < 60) return;
+        slashTimer.mark();
+        
+        if (slashIndex < slash.length) {
+            setImage(slash[slashIndex]);
+            slashIndex++;
+        }
+    }
+    
+     private void frostbite(Enemy enemy) {
         if (Hero.hero.frostbiteLvl > 0) enemy.frostbite();
     }
     
