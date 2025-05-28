@@ -200,7 +200,10 @@ public class Hero extends SmoothMover
      */
     public void act()
     {
-        if (isDead) animateDeath();
+        if (isDead) {
+            GameWorld.gameWorld.removeObject(heroArm);
+            animateDeath();
+        }
         else {
             // dash bar
             redBar.setPos(barX, barY);
@@ -250,7 +253,6 @@ public class Hero extends SmoothMover
             // attack
             if (Greenfoot.isKeyDown("space")) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
-                    isAttacking = true;
                     attack();
                     attackCooldown.mark();
                     lastAttackTimer.mark();
@@ -308,9 +310,6 @@ public class Hero extends SmoothMover
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
             heroArm.faceEnemy(closestEnemy);
             
-            heroArm.bowImageIndex = 0;
-            heroArm.animateBow(facing);
-            
             // crit generation
             if (Greenfoot.getRandomNumber(100) <= critRate) {
                 isCrit = true;
@@ -345,6 +344,8 @@ public class Hero extends SmoothMover
     }
     
     private void fireProjectile(double damage, Enemy enemy) {
+        isAttacking = true;
+        
         double dx = enemy.getExactX() - getExactX();
         double dy = enemy.getExactY() - getExactY();
         
