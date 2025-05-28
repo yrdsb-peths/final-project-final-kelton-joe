@@ -154,11 +154,18 @@ public class Enemy extends SmoothMover
             if (Greenfoot.getRandomNumber(5) == 1) isDodged = true;
             else isDodged = false;
         }
-        if (!isDodged) Hero.hero.currentHp -= this.attack;
+        if (!isDodged && !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
+        if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0) {
+            if (Hero.hero.isImmune != true) {
+                Hero.hero.isImmune = true;
+                Hero.hero.immunityTimer.mark();
+            }
+        }
+        
         if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
-        else if (!isDodged) Hero.hero.isHurt = true;
+        else if (!isDodged && !Hero.hero.isImmune) Hero.hero.isHurt = true;
     }
     
     public void frostbite() {

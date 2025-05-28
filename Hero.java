@@ -72,13 +72,21 @@ public class Hero extends SmoothMover
     int jesterLvl;
     int sharpshotLvl;
     int arcaneEchoLvl;
+    int spectralVeilLvl;
     
-    // other variables needed for unique upgrades
+    // arcane echo
     int echoChance;
     double echoMult;
     private final int echoWait = 800;
     boolean hasEchoed;
     SimpleTimer echoTimer = new SimpleTimer();
+    
+    // spectral veil
+    public boolean isImmune;
+    int immuneChance;
+    int immuneDuration;
+    SimpleTimer immunityTimer = new SimpleTimer();
+    SpectralVeilActive indicator = new SpectralVeilActive();
     
     // facing direction
     String facing = "right";
@@ -212,7 +220,15 @@ public class Hero extends SmoothMover
             GameWorld.gameWorld.removeObject(heroArm);
             animateDeath();
         }
-        else {
+        else { 
+            if (immunityTimer.millisElapsed() >= immuneDuration) {
+                isImmune = false;
+                GameWorld.gameWorld.removeObject(indicator);
+            }
+            else {
+                GameWorld.gameWorld.addObject(indicator, 50, 550);
+            }
+            
             // dash bar
             redBar.setPos(barX, barY);
             cooldownPercent = (double) dashTimer.millisElapsed() / (double) dashCooldown;
@@ -551,6 +567,13 @@ public class Hero extends SmoothMover
                     }
                 }
                 else Upgrade.uniques.remove("Arcane Echo");
+                break;
+            case "Spectral Veil":
+                if (spectralVeilLvl < 1) {
+                    spectralVeilLvl++;
+                    immuneChance = 40;
+                    immuneDuration = 1200;
+                }
                 break;
         }
     }

@@ -82,8 +82,8 @@ public class Upgrade extends Actor
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
         //"Stormcaller",   // chance to chain and stun enemies on hit 
         //"Thornsoul",     // chance to rebound damage, damage reduction
-        //"Spectral Veil", // chance to become immune to damage for a short time when hit
-        "Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
+        "Spectral Veil", // chance to become immune to damage for a short time when hit
+        //"Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active
         //"Iron Will",     // immune to crowd control
