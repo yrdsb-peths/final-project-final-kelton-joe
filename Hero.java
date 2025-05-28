@@ -522,9 +522,11 @@ public class Hero extends SmoothMover
                 }
                 break;
             case "Vampire":
-                if (vampireLvl < 2) {
+                if (vampireLvl == 0) {
                     vampireLvl++;
                     speed -= 0.1;
+                }   else if (vampireLvl == 1) {
+                    vampireLvl++;
                 }
                 else Upgrade.uniques.remove("Vampire");
                 break;
