@@ -7,26 +7,35 @@ import java.awt.Font;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class ConfirmButton extends Actor
+public class Button extends Actor
 {
-    public ConfirmButton() {
-        GreenfootImage image = new GreenfootImage(150, 50);
+    public String type;
+    public GreenfootImage image;
+    
+    public Button(String text) {
+        type = text;
+        
+        image = new GreenfootImage(150, 50);
         image.setColor(Color.GRAY);
         image.fill();
         
         image.setColor(Color.BLACK);
-        image.drawString("Confirm", 50, 30);
+        image.drawString(text, 50, 30);
         
         setImage(image);
     }
     
-    
     public void act()
     {
-        if (Greenfoot.mouseClicked(this)) {
+        if (Greenfoot.mouseClicked(this) && type.equals("Confirm")) {
             UpgradeManager upgradeManager = (UpgradeManager) getWorld().getObjects(UpgradeManager.class).get(0);
             upgradeManager.isConfirmed = true;  
             GameWorld.gameWorld.removeObject(this);
+        }
+        else if (Greenfoot.mouseClicked(this) && type.equals("Rerolls")) {
+            GameWorld.gameWorld.upgradeManager.rerollUpgrades();
+            image.drawString(type + ": " + UpgradeManager.numRerolls, 50, 30);
+            setImage(image);
         }
     }
 }

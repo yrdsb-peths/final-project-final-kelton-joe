@@ -15,6 +15,8 @@ public class UpgradeManager extends Actor
     public boolean isConfirmed;
     private boolean isUnique;
     
+    public static int numRerolls;
+    
     Label confirmLabel = new Label("Confirm", 30);
     
     private ArrayList<Upgrade> selectedUpgrades = new ArrayList<>();
@@ -39,8 +41,14 @@ public class UpgradeManager extends Actor
         
         Upgrade.numSelections = 1;
         
-        ConfirmButton confirmButton = new ConfirmButton();
-        GameWorld.gameWorld.addObject(confirmButton, 400, 450);
+        Button confirmButton = new Button("Confirm");
+        GameWorld.gameWorld.addObject(confirmButton, 500, 450);
+        
+        Button resetButton = new Button("Rerolls");
+        GameWorld.gameWorld.addObject(resetButton, 300, 450);
+        
+        resetButton.image.drawString(resetButton.type + ": " + UpgradeManager.numRerolls, 50, 30);
+        setImage(resetButton.image);
     }
     
     public void act() {
@@ -75,5 +83,24 @@ public class UpgradeManager extends Actor
     
     public void removeSelectedUpgrade(Upgrade upgrade) {
         selectedUpgrades.remove(upgrade);
+    }
+    
+    public void rerollUpgrades() {
+        if (numRerolls > 0) {
+            numRerolls--;
+            List<Upgrade> upgrades = new ArrayList<>(GameWorld.gameWorld.getObjects(Upgrade.class));
+            
+            for (Upgrade upgrade : upgrades) {
+                upgrade.upgradeManager = null;
+                GameWorld.gameWorld.removeObject(upgrade.name);
+                GameWorld.gameWorld.removeObject(upgrade.theRarity);
+                GameWorld.gameWorld.removeObject(upgrade);
+            }
+            
+            GameWorld.gameWorld.removeUpgrades();
+            
+            if (GameWorld.gameWorld.wave % 5 == 0) GameWorld.gameWorld.upgradeManager = new UpgradeManager(2, GameWorld.gameWorld, true);
+            else GameWorld.gameWorld.upgradeManager = new UpgradeManager(GameWorld.gameWorld.easyReward + GameWorld.gameWorld.waveDifficulty, GameWorld.gameWorld, false);
+        }
     }
 }

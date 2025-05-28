@@ -21,9 +21,9 @@ public class GameWorld extends World {
     public int wave;
     private final int maxSpeedMultiplier = 8;
     
-    private int waveDifficulty;
+    public int waveDifficulty;
     
-    private final int easyReward = 2;
+    public final int easyReward = 2;
     
     private Label waveLabel;
     
@@ -31,7 +31,7 @@ public class GameWorld extends World {
     
     public static Label healthBar;
     
-    private UpgradeManager upgradeManager;
+    public UpgradeManager upgradeManager;
     
     /**
      * Constructor for the world
@@ -61,6 +61,8 @@ public class GameWorld extends World {
         
         wave = 0;
         startWave();
+        
+        UpgradeManager.numRerolls = 5;
     }
     
     public void act() {
