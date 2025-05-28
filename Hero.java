@@ -608,12 +608,13 @@ public class Hero extends SmoothMover
                 else Upgrade.uniques.remove("Violent Vortex");
                 break;
             case "Blood Pact":
-                if (bloodPactLvl < 2) {
+                if (bloodPactLvl == 0) {
                     bloodPactLvl++;
                     maxHp += 3;
                     critDamage += 30;
                     attackRange = 150;
                     Upgrade.type.remove("attackRange");
+                    Upgrade.uniques.remove("Sharpshot");
                 }
                 else Upgrade.uniques.remove("Blood Pact");
                 break;
