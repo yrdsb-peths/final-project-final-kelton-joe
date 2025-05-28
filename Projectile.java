@@ -96,19 +96,19 @@ public class Projectile extends SmoothMover
     private void vampire(Enemy enemy) {
         if (Hero.hero.vampireLvl == 1) {
             Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
-            Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.1 * Hero.hero.maxHp)), Hero.hero.maxHp);
+            Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
         else if (Hero.hero.vampireLvl == 2) {
             if (enemy.hitpoints <= 0) {
-                if (Greenfoot.getRandomNumber(3) == 1) {
+                if (Greenfoot.getRandomNumber(2) == 1) {
                     Hero.hero.maxHp++;
                     Hero.hero.currentHp++;
                 }
             }
             else {
                 Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
-                Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.25 * Hero.hero.maxHp)), Hero.hero.maxHp);
+                Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
             }
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
