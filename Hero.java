@@ -283,7 +283,6 @@ public class Hero extends SmoothMover
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
                     attack(false);
                     attackCooldown.mark();
-                    lastAttackTimer.mark();
                 }
             }
             
@@ -310,8 +309,10 @@ public class Hero extends SmoothMover
             
             // animate attack
             else {
-                GameWorld.gameWorld.addObject(heroArm, (int) getExactX(), (int) getExactY());
-                if (isAttacking) heroArm.animateBow(facing);
+                if (isAttacking) {
+                    GameWorld.gameWorld.addObject(heroArm, (int) getExactX(), (int) getExactY());
+                    heroArm.animateBow(facing);
+                }
                 animateHero();
             }
         }
@@ -363,6 +364,7 @@ public class Hero extends SmoothMover
             if (echo) damageDealt *= echoMult;
             
             fireProjectile(damageDealt, closestEnemy);
+            lastAttackTimer.mark();
 
             if (!echo && arcaneEchoLvl > 0) {
                 if (Greenfoot.getRandomNumber(100) < echoChance) {
