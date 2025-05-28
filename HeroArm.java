@@ -48,8 +48,8 @@ public class HeroArm extends SmoothMover
     }
     
     public void setPos(double x, double y, String facing) {
-        if (facing.equals("right")) x += 5;
-        else x -= 5;
+        if (facing.equals("right")) x += 3;
+        else x -= 3;
         setLocation(x, y);
     }
     

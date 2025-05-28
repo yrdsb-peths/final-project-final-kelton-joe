@@ -298,17 +298,22 @@ public class Hero extends SmoothMover
                 GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
                 regenCooldown.mark();
             }
-            // first check if attacking
-            if (isAttacking) heroArm.animateBow(facing);
             
             // check if hurt
-            else if (isHurt) animateHurt();
+            if (isHurt) animateHurt();
             
             // then check if idle
-            //else if (lastAttackTimer.millisElapsed() >= 3000) animateIdle();
+            else if (lastAttackTimer.millisElapsed() >= 3000) {
+                animateIdle();
+                GameWorld.gameWorld.removeObject(heroArm);
+            }
             
-            // otherwise animate attack
-            else animateHero();
+            // animate attack
+            else {
+                GameWorld.gameWorld.addObject(heroArm, (int) getExactX(), (int) getExactY());
+                if (isAttacking) heroArm.animateBow(facing);
+                animateHero();
+            }
         }
     }
     
