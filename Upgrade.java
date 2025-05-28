@@ -73,7 +73,7 @@ public class Upgrade extends Actor
         //"Scorch",        // burn damage to enemies overtime
                          // upgraded: increases burn damage
         //"Sharpshot",     // pierce through enemies
-        //"Vampire",       // Hero heals hp on hit
+        "Vampire",       // Hero heals hp on hit
                          // upgraded: chance to increase max hp on hit
         //"Explosive Shot",// chance to shoot explosive arrows
         //"Rogue",         // much increased speed and crit, but low range and hp
@@ -82,7 +82,7 @@ public class Upgrade extends Actor
                          // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
         //"Stormcaller",   // chance to chain and stun enemies on hit 
         //"Thornsoul",     // chance to rebound damage, damage reduction
-        "Spectral Veil", // chance to become immune to damage for a short time when hit
+        //"Spectral Veil", // chance to become immune to damage for a short time when hit
         //"Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active

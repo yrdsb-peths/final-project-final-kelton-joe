@@ -72,7 +72,7 @@ public class Projectile extends SmoothMover
         enemy.removeHp((int)damage, isCrit, Color.GRAY, 20);
         frostbite(enemy);
         scorch(enemy);
-        vampire();
+        vampire(enemy);
         jester(enemy);
         
         durability--;
@@ -90,18 +90,20 @@ public class Projectile extends SmoothMover
         if (Hero.hero.scorchLvl > 0) enemy.scorch(damage * 0.5 * Hero.hero.scorchLvl);
     }
     
-    private void vampire() {
+    private void vampire(Enemy enemy) {
         if (Hero.hero.vampireLvl == 1) {
             Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
         else if (Hero.hero.vampireLvl == 2) {
-            if (Greenfoot.getRandomNumber(3) == 1) {
-                Hero.hero.maxHp++;
-                Hero.hero.currentHp++;
+            if (enemy.hitpoints <= 0) {
+                if (Greenfoot.getRandomNumber(3) == 1) {
+                    Hero.hero.maxHp++;
+                    Hero.hero.currentHp++;
+                }
+                else Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+                GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
             }
-            else Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
-            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
     }
     
