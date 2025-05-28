@@ -71,6 +71,14 @@ public class Hero extends SmoothMover
     int rogueLvl;
     int jesterLvl;
     int sharpshotLvl;
+    int arcaneEchoLvl;
+    
+    // other variables needed for unique upgrades
+    int echoChance;
+    double echoMult;
+    private final int echoWait = 800;
+    boolean hasEchoed;
+    SimpleTimer echoTimer = new SimpleTimer();
     
     // facing direction
     String facing = "right";
@@ -253,9 +261,13 @@ public class Hero extends SmoothMover
             // attack
             if (Greenfoot.isKeyDown("space")) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
-                    attack();
+                    attack(false);
                     attackCooldown.mark();
                     lastAttackTimer.mark();
+                    if (arcaneEchoLvl > 0) {
+                        echoTimer.mark();
+                        hasEchoed = false;
+                    }
                 }
             }
             
@@ -275,6 +287,13 @@ public class Hero extends SmoothMover
             
             // otherwise animate attack
             else animateHero();
+            
+            if (echoTimer.millisElapsed() > echoWait && hasEchoed == false) {
+                if (Greenfoot.getRandomNumber(100) <= echoChance) {
+                    attack(true);
+                    hasEchoed = true;
+                }
+            }
         }
     }
     
@@ -304,7 +323,7 @@ public class Hero extends SmoothMover
     /**
      * attacks the closest enemy in range 
      */
-    public void attack() {
+    public void attack(boolean echo) {
         Enemy closestEnemy = findClosestEnemy();
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
@@ -320,6 +339,8 @@ public class Hero extends SmoothMover
               damageDealt = attack;
               isCrit = false;
             }
+            
+            if (echo) damageDealt *= echoMult;
             
             fireProjectile(damageDealt, closestEnemy);
 
@@ -516,6 +537,20 @@ public class Hero extends SmoothMover
             case "Jester":
                 if (jesterLvl < 2) jesterLvl++;
                 else Upgrade.uniques.remove("Jester");
+                break;
+            case "Arcane Echo":
+                if (arcaneEchoLvl < 2) {
+                    arcaneEchoLvl++;
+                    if (arcaneEchoLvl == 1) {
+                        echoChance = 35;
+                        echoMult = 0.6;
+                    }
+                    else {
+                        echoChance = 100;
+                        echoMult = 1.2;
+                    }
+                }
+                else Upgrade.uniques.remove("Arcane Echo");
                 break;
         }
     }
