@@ -124,7 +124,7 @@ public class Slash extends SmoothMover
     
     private void tornado(Enemy enemy) {
         if (Hero.hero.vortexLvl > 0  && Greenfoot.getRandomNumber(100) <= Hero.hero.tornadoChance) {
-            Tornado vortex = new Tornado((int) damage);
+            Tornado vortex = new Tornado((int) this.damage);
             
             vortex.numCycles = Hero.hero.vortexLvl * 5;
             vortex.tornadoIndex = 0;
