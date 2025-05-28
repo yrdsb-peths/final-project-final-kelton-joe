@@ -23,7 +23,7 @@ public class Hero extends SmoothMover
     
     // attack range
     private double attackRange;
-    private final double maxAttackRange = 500;
+    private final double maxAttackRange = 600;
     
     // projectile speed
     public double projectileSpeed;
