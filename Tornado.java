@@ -59,7 +59,7 @@ public class Tornado extends SmoothMover
         if (tornadoTimer.millisElapsed() < 150) return;
         tornadoTimer.mark();
         
-        if (tornadoIndex > 3 && tornadoIndex < 6) isActive = true;
+        if (tornadoIndex < 6) isActive = true;
         if (numCycles == 0) isActive = false;
         
         if (tornadoIndex < tornadoImage.length) {

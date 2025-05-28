@@ -164,11 +164,11 @@ public class Enemy extends SmoothMover
             if (Greenfoot.getRandomNumber(5) == 1) isDodged = true;
             else isDodged = false;
         }
-        if (!isDodged && !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack;
+        if (!isDodged || !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0) {
-            if (Hero.hero.isImmune != true) {
+            if (!Hero.hero.isImmune) {
                 Hero.hero.isImmune = true;
                 Hero.hero.immunityTimer.mark();
             }

@@ -78,7 +78,7 @@ public class Hero extends SmoothMover
     // arcane echo
     int echoChance;
     double echoMult;
-    private final int echoWait = 800;
+    private final int echoWait = 250;
     boolean hasEchoed;
     SimpleTimer echoTimer = new SimpleTimer();
     
