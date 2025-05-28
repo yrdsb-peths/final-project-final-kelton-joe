@@ -280,11 +280,13 @@ public class Hero extends SmoothMover
                     attack(false);
                     attackCooldown.mark();
                     lastAttackTimer.mark();
-                    if (arcaneEchoLvl > 0) {
-                        echoTimer.mark();
-                        hasEchoed = false;
-                    }
                 }
+            }
+            
+            // Check for arcane echo delayed attack
+            if (!hasEchoed && echoTimer.millisElapsed() >= echoWait) {
+                attack(true);          // echo attack
+                hasEchoed = true;      // prevent repeat
             }
             
             if (regenCooldown.millisElapsed() >= regenInterval) {
@@ -303,13 +305,6 @@ public class Hero extends SmoothMover
             
             // otherwise animate attack
             else animateHero();
-            
-            if (echoTimer.millisElapsed() > echoWait && hasEchoed == false) {
-                if (Greenfoot.getRandomNumber(100) <= echoChance) {
-                    attack(true);
-                    hasEchoed = true;
-                }
-            }
         }
     }
     
@@ -360,7 +355,14 @@ public class Hero extends SmoothMover
             
             fireProjectile(damageDealt, closestEnemy);
 
-            //closestEnemy.removeHp((int) attack);
+            if (!echo && arcaneEchoLvl > 0) {
+            if (Greenfoot.getRandomNumber(100) < echoChance) {
+                echoTimer.mark();       // start the timer
+                hasEchoed = false;      // allow echo to happen
+            } else {
+                hasEchoed = true;       // no echo will happen
+            }
+        }
         }
     }
     
