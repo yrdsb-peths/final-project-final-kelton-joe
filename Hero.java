@@ -584,8 +584,7 @@ public class Hero extends SmoothMover
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
-                    if (vortexLvl == 1) tornadoChance = 25;
-                    else tornadoChance = 65;
+                    tornadoChance = 25 * vortexLvl;
                     break;
                 }
         }
