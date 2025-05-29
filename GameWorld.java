@@ -33,7 +33,7 @@ public class GameWorld extends World {
     
     public UpgradeManager upgradeManager;
     
-    private final String grass = "grass.png";
+    private GreenfootImage background = new GreenfootImage("background.png");
     
     /**
      * Constructor for the world
@@ -42,7 +42,7 @@ public class GameWorld extends World {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
         
-        setBackground(grass);
+        setBackground(background);
         
         gameWorld = this;
         
