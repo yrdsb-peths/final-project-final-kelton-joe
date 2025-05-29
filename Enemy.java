@@ -39,14 +39,21 @@ public class Enemy extends SmoothMover
     private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
     public SimpleTimer frostbiteTimer = new SimpleTimer();
     
+    private GreenfootSound[] freezeSounds = {
+        new GreenfootSound("freeze/freeze1.mp3"),
+        new GreenfootSound("freeze/freeze2.mp3"),
+        new GreenfootSound("freeze/freeze3.mp3")
+    };
+    private int freezeSoundIndex = 0;
+    
     private int burnTicks;
     private double burnDamage;
     private SimpleTimer scorchTimer = new SimpleTimer();
     
     private GreenfootSound[] burnSounds = {
-        new GreenfootSound("burn.mp3"),
-        new GreenfootSound("burn2.mp3"),
-        new GreenfootSound("burn3.mp3")
+        new GreenfootSound("burn/burn1.mp3"),
+        new GreenfootSound("burn/burn2.mp3"),
+        new GreenfootSound("burn/burn3.mp3")
     };
     private int burnSoundIndex = 0;
     
@@ -63,8 +70,7 @@ public class Enemy extends SmoothMover
         setImage("images/balloon1.png");
         
         for (GreenfootSound s : burnSounds) {
-            s.play();   // Plays once
-            s.stop();   // Stops it, but ensures it's cached
+            s.setVolume(30);
         }
         
         // stat increases
@@ -202,6 +208,9 @@ public class Enemy extends SmoothMover
         if (Hero.hero.frostbiteLvl > 1) {
             isFrozen = true;
             frostbiteFreezeTimer.mark();
+            
+            freezeSounds[freezeSoundIndex].play();
+            freezeSoundIndex = (freezeSoundIndex + 1) % freezeSounds.length;
         }
     }
     
