@@ -195,8 +195,8 @@ public class Hero extends SmoothMover
         greenBar.getImage().fill();
         
         // initializes default stats
-        currentHp = 3;
-        maxHp = 3;
+        currentHp = 5;
+        maxHp = 5;
         speed = 1.15;
         attackRange = 200;
         regenInterval = 5000;
