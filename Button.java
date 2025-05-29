@@ -1,15 +1,17 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.awt.Font;
 
 /**
- * Write a description of class ConfirmButton here.
+ * Button class
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Joe and Kelton
+ * @version June 2025
  */
 public class Button extends Actor
 {
+    // type of button (confirm/reroll)
     public String type;
+    
+    // image for the button
     public GreenfootImage image;
     
     /**

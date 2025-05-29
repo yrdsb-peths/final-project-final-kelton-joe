@@ -1,16 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class DamageIndicator here.
+ * Damage Indicators to show how much damage attacks do
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Joe and Kelton
+ * @version June 2025
  */
 public class DamageIndicator extends Label
 {
+    // duration of damage indicator
     private final int lifeTime = 250;
     SimpleTimer lifeTimer = new SimpleTimer();
     
+    /**
+     * Constructor for damage indicator
+     * 
+     * @param damage: the amount of damage
+     * @param size: the size of the damage text
+     * @param color: the color of the damage text
+     */
     public DamageIndicator(int damage, int size, Color color) {
         super(damage, size);
         this.setLineColor(color);
@@ -18,6 +26,10 @@ public class DamageIndicator extends Label
         lifeTimer.mark();
     }
     
+    /**
+     * Act method
+     * removes itself after displaying damage for its lifetime
+     */
     public void act()
     {
         setLocation(getX() + Greenfoot.getRandomNumber(3) - 1, getY() - 1);
