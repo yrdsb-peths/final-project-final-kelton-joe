@@ -23,6 +23,7 @@ public class Projectile extends SmoothMover
     private double dx, dy;
     private double shrapnelSpeed;
     private SimpleTimer shrapnelTimer = new SimpleTimer();
+    private double shrapnelDamage;
     
     private boolean addHealth;
     
@@ -47,6 +48,11 @@ public class Projectile extends SmoothMover
         if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
         else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
         else this.durability = 1;
+        
+        if (isShrapnel) {
+            if (Hero.hero.shrapnelLvl == 1) this.durability = 1;
+            else this.durability = 3;
+        }
         
         isRemoved = false;
         
@@ -160,8 +166,9 @@ public class Projectile extends SmoothMover
                     dy = Math.sin(radians);
                     
                     shrapnelSpeed = Hero.hero.shrapnelLvl == 1 ? 2.0 : 10.0;
+                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? 0.4 * damage : 0.8 * damage;
                     
-                    Projectile shrapnel = new Projectile(dx, dy, shrapnelSpeed, damage * 0.4, isCrit, true);
+                    Projectile shrapnel = new Projectile(dx, dy, shrapnelSpeed, shrapnelDamage, isCrit, true);
                     
                     GameWorld.gameWorld.addObject(shrapnel, (int)getExactX(), (int)getExactY());
                 }
