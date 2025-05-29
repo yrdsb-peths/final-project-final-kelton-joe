@@ -54,7 +54,7 @@ public class HeroArm extends SmoothMover
     }
     
     public void animateBow(String facing) {
-        if (bowAnimationTimer.millisElapsed() < Hero.hero.attackSpeed / 12.0) return;
+        if (bowAnimationTimer.millisElapsed() < Hero.hero.attackSpeed / 20.0) return;
         bowAnimationTimer.mark();
         
         if (bowImageIndex < bowRight.length) {
