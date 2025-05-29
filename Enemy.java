@@ -43,6 +43,13 @@ public class Enemy extends SmoothMover
     private double burnDamage;
     private SimpleTimer scorchTimer = new SimpleTimer();
     
+    private GreenfootSound[] burnSounds = {
+        new GreenfootSound("burn.mp3"),
+        new GreenfootSound("burn2.mp3"),
+        new GreenfootSound("burn3.mp3")
+    };
+    private int burnSoundIndex = 0;
+    
     private boolean isDodged;
     
     private boolean isStunned;
@@ -54,6 +61,11 @@ public class Enemy extends SmoothMover
     
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
+        
+        for (GreenfootSound s : burnSounds) {
+            s.play();   // Plays once
+            s.stop();   // Stops it, but ensures it's cached
+        }
         
         // stat increases
         maxHitpoints = hitpoints;
@@ -102,6 +114,9 @@ public class Enemy extends SmoothMover
         
         if (scorchTimer.millisElapsed() >= 1000) {
             if (burnTicks > 0) {
+                burnSounds[burnSoundIndex].play();
+                burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
+                
                 removeHp((int)burnDamage, false, Color.RED, 25);
                 burnTicks--;
                 scorchTimer.mark();
@@ -194,6 +209,9 @@ public class Enemy extends SmoothMover
         this.burnDamage = (int) (burnDamage + 0.5);
         burnTicks = 3;
         scorchTimer.mark();
+        
+        burnSounds[burnSoundIndex].play();
+        burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
         
         removeHp((int)this.burnDamage, false, Color.RED, 25);
     }
