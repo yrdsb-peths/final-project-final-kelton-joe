@@ -49,6 +49,7 @@ public class Upgrade extends Actor
         50.0 // dash cooldown
     };
     
+    // how much to buff a stat by
     public double theValue;
     
     // randomly generated number
@@ -66,6 +67,7 @@ public class Upgrade extends Actor
         99 // 5: 2% mythic 10x
     };
     
+    // unique upgrades
     public boolean isUnique;
     public String[] uniqueTraits = {
         "Frostbite",     // slows enemies
@@ -117,10 +119,12 @@ public class Upgrade extends Actor
     public Label name;
     public Label theRarity;
     
+    // mouse location and hovering stuff
     private boolean isHovered;
     private int mouseX;
     private int mouseY;
     
+    // selection stuff
     private boolean isSelected;
     public static int numSelections = 1;
     
@@ -128,8 +132,10 @@ public class Upgrade extends Actor
      * Upgrade Constructor
      * 
      * @param upgradeManager: manages the upgrades
+     * @param isUnique: whether the upgrade is unique
      */
     public Upgrade(UpgradeManager upgradeManager, boolean isUnique) {
+        // sets instance variable values
         this.upgradeManager = upgradeManager;
         this.isUnique = isUnique;
         
@@ -146,7 +152,7 @@ public class Upgrade extends Actor
     /**
      * Adds upgrade to the world
      * 
-     * @param world: world the upgrade is added to
+     * @param world: world to add the upgrade to
      */
     protected void addedToWorld(World world) {
         if (isUnique) {
@@ -165,10 +171,10 @@ public class Upgrade extends Actor
             }
         }
         
-        // increase mythic multiplier
+        // increase mythic multiplier to (9+1) = 10x
         if (rarity == 5) rarity = 9;
         
-        // make label for generated upgrade
+        // make name label for generated upgrade
         switch (num) {
             case 0:
                 name = new Label("Health Boost", 20);
@@ -232,7 +238,7 @@ public class Upgrade extends Actor
                 break;
         }
         
-        // rarity label
+        // make rarity label
         switch (rarity) {
             case 0:
                 theRarity = new Label("Common", 25);
@@ -266,20 +272,32 @@ public class Upgrade extends Actor
         GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
+    /**
+     * Method for unique upgrades
+     */
     private void uniqueUpgrade() {
+        // randomly generate an unique upgrade
         int trait = Greenfoot.getRandomNumber(uniques.size());
-        
         uniqueTrait = uniques.get(trait);
+        
+        // name and rarity label
         name = new Label(uniques.get(trait), 20);
         theRarity = new Label("Unique", 25);
         
+        // background color
         getImage().setColor(new greenfoot.Color(215, 0, 64));
         getImage().fill();
         
+        // adds labels to world
         GameWorld.gameWorld.addObject(name, getX(), getY() - 10);
         GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
     }
     
+    /**
+     * Checks if the mouse is hovering over the upgrade
+     * 
+     * @return is hovering or not
+     */
     public Boolean isMouseOver() {
         mouseX = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getX() : -1;
         mouseY = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getY() : -1;
@@ -291,20 +309,25 @@ public class Upgrade extends Actor
     }
     
     /**
-     * Select upgrade if clicked
+     * Act method
+     * 
+     * Selects upgrade if clicked 
+     * Removes upgrade from selected upgrades if it was already selected
      */
     public void act() {
+        // checks mouse hovering for lighter background
         if (isMouseOver() && !isHovered) {
             getImage().setTransparency(128);
             isHovered = true;
         }
-        
+        // otherwise don't make lighter background
         else if (!isMouseOver() && isHovered) {
             getImage().setTransparency(255);
             isHovered = false;
         }
         
-        if (Greenfoot.mouseClicked(this)) {
+        // if the rectangle or labels are clicked add/remove the upgrade from list of selected upgrades
+        if (Greenfoot.mouseClicked(this) || Greenfoot.mouseClicked(name) || Greenfoot.mouseClicked(theRarity)) {
             if (!isSelected && numSelections > 0) {
                 isSelected = true;
                 numSelections--;
@@ -317,6 +340,7 @@ public class Upgrade extends Actor
             }
         }
         
+        // make lighter background if selected
         if (isSelected) getImage().setTransparency(128);
     }
 }
