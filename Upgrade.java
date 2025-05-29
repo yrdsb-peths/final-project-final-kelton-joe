@@ -93,9 +93,9 @@ public class Upgrade extends Actor
         "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
                          // upgraded: vortex also deals damage and becomes bigger
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
-        "Blood Pact"     // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
+        "Blood Pact",    // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
         //"Stormcaller",   // chance to chain and stun enemies on hit
-        //"Shrapnel Shot"  // after projectiles hit enemies, fire shrapnels with lower speed, damage, and range
+        "Shrapnel Shot"  // after projectiles hit enemies, fire shrapnels with lower speed, damage, and range
                            // upgraded: shrapnels have max speed and range, and can additionally pierce
         //"Hydro Burst"    // projectiles are infused with water and weaken enemies
                            // upgraded: blasts additionally slows and deal additional damage to enemies below 50% health

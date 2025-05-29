@@ -75,6 +75,7 @@ public class Hero extends SmoothMover
     int spectralVeilLvl;
     int vortexLvl;
     int bloodPactLvl;
+    int shrapnelLvl;
     
     // arcane echo
     int echoChance;
@@ -92,6 +93,9 @@ public class Hero extends SmoothMover
     
     // violent vortex
     int tornadoChance;
+    
+    // shrapnel shot
+    int numShrapnel;
     
     // facing direction
     String facing = "right";
@@ -417,7 +421,7 @@ public class Hero extends SmoothMover
         double normalizedX = dx / magnitude;
         double normalizedY = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit);
+        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit, false);
         GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
     }
     
@@ -493,16 +497,19 @@ public class Hero extends SmoothMover
                 projectileSpeed = Math.min(projectileSpeed + value/100.0, maxProjectileSpeed);
                 if (projectileSpeed == maxProjectileSpeed) {
                     Upgrade.type.remove("projectileSpeed");
+                    Upgrade.type.remove("projectile");
                 }
                 
                 attackRange = Math.min(attackRange + value, maxAttackRange);
                 if (attackRange == maxAttackRange) {
                     Upgrade.type.remove("attackRange");
+                    Upgrade.type.remove("projectile");
                 }
                 
                 attackSpeed = Math.max(attackSpeed - value*5.0, maxAttackSpeed);
                 if (attackSpeed == maxAttackSpeed) {
                     Upgrade.type.remove("attackSpeed");
+                    Upgrade.type.remove("projectile");
                 }
                 break;
             case "dashCooldown":
@@ -518,13 +525,13 @@ public class Hero extends SmoothMover
         switch(uniqueTrait) {
             case "Frostbite":
                 if (frostbiteLvl < 2) frostbiteLvl++;
-                if (frostbiteLvl == 2) Upgrade.uniques.remove("Frostbite");
+                if (frostbiteLvl >= 2) Upgrade.uniques.remove("Frostbite");
                 break;
             case "Scorch":
                 if (scorchLvl < 2) {
                     scorchLvl++;
                 }
-                if (scorchLvl == 2) Upgrade.uniques.remove("Scorch");
+                if (scorchLvl >= 2) Upgrade.uniques.remove("Scorch");
                 break;
             case "Sharpshot":
                 switch (sharpshotLvl) {
@@ -532,7 +539,8 @@ public class Hero extends SmoothMover
                         sharpshotLvl++;
                         projectileSpeed = maxProjectileSpeed;
                         Upgrade.type.remove("projectileSpeed");
-                            break;
+                        Upgrade.uniques.remove("Blood Pact");
+                        break;
                     case 1:
                         sharpshotLvl++;
                         attackRange = maxAttackRange;
@@ -544,12 +552,12 @@ public class Hero extends SmoothMover
             case "Vampire":
                 if (vampireLvl == 0) {
                     vampireLvl++;
-                    speed -= 0.1;
+                    speed -= 0.15;
                     maxHp += 3;
                 } 
                 else if (vampireLvl == 1) {
                     vampireLvl++;
-                    maxHp += 3;
+                    maxHp += 5;
                     Upgrade.uniques.remove("Vampire");
                 }
                 break;
@@ -568,6 +576,7 @@ public class Hero extends SmoothMover
                         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
                         Upgrade.type.remove("attackRange");
+                        Upgrade.uniques.remove("Blood Pact");
                     }
                     else {
                         critRate = 100.0;
@@ -583,7 +592,7 @@ public class Hero extends SmoothMover
                 break;
             case "Jester":
                 if (jesterLvl < 2) jesterLvl++;
-                if (jesterLvl == 2) Upgrade.uniques.remove("Jester");
+                if (jesterLvl >= 2) Upgrade.uniques.remove("Jester");
                 break;
             case "Arcane Echo":
                 if (arcaneEchoLvl < 2) {
@@ -591,11 +600,11 @@ public class Hero extends SmoothMover
                     if (arcaneEchoLvl == 1) {
                         echoChance = 35;
                         echoMult = 0.6;
-                        Upgrade.uniques.remove("Arcane Echo");
                     }
                     else {
                         echoChance = 100;
                         echoMult = 1.2;
+                        Upgrade.uniques.remove("Arcane Echo");
                     }
                 }
                 break;
@@ -603,16 +612,16 @@ public class Hero extends SmoothMover
                 if (spectralVeilLvl < 1) {
                     spectralVeilLvl++;
                     immuneChance = 40;
-                    immuneDuration = 1200;
+                    immuneDuration = 2000;
                 }
-                if (spectralVeilLvl == 1) Upgrade.uniques.remove("Spectral Veil");
+                if (spectralVeilLvl >= 1) Upgrade.uniques.remove("Spectral Veil");
                 break;
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
                     tornadoChance = 10 * vortexLvl;
                 }
-                if (vortexLvl == 2) Upgrade.uniques.remove("Violent Vortex");
+                if (vortexLvl >= 2) Upgrade.uniques.remove("Violent Vortex");
                 break;
             case "Blood Pact":
                 if (bloodPactLvl == 0) {
@@ -624,6 +633,13 @@ public class Hero extends SmoothMover
                     Upgrade.uniques.remove("Sharpshot");
                     Upgrade.uniques.remove("Blood Pact");
                 }
+                break;
+            case "Shrapnel Shot": 
+                if (shrapnelLvl < 2) {
+                    shrapnelLvl++;
+                    numShrapnel = 3 * shrapnelLvl;
+                }
+                if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
                 break;
         }
     }

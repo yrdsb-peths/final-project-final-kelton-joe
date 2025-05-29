@@ -14,14 +14,21 @@ public class Projectile extends SmoothMover
     private double damage;
     private int durability;
     private boolean isCrit;
-    
     private boolean isRemoved;
+    
+    private boolean isShrapnel;
+    private double angleIncrement;
+    private double shrapnelAngle;
+    private double radians;
+    private double dx, dy;
+    private double shrapnelSpeed;
+    private SimpleTimer shrapnelTimer = new SimpleTimer();
     
     private boolean addHealth;
     
     private HashSet<Enemy> enemiesHit;
     
-    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit) {
+    public Projectile(double nx, double ny, double speed, double damage, boolean isCrit, boolean isShrapnel) {
         GreenfootImage image = new GreenfootImage("arrow.png");
         setImage(image);
         image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
@@ -34,6 +41,8 @@ public class Projectile extends SmoothMover
         this.speed = speed;
         this.damage = damage;
         this.isCrit = isCrit;
+        this.isShrapnel = isShrapnel;
+        if (isShrapnel) shrapnelTimer.mark();
         
         if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
         else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
@@ -60,6 +69,7 @@ public class Projectile extends SmoothMover
                 isRemoved = true;
             }
         }
+        if (shrapnelTimer.millisElapsed() > 600 && isShrapnel) GameWorld.gameWorld.removeObject(this);
     }
     
     private void attack(Enemy enemy) {
@@ -77,6 +87,7 @@ public class Projectile extends SmoothMover
         vampire(enemy);
         jester(enemy);
         tornado(enemy);
+        shrapnel();
         
         durability--;
         if (durability == 0) {
@@ -133,6 +144,28 @@ public class Projectile extends SmoothMover
             enemy.target = "vortex";
             
             GameWorld.gameWorld.addObject(vortex, (int) enemy.getExactX(), (int) enemy.getExactY());
+        }
+    }
+    
+    private void shrapnel() {
+        if (Hero.hero.shrapnelLvl > 0) {
+            for (int i = 1; i < Hero.hero.numShrapnel + 2; i++) {
+                if (!isShrapnel) {
+                    angleIncrement = 360.0 / Hero.hero.numShrapnel;
+                    shrapnelAngle = angleIncrement * i;
+                    
+                    radians = Math.toRadians(shrapnelAngle);
+                    
+                    dx = Math.cos(radians);
+                    dy = Math.sin(radians);
+                    
+                    shrapnelSpeed = Hero.hero.shrapnelLvl == 1 ? 2.0 : 10.0;
+                    
+                    Projectile shrapnel = new Projectile(dx, dy, shrapnelSpeed, damage * 0.4, isCrit, true);
+                    
+                    GameWorld.gameWorld.addObject(shrapnel, (int)getExactX(), (int)getExactY());
+                }
+            }
         }
     }
 }
