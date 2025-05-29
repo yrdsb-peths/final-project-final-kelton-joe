@@ -668,7 +668,7 @@ public class Hero extends SmoothMover
     }
     
     public void animateHurt() {
-        if (hurtAnimationTimer.millisElapsed() < 150) return;
+        if (hurtAnimationTimer.millisElapsed() < 100) return;
         hurtAnimationTimer.mark();
         
         if (hurtImageIndex < hurtLeft.length) {
