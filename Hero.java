@@ -96,6 +96,7 @@ public class Hero extends SmoothMover
     
     // shrapnel shot
     int numShrapnel;
+    int shrapnelChance;
     
     // facing direction
     String facing = "right";
@@ -638,6 +639,7 @@ public class Hero extends SmoothMover
                 if (shrapnelLvl < 2) {
                     shrapnelLvl++;
                     numShrapnel = 3 * shrapnelLvl;
+                    shrapnelChance = 30 * shrapnelLvl;
                 }
                 if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
                 break;

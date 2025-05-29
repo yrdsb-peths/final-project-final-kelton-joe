@@ -87,18 +87,15 @@ public class Upgrade extends Actor
                          // chance to become immune to damage for a short time when hit
         //"Blightroot",    // apply poison on hit
                          // upgraded: poison damage spreads and increases the longer it is active
-        //"Iron Will",     // immune to crowd control
-        //"Windborne",      // tracks nearby enemies
-        //"Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
+        //"Blaze Rush",     // dash leaves a trail of fire that applies burn to enemies in the trail
         "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
                          // upgraded: vortex also deals damage and becomes bigger
-        // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
         "Blood Pact",    // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
         //"Stormcaller",   // chance to chain and stun enemies on hit
-        "Shrapnel Shot"  // after projectiles hit enemies, fire shrapnels with lower speed, damage, and range
+        "Shrapnel Shot"  // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
                            // upgraded: shrapnels have max speed and range, and can additionally pierce
-        //"Hydro Burst"    // projectiles are infused with water and weaken enemies
-                           // upgraded: blasts additionally slows and deal additional damage to enemies below 50% health
+        //"Hydro Burst"    // projectiles are infused with water and weakens enemies on hit (chance to blast)
+                           // upgraded: guaranteed blasts that deal additional crit damage to enemies under 50% health
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;

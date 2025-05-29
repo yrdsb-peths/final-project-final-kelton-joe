@@ -154,7 +154,7 @@ public class Projectile extends SmoothMover
     }
     
     private void shrapnel() {
-        if (Hero.hero.shrapnelLvl > 0) {
+        if (Hero.hero.shrapnelLvl > 0 && Greenfoot.getRandomNumber(100) <= Hero.hero.shrapnelChance) {
             for (int i = 1; i < Hero.hero.numShrapnel + 2; i++) {
                 if (!isShrapnel) {
                     angleIncrement = 360.0 / Hero.hero.numShrapnel;
