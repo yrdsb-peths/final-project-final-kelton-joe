@@ -33,8 +33,6 @@ public class GameWorld extends World {
     
     public UpgradeManager upgradeManager;
     
-    private GreenfootImage background = new GreenfootImage("background.png");
-    
     /**
      * Constructor for the world
      */
@@ -42,7 +40,7 @@ public class GameWorld extends World {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
         
-        setBackground(background);
+        setBackground("background/background" + Greenfoot.getRandomNumber(5) + ".png");
         
         gameWorld = this;
         
