@@ -40,30 +40,31 @@ public class GameWorld extends World {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
         
-        setBackground("background/background" + Greenfoot.getRandomNumber(5) + ".png");
+        // random background
+        //setBackground("background/background" + Greenfoot.getRandomNumber(5) + ".png");
         
+        // init
         gameWorld = this;
-        
         gameOver = false;
-        
         heroArm = new HeroArm();
         
+        // spawn actors
         hero = new Hero(heroArm);
         addObject(hero, 400, 300);
-        
         addObject(heroArm, 0, 0);
-        
         healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
         addObject(healthBar, 730, 20);
-        
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 80, 20);
         
+        // list of enemies
         Enemy.enemies = new ArrayList<Enemy>();
         
+        // start original wave
         wave = 0;
         startWave();
         
+        // give total rerolls
         UpgradeManager.numRerolls = 5;
     }
     
@@ -87,6 +88,7 @@ public class GameWorld extends World {
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
             if (!Hero.hero.isDead) {
                 if (wave % 5 == 0) {
+                    // spawn unique upgrade
                     upgradeManager = new UpgradeManager(2, this, true);
                 } else {
                     // spawns 3 upgrades
@@ -141,6 +143,7 @@ public class GameWorld extends World {
     }
     
     public void removeUpgrades() {
+        removeObject(upgradeManager);
         upgradeManager = null;
     }
 }
