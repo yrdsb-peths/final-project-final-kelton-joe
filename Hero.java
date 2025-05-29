@@ -125,6 +125,7 @@ public class Hero extends SmoothMover
     private int hurtImageIndex = 0;
     public boolean isHurt = false;
     
+    // whether hero is attacking
     public boolean isAttacking;
     
     // dash bar cooldown
@@ -135,12 +136,16 @@ public class Hero extends SmoothMover
     GreenBar greenBar = new GreenBar(dashBarScale);
     double cooldownPercent;
     
+    // hero arm
     private HeroArm heroArm;
     
+    // angle between hero and enemy (for bow targeting enemies)
     double dx, dy, angle;
     
     /**
      * Constructor for Hero Class
+     * 
+     * @param heroArm: the hero arm (bow) of the hero
      */
     public Hero(HeroArm heroArm) {
         for (int i = 0; i < idleLeft.length; i++) {
@@ -198,23 +203,23 @@ public class Hero extends SmoothMover
         critRate = 10.0;
         critDamage = 100.0;
         
+        // dash
         isDashing = false;
         dashLength = 300;
         dashMultiplier = 1.0;
         dashCooldown = 3000;
         
-        frostbiteLvl = 0;
-        scorchLvl = 0;
-        sharpshotLvl = 0;
-        
+        // marks cooldowns
         attackCooldown.mark();
         regenCooldown.mark();
         lastAttackTimer.mark();
         dashTimer.mark();
         
+        // adds dash bars
         GameWorld.gameWorld.addObject(redBar, barX, barY);
         GameWorld.gameWorld.addObject(greenBar, barX, barY);
         
+        // sets hero arm (bow)
         this.heroArm = heroArm;
     }
     

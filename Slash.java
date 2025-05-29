@@ -68,6 +68,10 @@ public class Slash extends SmoothMover
             
             Hero.hero.currentHp -= totalSelfDamage;
             
+            if (Hero.hero.currentHp <= 0) {
+                Hero.hero.isDead = true;
+            }
+            
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
     }
