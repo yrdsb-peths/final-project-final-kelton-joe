@@ -511,13 +511,13 @@ public class Hero extends SmoothMover
         switch(uniqueTrait) {
             case "Frostbite":
                 if (frostbiteLvl < 2) frostbiteLvl++;
-                else Upgrade.uniques.remove("Frostbite");
+                if (frostbiteLvl == 2) Upgrade.uniques.remove("Frostbite");
                 break;
             case "Scorch":
                 if (scorchLvl < 2) {
                     scorchLvl++;
                 }
-                else Upgrade.uniques.remove("Scorch");
+                if (scorchLvl == 2) Upgrade.uniques.remove("Scorch");
                 break;
             case "Sharpshot":
                 switch (sharpshotLvl) {
@@ -543,8 +543,8 @@ public class Hero extends SmoothMover
                 else if (vampireLvl == 1) {
                     vampireLvl++;
                     maxHp += 3;
+                    Upgrade.uniques.remove("Vampire");
                 }
-                else Upgrade.uniques.remove("Vampire");
                 break;
             case "Rogue":
                 if (rogueLvl < 2) {
@@ -570,13 +570,13 @@ public class Hero extends SmoothMover
                         attackSpeed = maxAttackSpeed;
                         Upgrade.type.remove("attackSpeed");
                         Upgrade.type.remove("dashCooldown");
+                        Upgrade.uniques.remove("Rogue");
                     }
                 }
-                else Upgrade.uniques.remove("Rogue");
                 break;
             case "Jester":
                 if (jesterLvl < 2) jesterLvl++;
-                else Upgrade.uniques.remove("Jester");
+                if (jesterLvl == 2) Upgrade.uniques.remove("Jester");
                 break;
             case "Arcane Echo":
                 if (arcaneEchoLvl < 2) {
@@ -584,13 +584,13 @@ public class Hero extends SmoothMover
                     if (arcaneEchoLvl == 1) {
                         echoChance = 35;
                         echoMult = 0.6;
+                        Upgrade.uniques.remove("Arcane Echo");
                     }
                     else {
                         echoChance = 100;
                         echoMult = 1.2;
                     }
                 }
-                else Upgrade.uniques.remove("Arcane Echo");
                 break;
             case "Spectral Veil":
                 if (spectralVeilLvl < 1) {
@@ -598,14 +598,14 @@ public class Hero extends SmoothMover
                     immuneChance = 40;
                     immuneDuration = 1200;
                 }
-                else Upgrade.uniques.remove("Spectral Veil");
+                if (spectralVeilLvl == 1) Upgrade.uniques.remove("Spectral Veil");
                 break;
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
                     tornadoChance = 10 * vortexLvl;
                 }
-                else Upgrade.uniques.remove("Violent Vortex");
+                if (vortexLvl == 2) Upgrade.uniques.remove("Violent Vortex");
                 break;
             case "Blood Pact":
                 if (bloodPactLvl == 0) {
@@ -615,8 +615,8 @@ public class Hero extends SmoothMover
                     attackRange = 150;
                     Upgrade.type.remove("attackRange");
                     Upgrade.uniques.remove("Sharpshot");
+                    Upgrade.uniques.remove("Blood Pact");
                 }
-                else Upgrade.uniques.remove("Blood Pact");
                 break;
         }
     }

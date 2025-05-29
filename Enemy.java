@@ -39,9 +39,23 @@ public class Enemy extends SmoothMover
     private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
     public SimpleTimer frostbiteTimer = new SimpleTimer();
     
+    private GreenfootSound[] freezeSounds = {
+        new GreenfootSound("freeze/freeze1.mp3"),
+        new GreenfootSound("freeze/freeze2.mp3"),
+        new GreenfootSound("freeze/freeze3.mp3")
+    };
+    private int freezeSoundIndex = 0;
+    
     private int burnTicks;
     private double burnDamage;
     private SimpleTimer scorchTimer = new SimpleTimer();
+    
+    private GreenfootSound[] burnSounds = {
+        new GreenfootSound("burn/burn1.mp3"),
+        new GreenfootSound("burn/burn2.mp3"),
+        new GreenfootSound("burn/burn3.mp3")
+    };
+    private int burnSoundIndex = 0;
     
     private boolean isDodged;
     
@@ -54,6 +68,10 @@ public class Enemy extends SmoothMover
     
     public Enemy(int hitpoints, double speed, int attack, int attackSpeed) {
         setImage("images/balloon1.png");
+        
+        for (GreenfootSound s : burnSounds) {
+            s.setVolume(30);
+        }
         
         // stat increases
         maxHitpoints = hitpoints;
@@ -102,6 +120,9 @@ public class Enemy extends SmoothMover
         
         if (scorchTimer.millisElapsed() >= 1000) {
             if (burnTicks > 0) {
+                burnSounds[burnSoundIndex].play();
+                burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
+                
                 removeHp((int)burnDamage, false, Color.RED, 25);
                 burnTicks--;
                 scorchTimer.mark();
@@ -187,6 +208,9 @@ public class Enemy extends SmoothMover
         if (Hero.hero.frostbiteLvl > 1) {
             isFrozen = true;
             frostbiteFreezeTimer.mark();
+            
+            freezeSounds[freezeSoundIndex].play();
+            freezeSoundIndex = (freezeSoundIndex + 1) % freezeSounds.length;
         }
     }
     
@@ -194,6 +218,9 @@ public class Enemy extends SmoothMover
         this.burnDamage = (int) (burnDamage + 0.5);
         burnTicks = 3;
         scorchTimer.mark();
+        
+        burnSounds[burnSoundIndex].play();
+        burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
         
         removeHp((int)this.burnDamage, false, Color.RED, 25);
     }
