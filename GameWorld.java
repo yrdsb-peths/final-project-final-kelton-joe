@@ -23,6 +23,8 @@ public class GameWorld extends World {
     
     public int waveDifficulty;
     
+    public int waveMultiplier;
+    
     public final int easyReward = 2;
     
     private Label waveLabel;
@@ -78,7 +80,7 @@ public class GameWorld extends World {
                 bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
                 
                 // spawn enemy with buffs
-                Enemy enemy = new Enemy(wave + bonusHp, bonusSpeed, bonusAttack, bonusAttackSpeed);
+                Enemy enemy = new Enemy((wave + bonusHp) * waveMultiplier, bonusSpeed, bonusAttack * waveMultiplier, bonusAttackSpeed);
                 addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
                 
                 enemiesToSpawn--;
@@ -104,12 +106,14 @@ public class GameWorld extends World {
         // increase wave number every time it is called
         wave++;
         
+        waveMultiplier = wave/10 + 1;
+        
         Hero.hero.currentHp = Hero.hero.maxHp;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         waveLabel.setValue("Wave " + wave);
         
-        enemiesToSpawn = wave + Greenfoot.getRandomNumber(2);
+        enemiesToSpawn = (wave + Greenfoot.getRandomNumber(2)) * waveMultiplier;
         
         waveDifficulty = Greenfoot.getRandomNumber(3);
         
