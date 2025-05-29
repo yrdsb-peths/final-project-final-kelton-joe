@@ -19,7 +19,6 @@ public class Slash extends SmoothMover
     
     double damage;
     boolean isCrit;
-    static double totalSelfDamage;
     
     List<Enemy> enemies = new ArrayList<Enemy>();
     Set<Enemy> enemiesHitSet = new HashSet<>();
@@ -33,7 +32,6 @@ public class Slash extends SmoothMover
         
         this.damage = damage;
         this.isCrit = isCrit;
-        totalSelfDamage = 0;
     }
     
     public void act() {
@@ -47,8 +45,6 @@ public class Slash extends SmoothMover
                 else enemy.removeHp((int) this.damage, false, Color.RED, 25);
                 
                 enemiesHitSet.add(enemy);
-                
-                totalSelfDamage += Math.min(this.damage * 0.2, Hero.hero.maxHp * 0.2);
                 
                 if ((int) Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
                 
@@ -65,8 +61,6 @@ public class Slash extends SmoothMover
         if (slashIndex == slash.length) {
             GameWorld.gameWorld.removeObject(this);
             enemiesHitSet.clear();
-            
-            Hero.hero.currentHp -= totalSelfDamage;
             
             if (Hero.hero.currentHp <= 0) {
                 Hero.hero.isDead = true;

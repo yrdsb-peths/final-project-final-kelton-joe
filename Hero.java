@@ -382,6 +382,8 @@ public class Hero extends SmoothMover
                 
                 Slash slash = new Slash(damageDealt, isCrit);
                 
+                currentHp -= maxHp * 0.1;
+                
                 dx = closestEnemy.getExactX() - getExactX();
                 dy = closestEnemy.getExactY() - getExactY();
                 angle = Math.toDegrees(Math.atan2(dy, dx));
