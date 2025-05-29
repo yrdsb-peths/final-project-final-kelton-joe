@@ -70,7 +70,7 @@ public class Enemy extends SmoothMover
         setImage("images/balloon1.png");
         
         for (GreenfootSound s : burnSounds) {
-            s.setVolume(30);
+            s.setVolume(50);
         }
         
         // stat increases
@@ -226,6 +226,9 @@ public class Enemy extends SmoothMover
     }
     
     public void jester(int stun, int stunDamage) {
+        if (Greenfoot.getRandomNumber(2) > 0) {
+            setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+        }
         if (stun > 0) {
             this.isStunned = true;
             removeHp(stunDamage, false, Color.MAGENTA, 30);

@@ -115,13 +115,11 @@ public class Projectile extends SmoothMover
     }
     
     private void jester(Enemy enemy) {
-        if (Hero.hero.jesterLvl > 0) {
-            if (Greenfoot.getRandomNumber(2) > 0) {
-                enemy.setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
-            }
-            if (Hero.hero.jesterLvl == 2) {
-                enemy.jester(Greenfoot.getRandomNumber(2), Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1));
-            }
+        if (Hero.hero.jesterLvl == 1) {
+            enemy.jester(0, 0);
+        }
+        if (Hero.hero.jesterLvl == 2) {
+            enemy.jester(Greenfoot.getRandomNumber(2), Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1));
         }
     }
     
