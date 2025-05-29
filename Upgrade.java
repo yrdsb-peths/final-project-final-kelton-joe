@@ -89,21 +89,12 @@ public class Upgrade extends Actor
                          // upgraded: poison damage spreads and increases the longer it is active
         //"Iron Will",     // immune to crowd control
         //"Windborne",      // tracks nearby enemies
-        // "Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
-        // "Saviors Sacrifice", // attacks consume health to deal additional damage
-                         // upgraded: increased damage and resistance on low health
+        //"Blaze Rush",     // dash leaves a trail of fire that applies burn, damage immunity when dashing
         "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
                          // upgraded: vortex also deals damage and becomes bigger
         // "Phantom Dash", // phase through enemies, damage immunity when dashing, deal damage to enemies hit by dash
         "Blood Pact"     // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
-        // "Time Rift",       // chance for hero to bypass maximum attack speed when attacking
-        // "Vengeful Spirit",  // after getting hit, next attack becomes much stronger
-        // "Concentration"    // much slower attacks that deal much increased damage
-        //"Stormcaller",   // chance to chain and stun enemies on hit 
-        //"Thornsoul",     // chance to rebound damage, damage reduction
-        //"Shadow Step",   // teleport to mouse location
-        //"Pheonix Flame", // deal fire damage when dying + 1 revive per game
-        //"Enduring Strike"// critical hits deal additional damage to enemies that have damage on them
+        //"Stormcaller",   // chance to chain and stun enemies on hit
         //"Shrapnel Shot"  // after projectiles hit enemies, fire shrapnels with lower speed, damage, and range
                            // upgraded: shrapnels have max speed and range, and can additionally pierce
         //"Hydro Burst"    // projectiles are infused with water and weaken enemies
