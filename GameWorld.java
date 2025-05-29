@@ -87,9 +87,14 @@ public class GameWorld extends World {
                 spawnTimer.mark();
             }
         } 
+        
+        // generate upgrades if enemies are dead and hero is alive
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
             if (!Hero.hero.isDead) {
                 if (wave % 5 == 0) {
+                    // additional reroll every 5 upgrades
+                    UpgradeManager.numRerolls++;
+                    
                     // spawn unique upgrade
                     upgradeManager = new UpgradeManager(2, this, true);
                 } else {
