@@ -11,10 +11,10 @@ public class GreenBar extends SmoothMover
     private GreenfootImage image;
     private int startWidth;
     
-    public GreenBar(double scale) {
+    public GreenBar(double xScale, double yScale) {
         image = new GreenfootImage("greenBar.png");
         setImage(image);
-        image.scale((int)(image.getWidth() * scale), (int)(image.getHeight() * scale));
+        image.scale((int)(image.getWidth() * xScale), (int)(image.getHeight() * yScale));
         
         startWidth = image.getWidth();
     }

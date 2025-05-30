@@ -12,14 +12,14 @@ import java.util.ArrayList;
 public class Enemy extends SmoothMover
 {
     // speed
-    private double speed = 1.0;
+    double speed = 1.0;
     
     // health
     public int maxHitpoints;
     public int hitpoints;
     
     // attack
-    private int attack = 1;
+    int attack = 1;
     
     // attack speed
     private int attackSpeed = 1200;
@@ -36,36 +36,36 @@ public class Enemy extends SmoothMover
     // slow and freeze
     public boolean isSlowed;
     public int slowDuration;
-    private boolean isFrozen;
-    private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
+    boolean isFrozen;
+    SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
     public SimpleTimer frostbiteTimer = new SimpleTimer();
-    private GreenfootSound[] freezeSounds = {
+    GreenfootSound[] freezeSounds = {
         new GreenfootSound("freeze/freeze1.mp3"),
         new GreenfootSound("freeze/freeze2.mp3"),
         new GreenfootSound("freeze/freeze3.mp3")
     };
-    private int freezeSoundIndex = 0;
+    int freezeSoundIndex = 0;
     
     // burn
-    private int burnTicks;
-    private double burnDamage;
-    private SimpleTimer scorchTimer = new SimpleTimer();
-    private GreenfootSound[] burnSounds = {
+    int burnTicks;
+    double burnDamage;
+    SimpleTimer scorchTimer = new SimpleTimer();
+    GreenfootSound[] burnSounds = {
         new GreenfootSound("burn/burn1.mp3"),
         new GreenfootSound("burn/burn2.mp3"),
         new GreenfootSound("burn/burn3.mp3")
     };
-    private int burnSoundIndex = 0;
+    int burnSoundIndex = 0;
     
     // dodge and stun
-    private boolean isDodged;
-    public boolean isStunned;
+    boolean isDodged;
+    boolean isStunned;
     SimpleTimer stunTimer = new SimpleTimer();
     
     // weaken
-    private boolean isWeakened;
-    private int weakenAmount;
-    private int weakenDuration;
+    boolean isWeakened;
+    int weakenAmount;
+    int weakenDuration;
     SimpleTimer weakenTimer = new SimpleTimer();
     
     public String target = "hero";
@@ -100,10 +100,10 @@ public class Enemy extends SmoothMover
     protected void addedToWorld(World world) {
         double scale = 0.05;
         
-        redBar = new RedBar(scale);
+        redBar = new RedBar(scale, scale);
         world.addObject(redBar, getX(), getY());
         
-        greenBar = new GreenBar(scale);
+        greenBar = new GreenBar(scale, scale);
         world.addObject(greenBar, getX(), getY());
     }
     
@@ -160,10 +160,7 @@ public class Enemy extends SmoothMover
             }
         }
         
-        if (redBar != null && greenBar != null) {
-            redBar.setPos(getX(), getY());
-            greenBar.setPos(getX(), getY(), (double)hitpoints/(double)maxHitpoints);
-        }
+        changeBar();
     }
     
     public void removeHp(int damage, boolean isCrit, Color color, int size) {
@@ -304,6 +301,13 @@ public class Enemy extends SmoothMover
             enemies.get(0).greenBar = null;
             GameWorld.gameWorld.removeObject(enemies.get(0));
             enemies.remove(enemies.get(0));
+        }
+    }
+    
+    public void changeBar() {
+        if (redBar != null && greenBar != null) {
+            redBar.setPos(getX(), getY());
+            greenBar.setPos(getX(), getY(), (double) hitpoints / (double) maxHitpoints);
         }
     }
 }

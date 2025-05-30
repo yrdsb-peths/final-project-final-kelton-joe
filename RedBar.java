@@ -10,10 +10,10 @@ public class RedBar extends SmoothMover
 {
     private GreenfootImage image;
     
-    public RedBar(double scale) {
+    public RedBar(double xScale, double yScale) {
         image = new GreenfootImage("redBar.png");
         setImage(image);
-        image.scale((int)(image.getWidth() * scale), (int)(image.getHeight() * scale));
+        image.scale((int)(image.getWidth() * xScale), (int)(image.getHeight() * yScale));
     }
     
     public void setPos(double x, double y) {

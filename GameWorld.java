@@ -13,7 +13,7 @@ public class GameWorld extends World {
     private int bonusAttack;
     private int bonusAttackSpeed;
     
-    private final int spawnInterval = 1000;
+    private int spawnInterval;
     
     private Hero hero;
     private HeroArm heroArm;
@@ -74,9 +74,14 @@ public class GameWorld extends World {
     }
     
     public void act() {
+        // spawn interval
+        if (wave % 10 == 0) spawnInterval = 3000;
+        else spawnInterval = 1000 / waveMultiplier;
+                    
         if (enemiesToSpawn > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
                 if (wave % 10 == 0) {
+                    // spawns the boss
                     spawnBoss();
                 } else {
                     // randomly generate buffs based on wave number
@@ -166,7 +171,7 @@ public class GameWorld extends World {
     }
     
     private void spawnBoss() {
-        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 10 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 2 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         enemiesToSpawn--;
