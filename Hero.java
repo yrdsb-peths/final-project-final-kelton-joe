@@ -99,9 +99,6 @@ public class Hero extends SmoothMover
     int numShrapnel;
     int shrapnelChance;
     
-    // hydro burst
-    int burstChance;
-    
     // facing direction
     String facing = "right";
     
@@ -660,14 +657,8 @@ public class Hero extends SmoothMover
                 if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
                 break;
             case "Hydro Burst":
-                if (burstLvl < 2) {
-                    burstLvl++;
-                    burstChance = 15;
-                }
-                if (burstLvl >= 2) {
-                    Upgrade.uniques.remove("Hydro Burst");
-                    burstChance = 40;
-                }
+                if (burstLvl < 2) burstLvl++;
+                if (burstLvl >= 2) Upgrade.uniques.remove("Hydro Burst");
                 break;
         }
     }
