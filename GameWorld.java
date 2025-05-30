@@ -76,18 +76,22 @@ public class GameWorld extends World {
     public void act() {
         if (enemiesToSpawn > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
-                // randomly generate buffs based on wave number
-                bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
-                bonusHp = Greenfoot.getRandomNumber(wave);
-                bonusAttack = Greenfoot.getRandomNumber((int)(wave / 2.5) + 1);
-                bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
-                
-                // spawn enemy with buffs
-                Enemy enemy = new Enemy((wave + bonusHp) * waveMultiplier, bonusSpeed, bonusAttack * waveMultiplier, bonusAttackSpeed);
-                addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
-                
-                enemiesToSpawn--;
-                spawnTimer.mark();
+                if (wave % 10 == 0) {
+                    spawnBoss();
+                } else {
+                    // randomly generate buffs based on wave number
+                    bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
+                    bonusHp = Greenfoot.getRandomNumber(wave);
+                    bonusAttack = Greenfoot.getRandomNumber((int)(wave / 2.5) + 1);
+                    bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
+                    
+                    // spawn enemy with buffs
+                    Enemy enemy = new Enemy((wave + bonusHp) * waveMultiplier, bonusSpeed, bonusAttack * waveMultiplier, bonusAttackSpeed);
+                    addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+                    
+                    enemiesToSpawn--;
+                    spawnTimer.mark();
+                }
             }
         } 
         
@@ -121,9 +125,16 @@ public class GameWorld extends World {
         
         waveLabel.setValue("Wave " + wave);
         
-        enemiesToSpawn = (wave + Greenfoot.getRandomNumber(2)) * waveMultiplier;
+        if (wave % 10 == 0) {
+            enemiesToSpawn = 1;
+            spawnTimer.mark();
+            waveDifficulty = 2;
+            return;
+        }
         
         waveDifficulty = Greenfoot.getRandomNumber(3);
+        
+        enemiesToSpawn = (wave + Greenfoot.getRandomNumber(2)) * waveMultiplier;
         
         switch (waveDifficulty) {
             case 0:
@@ -151,6 +162,14 @@ public class GameWorld extends World {
                 }
                 break;
         }
+        spawnTimer.mark();
+    }
+    
+    private void spawnBoss() {
+        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 10 * waveMultiplier);
+        addObject(wyrmroot, 400, 300);
+        
+        enemiesToSpawn--;
         spawnTimer.mark();
     }
     

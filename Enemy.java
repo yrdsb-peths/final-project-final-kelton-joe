@@ -30,8 +30,8 @@ public class Enemy extends SmoothMover
     public static ArrayList<Enemy> enemies = new ArrayList<Enemy>();
     
     // health bars
-    private RedBar redBar;
-    private GreenBar greenBar;
+    public RedBar redBar;
+    public GreenBar greenBar;
     
     // slow and freeze
     public boolean isSlowed;
@@ -59,7 +59,7 @@ public class Enemy extends SmoothMover
     
     // dodge and stun
     private boolean isDodged;
-    private boolean isStunned;
+    public boolean isStunned;
     SimpleTimer stunTimer = new SimpleTimer();
     
     // weaken
