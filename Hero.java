@@ -76,7 +76,7 @@ public class Hero extends SmoothMover
     int vortexLvl;
     int bloodPactLvl;
     int shrapnelLvl;
-    int burstLvl = 1;
+    int burstLvl;
     
     // arcane echo
     int echoChance;
@@ -100,7 +100,7 @@ public class Hero extends SmoothMover
     int shrapnelChance;
     
     // hydro burst
-    int burstChance = 100;
+    int burstChance;
     
     // facing direction
     String facing = "right";
@@ -366,6 +366,7 @@ public class Hero extends SmoothMover
         Enemy closestEnemy = findClosestEnemy();
         
         if (closestEnemy != null && closestEnemy.hitpoints > 0) {
+            // make bow face enemy
             heroArm.faceEnemy(closestEnemy);
             
             // crit generation
@@ -379,9 +380,14 @@ public class Hero extends SmoothMover
               isCrit = false;
             }
             
+            // echo damage
             if (echo) damageDealt *= echoMult;
             
+            // fire only if no blood pact
             if (bloodPactLvl == 0) fireProjectile(damageDealt, closestEnemy);
+            else if (burstLvl == 0) {
+                
+            }
             else {
                 if (isCrit) {
                     critMultiplier = 1.0 + (critDamage/100.0);
@@ -423,11 +429,17 @@ public class Hero extends SmoothMover
         
         double magnitude = Math.sqrt(dx*dx + dy*dy);
         
-        double normalizedX = dx / magnitude;
-        double normalizedY = dy / magnitude;
+        double nx = dx / magnitude;
+        double ny = dy / magnitude;
         
-        Projectile arrow = new Projectile(normalizedX, normalizedY, projectileSpeed, damage, isCrit, false);
-        GameWorld.gameWorld.addObject(arrow, (int)getExactX(), (int)getExactY());
+        if (burstLvl == 0) {
+            Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
+            GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
+        }
+        else {
+            Blast burst = new Blast(nx, ny, projectileSpeed, damage);
+            GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
+        }
     }
     
     /**
