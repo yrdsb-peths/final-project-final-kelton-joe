@@ -29,10 +29,15 @@ public class Projectile extends SmoothMover
     
     private HashSet<Enemy> enemiesHit;
     
+    GreenfootImage image;
+    
     public Projectile(double nx, double ny, double speed, double damage, boolean isCrit, boolean isShrapnel) {
-        GreenfootImage image = new GreenfootImage("arrow.png");
+        if (Hero.hero.scorchLvl > 0) image = new GreenfootImage("scorchArrow.png");
+        else if (Hero.hero.frostbiteLvl > 0) image = new GreenfootImage("frostArrow.png");
+        else image = image = new GreenfootImage("arrow.png");
+        
         setImage(image);
-        image.scale((int)(image.getWidth() * 0.1), (int)(image.getHeight() * 0.1));
+        image.scale((int)(image.getWidth() * 0.15), (int)(image.getHeight() * 0.15));
         
         double angle = Math.toDegrees(Math.atan2(ny, nx));
         setRotation((int)angle);

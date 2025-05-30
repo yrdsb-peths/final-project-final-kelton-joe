@@ -46,6 +46,7 @@ public class GameWorld extends World {
         
         // random background
         //setBackground("background/background" + Greenfoot.getRandomNumber(5) + ".png");
+        //setBackground("background.png");
         
         // init
         gameWorld = this;
