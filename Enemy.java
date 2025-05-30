@@ -33,12 +33,12 @@ public class Enemy extends SmoothMover
     private RedBar redBar;
     private GreenBar greenBar;
     
+    // slow and freeze
     public boolean isSlowed;
     public int slowDuration;
     private boolean isFrozen;
     private SimpleTimer frostbiteFreezeTimer = new SimpleTimer();
     public SimpleTimer frostbiteTimer = new SimpleTimer();
-    
     private GreenfootSound[] freezeSounds = {
         new GreenfootSound("freeze/freeze1.mp3"),
         new GreenfootSound("freeze/freeze2.mp3"),
@@ -46,10 +46,10 @@ public class Enemy extends SmoothMover
     };
     private int freezeSoundIndex = 0;
     
+    // burn
     private int burnTicks;
     private double burnDamage;
     private SimpleTimer scorchTimer = new SimpleTimer();
-    
     private GreenfootSound[] burnSounds = {
         new GreenfootSound("burn/burn1.mp3"),
         new GreenfootSound("burn/burn2.mp3"),
@@ -57,10 +57,16 @@ public class Enemy extends SmoothMover
     };
     private int burnSoundIndex = 0;
     
+    // dodge and stun
     private boolean isDodged;
-    
     private boolean isStunned;
     SimpleTimer stunTimer = new SimpleTimer();
+    
+    // weaken
+    private boolean isWeakened;
+    private int weakenAmount;
+    private int weakenDuration;
+    SimpleTimer weakenTimer = new SimpleTimer();
     
     public String target = "hero";
     
@@ -103,6 +109,8 @@ public class Enemy extends SmoothMover
     
     public void act()
     {
+        if (weakenTimer.millisElapsed() > weakenDuration) isWeakened = false;
+        
         if (!isSlowed) target = "hero";
         else if (Hero.hero.vortexLvl > 0) target = "vortex";
         
@@ -181,11 +189,14 @@ public class Enemy extends SmoothMover
     }
     
     public void attack() {
+        // rogue dodge
         if (Hero.hero.rogueLvl == 2) {
             if (Greenfoot.getRandomNumber(5) == 1) isDodged = true;
             else isDodged = false;
         }
-        if (!isDodged || !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack;
+        
+        // deal damage if hero is not immune
+        if (!isDodged || !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack * (1.0 - weakenAmount/100.0);
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
         if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0) {
@@ -276,6 +287,13 @@ public class Enemy extends SmoothMover
             
             GameWorld.gameWorld.addObject(vortex, (int) this.getExactX(), (int) this.getExactY());
         }
+    }
+    
+    public void weaken(int weakenAmount, int weakenDuration) {
+        this.isWeakened = true;
+        this.weakenAmount = weakenAmount;
+        this.weakenDuration = weakenDuration;
+        weakenTimer.mark();
     }
     
     public static void removeAll() {

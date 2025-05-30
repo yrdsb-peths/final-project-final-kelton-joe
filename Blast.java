@@ -118,6 +118,8 @@ public class Blast extends SmoothMover
         // deals damage to all enemies touching the blast
         for (Enemy enemy : enemies) {
             if (enemy != null && blastIndex == 7 && !enemiesHitSet.contains(enemy)) {
+                if (enemy.hitpoints <= enemy.maxHitpoints * 0.3) this.damage *= 2;
+                
                 enemy.removeHp((int) this.damage, false, Color.BLUE, 25);
                 
                 // dont damage enemies already hit
@@ -134,6 +136,7 @@ public class Blast extends SmoothMover
                 
                 // create shrapnels
                 shrapnel();
+                enemy.weaken(30, 5000);
             }
         }
         
@@ -188,7 +191,7 @@ public class Blast extends SmoothMover
                     
                     // speed and damage calculation depending on shrapnel level
                     shrapnelSpeed = Hero.hero.shrapnelLvl == 1 ? 2.0 : 10.0;
-                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? (0.3 * damage) + 1.0 : (0.6 * damage) + 1.0;
+                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? (0.3 * damage) + 1.0 : (0.7 * damage) + 1.0;
                     
                     // creates blast shrapnel 
                     Blast shrapnel = new Blast(dx, dy, shrapnelSpeed, shrapnelDamage, true);

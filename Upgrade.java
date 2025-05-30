@@ -94,8 +94,8 @@ public class Upgrade extends Actor
         //"Stormcaller",   // chance to chain and stun enemies on hit
         "Shrapnel Shot", // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
                          // upgraded: shrapnels have max speed and range, and can additionally pierce
-        "Hydro Burst"    // projectiles are infused with water and weakens enemies on hit (chance to blast)
-                         // upgraded: guaranteed blasts that deal additional crit damage to enemies under 50% health
+        "Hydro Burst"    // projectiles become blasts
+                         // upgraded: weakens enemies by 30% and deals double damage to enemies under 30% hp
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;
