@@ -624,8 +624,8 @@ public class Hero extends SmoothMover
             case "Spectral Veil":
                 if (spectralVeilLvl < 1) {
                     spectralVeilLvl++;
-                    immuneChance = 40;
-                    immuneDuration = 2000;
+                    immuneChance = 60;
+                    immuneDuration = 3000;
                 }
                 if (spectralVeilLvl >= 1) Upgrade.uniques.remove("Spectral Veil");
                 break;

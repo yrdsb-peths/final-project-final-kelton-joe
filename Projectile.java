@@ -94,13 +94,15 @@ public class Projectile extends SmoothMover
         
         enemy.removeHp((int)(damage + 0.5), isCrit, Color.GRAY, 20);
         
-        enemy.frostbite();
-        enemy.scorch(damage);
-        enemy.vampire();
-        enemy.jester();
-        enemy.tornado(damage);
-        
-        shrapnel();
+        if (!isShrapnel) {
+            enemy.frostbite();
+            enemy.scorch(damage);
+            enemy.vampire();
+            enemy.jester();
+            enemy.tornado(damage);
+            
+            shrapnel();
+        }
         
         durability--;
         if (durability == 0) {
@@ -122,7 +124,7 @@ public class Projectile extends SmoothMover
                     dy = Math.sin(radians);
                     
                     shrapnelSpeed = Hero.hero.shrapnelLvl == 1 ? 2.0 : 10.0;
-                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? 0.4 * damage : 0.8 * damage;
+                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? (0.4 * damage) + 1.0 : (0.8 * damage) + 1.0;
                     
                     Projectile shrapnel = new Projectile(dx, dy, shrapnelSpeed, shrapnelDamage, isCrit, true);
                     

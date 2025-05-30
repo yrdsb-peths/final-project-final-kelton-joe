@@ -84,11 +84,13 @@ public class Blast extends SmoothMover
                 
                 enemiesHitSet.add(enemy);
     
-                enemy.frostbite();
-                enemy.scorch(damage);
-                enemy.vampire();
-                enemy.jester();
-                enemy.tornado(damage);
+                if (!isShrapnel) {
+                    enemy.frostbite();
+                    enemy.scorch(damage);
+                    enemy.vampire();
+                    enemy.jester();
+                    enemy.tornado(damage);
+                }
                 
                 shrapnel();
             }
@@ -130,7 +132,7 @@ public class Blast extends SmoothMover
                     dy = Math.sin(radians);
                     
                     shrapnelSpeed = Hero.hero.shrapnelLvl == 1 ? 2.0 : 10.0;
-                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? 0.3 * damage : 0.6 * damage;
+                    shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? (0.3 * damage) + 1.0 : (0.6 * damage) + 1.0;
                     
                     Blast shrapnel = new Blast(dx, dy, shrapnelSpeed, shrapnelDamage, true);
                     
