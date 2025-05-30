@@ -18,8 +18,8 @@ public class Blast extends SmoothMover
     int blastIndex = 0;
     
     double damage;
-    private final int blastSize = 130;
-    private final int projectilesize = 50;
+    private final int blastSize = 110;
+    private final int projectilesize = 35;
     
     List<Enemy> enemies = new ArrayList<Enemy>();
     Set<Enemy> enemiesHitSet = new HashSet<>();
