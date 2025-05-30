@@ -26,8 +26,8 @@ public class Slash extends SmoothMover
     public Slash(double damage, boolean isCrit) {
         for (int i = 0; i < slash.length; i++) {
             slash[i] = new GreenfootImage("bloodslash/slash" + i + ".png");
-            slash[i].scale(125, 125);
-            if (isCrit) slash[i].scale(160, 160);
+            slash[i].scale(150, 150);
+            if (isCrit) slash[i].scale(200, 200);
         }
         
         this.damage = damage;
