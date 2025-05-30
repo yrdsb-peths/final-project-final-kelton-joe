@@ -18,7 +18,7 @@ public class Hero extends SmoothMover
     
     // attack speed
     public double attackSpeed;
-    private final double maxAttackSpeed = 200.0;
+    private final double maxAttackSpeed = 300.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
@@ -382,9 +382,6 @@ public class Hero extends SmoothMover
             
             // fire only if no blood pact
             if (bloodPactLvl == 0) fireProjectile(damageDealt, closestEnemy);
-            else if (burstLvl == 0) {
-                
-            }
             else {
                 if (isCrit) {
                     critMultiplier = 1.0 + (critDamage/100.0);
@@ -644,7 +641,7 @@ public class Hero extends SmoothMover
                     bloodPactLvl++;
                     maxHp += 3;
                     critDamage += 30;
-                    attackRange = 150;
+                    attackRange = 200;
                     Upgrade.type.remove("attackRange");
                     Upgrade.uniques.remove("Sharpshot");
                     Upgrade.uniques.remove("Blood Pact");
