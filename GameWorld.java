@@ -4,38 +4,46 @@ import java.util.ArrayList;
 public class GameWorld extends World {
     static GameWorld gameWorld;
     
-    SimpleTimer spawnTimer = new SimpleTimer();
-    
+    // enemies to spawn
     private int enemiesToSpawn;
+    SimpleTimer spawnTimer = new SimpleTimer();
+    private int spawnInterval;
     
+    // bonus enemy stats
     private int bonusHp;
     private double bonusSpeed;
     private int bonusAttack;
     private int bonusAttackSpeed;
+    private final int maxSpeedMultiplier = 8;
     
-    private int spawnInterval;
-    
+    // hero
     private Hero hero;
     private HeroArm heroArm;
     
+    // wave
     public int wave;
-    private final int maxSpeedMultiplier = 8;
-    
     public int waveDifficulty;
-    
     public int waveMultiplier;
-    
     public final int easyReward = 2;
-    
     private Label waveLabel;
     
+    // game over
     static boolean gameOver;
     
+    // hero hp bar
     public static Label healthBar;
     
+    // upgrade manager
     public UpgradeManager upgradeManager;
     
+    // waves per unique upgrade
     public static final int waveUnique = 5;
+    
+    // boss label timer and text
+    Label bossText = new Label("Boss Wave", 90);
+    Label boss1 = new Label("The Wyrmroot", 50);
+    Label bossBarText = new Label("Zarock: the All-Devouring", 30);
+    SimpleTimer labelTimer = new SimpleTimer();
     
     /**
      * Constructor for the world
@@ -66,7 +74,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 0;
+        wave = 9;
         startWave();
         
         // give total rerolls
@@ -74,6 +82,10 @@ public class GameWorld extends World {
     }
     
     public void act() {
+        if (labelTimer.millisElapsed() > 1500) {
+            removeObject(bossText);
+            removeObject(boss1);
+        }
         // spawn interval
         if (wave % 10 == 0) spawnInterval = 3000;
         else spawnInterval = 1000 / waveMultiplier;
@@ -83,6 +95,7 @@ public class GameWorld extends World {
                 if (wave % 10 == 0) {
                     // spawns the boss
                     spawnBoss();
+                    addObject(bossBarText, 400, 20);
                 } else {
                     // randomly generate buffs based on wave number
                     bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
@@ -122,6 +135,12 @@ public class GameWorld extends World {
     public void startWave() {
         // increase wave number every time it is called
         wave++;
+        
+        if (wave % 10 == 0) {
+            labelTimer.mark();
+            addObject(bossText, 400, 300);
+            addObject(boss1, 400, 375);
+        }
         
         waveMultiplier = wave/10 + 1;
         
@@ -171,7 +190,7 @@ public class GameWorld extends World {
     }
     
     private void spawnBoss() {
-        Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 2 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 4 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         enemiesToSpawn--;
