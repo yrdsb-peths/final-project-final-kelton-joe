@@ -213,26 +213,68 @@ public class Enemy extends SmoothMover
             freezeSoundIndex = (freezeSoundIndex + 1) % freezeSounds.length;
         }
     }
+
     
-    public void scorch(double burnDamage) {
-        this.burnDamage = (int) (burnDamage + 0.5);
-        burnTicks = 3;
-        scorchTimer.mark();
-        
-        burnSounds[burnSoundIndex].play();
-        burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
-        
-        removeHp((int)this.burnDamage, false, Color.RED, 25);
+    public void scorch(double damage) {
+        if (Hero.hero.scorchLvl > 0) {
+            this.burnDamage = (int) ((damage * 0.5 * Hero.hero.scorchLvl) + 0.5);
+            burnTicks = 3;
+            scorchTimer.mark();
+            
+            burnSounds[burnSoundIndex].play();
+            burnSoundIndex = (burnSoundIndex + 1) % burnSounds.length;
+            
+            removeHp((int)this.burnDamage, false, Color.RED, 25);
+        }
     }
     
-    public void jester(int stun, int stunDamage) {
-        if (Greenfoot.getRandomNumber(2) > 0) {
-            setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+    public void vampire() {
+        if (Hero.hero.vampireLvl == 1) {
+            // increases current hp by 1 or 5% of max hp, whichever is more
+            Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+            Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
+            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
-        if (stun > 0) {
-            this.isStunned = true;
-            removeHp(stunDamage, false, Color.MAGENTA, 30);
-            stunTimer.mark();
+        else if (Hero.hero.vampireLvl == 2) {
+            // chance to grant additional hp on kill
+            if (this.hitpoints <= 0) {
+                if (Greenfoot.getRandomNumber(2) == 1) {
+                    Hero.hero.maxHp++;
+                    Hero.hero.currentHp++;
+                }
+            }
+            // otherwise increase current hp by 1 or 15%, whicherver is more
+            else {
+                Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+                Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
+            }
+            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        }
+    }
+    
+    public void jester() {
+        if (Hero.hero.jesterLvl > 0) {
+            if (Greenfoot.getRandomNumber(2) > 0) {
+                setLocation(Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
+            }
+            if (Greenfoot.getRandomNumber(2) > 0 && Hero.hero.jesterLvl > 1) {
+                this.isStunned = true;
+                removeHp(Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1), false, Color.MAGENTA, 30);
+                stunTimer.mark();
+            }
+        }
+    }
+    
+    public void tornado(double damage) {
+        if (Hero.hero.vortexLvl > 0  && Greenfoot.getRandomNumber(100) <= Hero.hero.tornadoChance) {
+            Tornado vortex = new Tornado((int) damage);
+            
+            vortex.numCycles = Hero.hero.vortexLvl * 5;
+            vortex.tornadoIndex = 0;
+            
+            this.target = "vortex";
+            
+            GameWorld.gameWorld.addObject(vortex, (int) this.getExactX(), (int) this.getExactY());
         }
     }
     

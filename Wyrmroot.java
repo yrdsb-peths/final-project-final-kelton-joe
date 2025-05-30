@@ -129,7 +129,7 @@ public class Wyrmroot extends Enemy
             greenBar.setPos(getX(), getY(), (double)hitpoints/(double)maxHitpoints);
         }
     }
-    
+    /*
     @Override
     public void jester(int stun, int stunDamage) {
         if (stun > 0) {
@@ -138,6 +138,7 @@ public class Wyrmroot extends Enemy
             stunTimer.mark();
         }
     }
+    */
     
     private void blueBite() {
         
