@@ -552,6 +552,8 @@ public class Hero extends SmoothMover
                     case 0:
                         sharpshotLvl++;
                         projectileSpeed = maxProjectileSpeed;
+                        attackSpeed = 800;
+                        Upgrade.type.remove("attackSpeed");
                         Upgrade.type.remove("projectileSpeed");
                         Upgrade.uniques.remove("Blood Pact");
                         break;

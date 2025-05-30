@@ -148,7 +148,7 @@ public class UpgradeManager extends Actor
             GameWorld.gameWorld.removeUpgrades();
             
             // same upgrade generation found in gameWorld
-            if (GameWorld.gameWorld.wave % 5 == 0) {
+            if (GameWorld.gameWorld.wave % GameWorld.waveUnique == 0) {
                 rerolledManager = new UpgradeManager(2, GameWorld.gameWorld, true);
             }
             else {

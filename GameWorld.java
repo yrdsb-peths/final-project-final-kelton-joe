@@ -35,6 +35,8 @@ public class GameWorld extends World {
     
     public UpgradeManager upgradeManager;
     
+    public static final int waveUnique = 5;
+    
     /**
      * Constructor for the world
      */
@@ -91,7 +93,7 @@ public class GameWorld extends World {
         // generate upgrades if enemies are dead and hero is alive
         else if (Enemy.enemies.size() == 0 && upgradeManager == null) {
             if (!Hero.hero.isDead) {
-                if (wave % 5 == 0) {
+                if (wave % waveUnique == 0) {
                     // additional reroll every 5 upgrades
                     UpgradeManager.numRerolls++;
                     
