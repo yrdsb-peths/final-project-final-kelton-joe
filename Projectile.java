@@ -94,6 +94,7 @@ public class Projectile extends SmoothMover
         jester(enemy);
         tornado(enemy);
         shrapnel();
+        burst();
         
         durability--;
         if (durability == 0) {
@@ -173,6 +174,12 @@ public class Projectile extends SmoothMover
                     GameWorld.gameWorld.addObject(shrapnel, (int)getExactX(), (int)getExactY());
                 }
             }
+        }
+    }
+    
+    private void burst() {
+        if (Hero.hero.burstLvl > 0 && Greenfoot.getRandomNumber(100) <= Hero.hero.burstChance) {
+            Blast hydroBlast = new Blast(damage);
         }
     }
 }

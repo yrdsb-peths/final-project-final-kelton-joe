@@ -76,6 +76,7 @@ public class Hero extends SmoothMover
     int vortexLvl;
     int bloodPactLvl;
     int shrapnelLvl;
+    int burstLvl = 1;
     
     // arcane echo
     int echoChance;
@@ -97,6 +98,9 @@ public class Hero extends SmoothMover
     // shrapnel shot
     int numShrapnel;
     int shrapnelChance;
+    
+    // hydro burst
+    int burstChance = 100;
     
     // facing direction
     String facing = "right";
@@ -642,6 +646,16 @@ public class Hero extends SmoothMover
                     shrapnelChance = 30 * shrapnelLvl;
                 }
                 if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
+                break;
+            case "Hydro Burst":
+                if (burstLvl < 2) {
+                    burstLvl++;
+                    burstChance = 15;
+                }
+                if (burstLvl >= 2) {
+                    Upgrade.uniques.remove("Hydro Burst");
+                    burstChance = 40;
+                }
                 break;
         }
     }

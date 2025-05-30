@@ -92,10 +92,10 @@ public class Upgrade extends Actor
                          // upgraded: vortex also deals damage and becomes bigger
         "Blood Pact",    // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
         //"Stormcaller",   // chance to chain and stun enemies on hit
-        "Shrapnel Shot"  // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
-                           // upgraded: shrapnels have max speed and range, and can additionally pierce
-        //"Hydro Burst"    // projectiles are infused with water and weakens enemies on hit (chance to blast)
-                           // upgraded: guaranteed blasts that deal additional crit damage to enemies under 50% health
+        "Shrapnel Shot", // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
+                         // upgraded: shrapnels have max speed and range, and can additionally pierce
+        "Hydro Burst"    // projectiles are infused with water and weakens enemies on hit (chance to blast)
+                         // upgraded: guaranteed blasts that deal additional crit damage to enemies under 50% health
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;

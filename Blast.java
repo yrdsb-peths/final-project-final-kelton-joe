@@ -1,56 +1,52 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-import java.util.ArrayList;
-import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Write a description of class Slash here.
+ * Hydro Burst unique upgrade
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Joe and Kelton
+ * @version June 2025
  */
-public class Slash extends SmoothMover
+public class Blast extends Actor
 {
-    GreenfootImage[] slash = new GreenfootImage[7];
+    GreenfootImage[] blast = new GreenfootImage[11];
     
-    SimpleTimer slashTimer = new SimpleTimer();
-    int slashIndex = 0;
+    SimpleTimer blastTimer = new SimpleTimer();
+    int blastIndex = 0;
     
     double damage;
-    boolean isCrit;
     
     List<Enemy> enemies = new ArrayList<Enemy>();
     Set<Enemy> enemiesHitSet = new HashSet<>();
     
-    public Slash(double damage, boolean isCrit) {
-        for (int i = 0; i < slash.length; i++) {
-            slash[i] = new GreenfootImage("bloodslash/slash" + i + ".png");
-            slash[i].scale(125, 125);
-            if (isCrit) slash[i].scale(160, 160);
+    public Blast(double damage) {
+        for (int i = 0; i < blast.length; i++) {
+            blast[i] = new GreenfootImage("blast/blast" + i + ".png");
+            if (Hero.hero.burstLvl == 1) blast[i].scale(50, 50);
+            else blast[i].scale(80, 80);
         }
         
         this.damage = damage;
-        this.isCrit = isCrit;
     }
     
-    public void act() {
-        animateSlash();
+    public void act()
+    {
+        animateBlast();
         
         enemies = getIntersectingObjects(Enemy.class);
         
         for (Enemy enemy : enemies) {
-            if (enemy != null && slashIndex == 3 && !enemiesHitSet.contains(enemy)) {
-                if (isCrit) enemy.removeHp((int) this.damage, false, Color.RED, 35);
-                else enemy.removeHp((int) this.damage, false, Color.RED, 25);
+            if (enemy != null && blastIndex == 3 && !enemiesHitSet.contains(enemy)) {
+                enemy.removeHp((int) this.damage, false, Color.BLUE, 30);
                 
                 enemiesHitSet.add(enemy);
                 
-                if ((int) Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
-                
                 vampire(enemy);
                 GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
-                
+    
                 frostbite(enemy);
                 scorch(enemy);
                 jester(enemy);
@@ -58,25 +54,19 @@ public class Slash extends SmoothMover
             }
         }
         
-        if (slashIndex == slash.length) {
+        if (blastIndex == blast.length) {
             GameWorld.gameWorld.removeObject(this);
             enemiesHitSet.clear();
-            
-            if (Hero.hero.currentHp <= 0) {
-                Hero.hero.isDead = true;
-            }
-            
-            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
     }
     
-    public void animateSlash() {
-        if (slashTimer.millisElapsed() < 60) return;
-        slashTimer.mark();
+    public void animateBlast() {
+        if (blastTimer.millisElapsed() < 100) return;
+        blastTimer.mark();
         
-        if (slashIndex < slash.length) {
-            setImage(slash[slashIndex]);
-            slashIndex++;
+        if (blastIndex < blast.length) {
+            setImage(blast[blastIndex]);
+            blastIndex++;
         }
     }
     
