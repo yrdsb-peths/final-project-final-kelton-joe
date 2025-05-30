@@ -18,7 +18,7 @@ public class Blast extends SmoothMover
     int blastIndex = 0;
     
     double damage;
-    private int blastSize = 110;
+    private int blastSize = 90;
     private final int projectilesize = 35;
     
     List<Enemy> enemies = new ArrayList<Enemy>();
@@ -92,6 +92,10 @@ public class Blast extends SmoothMover
                 
                 shrapnel();
             }
+        }
+        
+        if (getX() <= 5 || getX() >= GameWorld.gameWorld.getWidth() - 5 || getY() <= 5 || getY() >= GameWorld.gameWorld.getHeight() - 5) {
+            GameWorld.gameWorld.removeObject(this);
         }
         
         if (blastIndex == blast.length) {
