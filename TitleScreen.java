@@ -21,14 +21,10 @@ public class TitleScreen extends World
         Label gameName = new Label("Project Nameless", 70);
         addObject(gameName, 400, 100);
         
-        Label start = new Label("Press space to start the game", 35);
-        addObject(start, 400, 500);
-    }
-    
-    public void act() {
-        if (Greenfoot.isKeyDown("space")) {
-            GameWorld gameWorld = new GameWorld();
-            Greenfoot.setWorld(gameWorld);
-        }
+        Button start = new Button("Start");
+        addObject(start, 350, 500);
+        
+        Button menu = new Button("Menu");
+        addObject(menu, 450, 500);
     }
 }

@@ -20,14 +20,10 @@ public class EndScreen extends World
         Label gameOverText = new Label("Game Over", 80);
         addObject(gameOverText, 400, 100);
         
-        Label resetText = new Label("Press r to restart", 35);
-        addObject(resetText, 400, 500);
-    }
-    
-    public void act() {
-        if (Greenfoot.isKeyDown("r")) {
-            GameWorld gameWorld = new GameWorld();
-            Greenfoot.setWorld(gameWorld);
-        }
+        Button restart = new Button("Restart");
+        addObject(restart, 360, 500);
+        
+        Button home = new Button("Home");
+        addObject(home, 440, 500);
     }
 }
