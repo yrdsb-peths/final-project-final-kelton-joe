@@ -644,6 +644,8 @@ public class Hero extends SmoothMover
                     maxHp += 3;
                     critDamage += 30;
                     attackRange = 200;
+                    Upgrade.type.remove("projectile"); 
+                    Upgrade.type.remove("projectileSpeed");
                     Upgrade.type.remove("attackRange");
                     Upgrade.uniques.remove("Sharpshot");
                     Upgrade.uniques.remove("Blood Pact");

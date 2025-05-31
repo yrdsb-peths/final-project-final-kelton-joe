@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Wyrmroot extends Enemy
 {
     // boss attack speed
-    private double attackSpeed = 1500;
+    private double attackSpeed = 1000;
     private boolean facingRight = false;
     
     // animation
@@ -63,7 +63,7 @@ public class Wyrmroot extends Enemy
     private SimpleTimer disableTimer = new SimpleTimer();
     
     public Wyrmroot(int hitpoints, int attack) {
-        super(hitpoints, 0.35, attack, 1500);
+        super(hitpoints, 0.5, attack, 1000);
         
         for (int i = 0; i < blueBiteRight.length; i++) {
             blueBiteLeft[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
