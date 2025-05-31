@@ -91,7 +91,7 @@ public class Wyrmvine extends Enemy
             // facing right if the hero is more to the right
             facingRight = dx >= 0;
             
-            if ((Math.sqrt(dx * dx + dy * dy) < 65 || isAttacking) && attackTimer.millisElapsed() > attackSpeed) {
+            if ((Math.sqrt(dx * dx + dy * dy) < 75 || isAttacking) && attackTimer.millisElapsed() > attackSpeed) {
                 animateAttack();
                 if (attackIndex == 4 && Math.sqrt(dx * dx + dy * dy) < 50 && !hasAttacked) {
                     hasAttacked = true;

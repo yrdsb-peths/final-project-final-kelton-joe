@@ -190,7 +190,7 @@ public class GameWorld extends World {
     }
     
     private void spawnBoss() {
-        Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 4 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 4 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         enemiesToSpawn--;

@@ -214,7 +214,7 @@ public class Wyrmroot extends Enemy
                             if (Math.sqrt(dx * dx + dy * dy) < 70) attack();
                             
                             if (vineToSpawn > 0 && !spawnedVine) {
-                                Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 50, GameWorld.gameWorld.waveMultiplier * 3);
+                                Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 40, GameWorld.gameWorld.waveMultiplier * 3);
                                 GameWorld.gameWorld.addObject(vine, (int) getExactX(), (int) getExactY());
                                 vineToSpawn--;
                                 vineRemaining++;
