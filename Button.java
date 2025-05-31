@@ -12,6 +12,9 @@ public class Button extends Actor
     public String type;
     private double scale;
     
+    private int mouseX, mouseY;
+    private boolean isHovered;
+    
     // image for the button
     public GreenfootImage image;
     
@@ -58,6 +61,12 @@ public class Button extends Actor
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
             setImage(image);
         }
+        else if (type.equals("Unique")) {
+            image = new GreenfootImage("uniques.png");
+            scale = 0.75;
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            setImage(image);
+        }
     }
     
     /**
@@ -67,6 +76,17 @@ public class Button extends Actor
      */
     public void act()
     {
+        // checks mouse hovering for lighter background
+        if (isMouseOver() && !isHovered) {
+            getImage().setTransparency(200);
+            isHovered = true;
+        }
+        // otherwise don't make lighter background
+        else if (!isMouseOver() && isHovered) {
+            getImage().setTransparency(255);
+            isHovered = false;
+        }
+        
         // confirm or reroll
         if (type.equals("Confirm") || type.equals("Rerolls")) {
             // removes any button if there is no upgrade manager
@@ -96,5 +116,15 @@ public class Button extends Actor
             GameWorld gameWorld = new GameWorld();
             Greenfoot.setWorld(gameWorld);
         }
+    }
+    
+    public Boolean isMouseOver() {
+        mouseX = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getX() : -1;
+        mouseY = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getY() : -1;
+        
+        return mouseX >= getX() - getImage().getWidth() / 2
+                      && mouseX <= getX() + getImage().getWidth() / 2
+                      && mouseY >= getY() - getImage().getHeight() / 2
+                      && mouseY <= getY() + getImage().getHeight() / 2;
     }
 }

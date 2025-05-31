@@ -22,9 +22,12 @@ public class TitleScreen extends World
         addObject(gameName, 400, 100);
         
         Button start = new Button("Start");
-        addObject(start, 350, 500);
+        addObject(start, 300, 500);
         
         Button menu = new Button("Menu");
-        addObject(menu, 450, 500);
+        addObject(menu, 400, 500);
+        
+        Button unique = new Button("Unique");
+        addObject(unique, 500, 500);
     }
 }
