@@ -470,6 +470,7 @@ public class Hero extends SmoothMover
                 if (projectileSpeed == maxProjectileSpeed) {
                     Upgrade.type.remove("projectileSpeed");
                 }
+                break;
             case "speed":
                 speed += value;
                 break;
