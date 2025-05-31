@@ -119,17 +119,20 @@ public class Button extends Actor
             GameWorld gameWorld = new GameWorld();
             Greenfoot.setWorld(gameWorld);
         }
+        // return to home screen
         else if (type.equals("Home") && Greenfoot.mouseClicked(this)) {
             TitleScreen titleScreen = new TitleScreen();
             GameWorld.gameWorld = null;
             Greenfoot.setWorld(titleScreen);
         }
+        // restart game
         else if (type.equals("Restart") && Greenfoot.mouseClicked(this)) {
             GameWorld gameWorld = new GameWorld();
             Greenfoot.setWorld(gameWorld);
         }
     }
     
+    // checks if mouse is hovering
     public Boolean isMouseOver() {
         mouseX = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getX() : -1;
         mouseY = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getY() : -1;
