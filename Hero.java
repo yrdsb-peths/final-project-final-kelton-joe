@@ -61,6 +61,7 @@ public class Hero extends SmoothMover
     SimpleTimer dashTimer = new SimpleTimer();
     double dashLength;
     double dashMultiplier;
+    double dashSpeed;
     final int minDashCooldown = 600;
     int dashCooldown;
     
@@ -213,6 +214,7 @@ public class Hero extends SmoothMover
         isDashing = false;
         dashLength = 300;
         dashMultiplier = 1.0;
+        dashSpeed = 2.5;
         dashCooldown = 3000;
         
         // marks cooldowns
@@ -264,7 +266,7 @@ public class Hero extends SmoothMover
             if (Greenfoot.isKeyDown("e")) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
                     isDashing = true;
-                    dashMultiplier = 2.5;
+                    dashMultiplier = dashSpeed;
                     dashTimer.mark();
                 }
             }
@@ -502,7 +504,7 @@ public class Hero extends SmoothMover
                 dashLength += value;
                 break;
             case "dashMultiplier":
-                dashMultiplier += value;
+                dashSpeed += value;
                 break;
             case "projectile":
                 projectileSpeed = Math.min(projectileSpeed + value/100.0, maxProjectileSpeed);
