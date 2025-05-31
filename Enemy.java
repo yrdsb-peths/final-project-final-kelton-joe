@@ -196,6 +196,7 @@ public class Enemy extends SmoothMover
         if (!isDodged || !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack * (1.0 - weakenAmount/100.0);
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
+        // chance to activate spectral veil on hitting hero
         if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0) {
             if (!Hero.hero.isImmune) {
                 Hero.hero.isImmune = true;
@@ -203,6 +204,7 @@ public class Enemy extends SmoothMover
             }
         }
         
+        // hero hurt and death animations
         if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
         else if (!isDodged && !Hero.hero.isImmune) Hero.hero.isHurt = true;
     }

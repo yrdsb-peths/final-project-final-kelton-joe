@@ -39,7 +39,7 @@ public class Wyrmroot extends Enemy
     // boss conditions
     private boolean isAttacking;
     private boolean isAnimating;
-    private boolean isDead = false;
+    public static boolean isDead = false;
     
     // location
     private double magnitude;
@@ -49,8 +49,20 @@ public class Wyrmroot extends Enemy
     // which attack to use
     private double attackIndex = 0;
     
+    // which phase
+    private int phase;
+    
+    // summons and phase 2 related
+    private int vineToSpawn;
+    private boolean spawnedVine;
+    public static int vineRemaining;
+    public static boolean vineDied;
+    public static double resMult;
+    private boolean isDisabled;
+    private SimpleTimer disableTimer = new SimpleTimer();
+    
     public Wyrmroot(int hitpoints, int attack) {
-        super(hitpoints, 0.0, attack, 2000);
+        super(hitpoints, 0.0, attack, 1500);
         
         for (int i = 0; i < blueBiteRight.length; i++) {
             blueBiteLeft[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
@@ -76,11 +88,45 @@ public class Wyrmroot extends Enemy
         
         isAnimating = false;
         attackCooldown.mark();
+        
+        isDead = false;
+        phase = 1;
+        isDisabled = false;
+        resMult = 1.0;
+        vineRemaining = 0;
+        vineToSpawn = 0;
     }
     
     public void act()
     {
         if (!isDead) {
+            // triggers phase 2
+            if (hitpoints <= (maxHitpoints * 0.5) && phase == 1) {
+                phase++;
+                vineToSpawn = 4;
+                resMult = 0.05;
+                attackIndex = 1;
+                hitpoints = maxHitpoints;
+            }
+            
+            if (vineDied) {
+                hitpoints = Math.max(1, (int) (hitpoints - (maxHitpoints * 0.1)));
+                isDisabled = true;
+                disableTimer.mark();
+                vineDied = false;
+            }
+            
+            if (vineRemaining <= 0 && vineToSpawn <= 0 && phase == 2) {
+                resMult = 1.3;
+                attackIndex = 0;
+                isAttacking = false;
+                isAnimating = false;
+                phase++;
+            }
+            
+            // disable for 2s when vine dies 
+            if (disableTimer.millisElapsed() >= 2000) isDisabled = false;
+            
             // tornado targeting
             if (!isSlowed) target = "hero";
             else if (Hero.hero.vortexLvl > 0) target = "vortex";
@@ -95,7 +141,7 @@ public class Wyrmroot extends Enemy
                 facingRight = dx >= 0;
                 
                 // animate run
-                if (!isAttacking) animateRun();
+                if (!isAttacking && !isDisabled) animateRun();
             }
             
             // deal scorch damage
@@ -121,7 +167,7 @@ public class Wyrmroot extends Enemy
             if (weakenTimer.millisElapsed() > weakenDuration) isWeakened = false;
             
             // slow, frozen, and stun movements
-            if (!isAttacking) {
+            if (!isAttacking && !isDisabled) {
                 // movement calculation
                 magnitude = Math.sqrt(dx * dx + dy * dy);
                 nx = dx / magnitude;
@@ -142,7 +188,7 @@ public class Wyrmroot extends Enemy
             }
             
             // blue bite
-            if (attackIndex == 0) {
+            if (attackIndex == 0 && vineToSpawn == 0) {
                 if (magnitude < 75 || isAttacking) {
                     if (attackCooldown.millisElapsed() >= attackSpeed) {
                         animateBlueBite();
@@ -154,8 +200,9 @@ public class Wyrmroot extends Enemy
                     }
                 }
             }
+            
             // purple bite
-            else {
+            else if (attackIndex == 1) {
                 if (magnitude < 75 || isAttacking) {
                     if (attackCooldown.millisElapsed() >= attackSpeed) {
                         animatePurpleBite();
@@ -165,6 +212,16 @@ public class Wyrmroot extends Enemy
                             dy = Hero.hero.getExactY() - getExactY();
                             
                             if (Math.sqrt(dx * dx + dy * dy) < 70) attack();
+                            
+                            if (vineToSpawn > 0 && !spawnedVine) {
+                                Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 50, GameWorld.gameWorld.waveMultiplier * 3);
+                                GameWorld.gameWorld.addObject(vine, (int) getExactX(), (int) getExactY());
+                                vineToSpawn--;
+                                vineRemaining++;
+                                isAttacking = false;
+                                spawnedVine = true;
+                                if (vineToSpawn <= 0) attackIndex = 0;
+                            }
                         }
                     }
                 }
@@ -181,6 +238,8 @@ public class Wyrmroot extends Enemy
                 GameWorld.gameWorld.removeObject(greenBar);
                 redBar = null;
                 greenBar = null;
+            
+                GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
                 
                 // boss is now dead
                 isDead = true;
@@ -228,6 +287,7 @@ public class Wyrmroot extends Enemy
     
     @Override
     public void removeHp(int damage, boolean isCrit, Color color, int size) {
+        damage = (int) Math.max(damage * resMult, 0);
         hitpoints -= damage;
         
         if (isCrit) {
@@ -271,11 +331,18 @@ public class Wyrmroot extends Enemy
             else setImage(purpleBiteLeft[purpleBiteIndex]);
             purpleBiteIndex++;
         }
+        
         else {
             purpleBiteIndex = 0;
-            attackIndex = 0;
+                
+            if (vineToSpawn > 0) attackIndex = 1;
+            else attackIndex = 0;
+                
             isAttacking = false;
             isAnimating = false;
+            spawnedVine = false;
+                
+            attackCooldown.mark();
         }
     }
     

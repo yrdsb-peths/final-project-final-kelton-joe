@@ -74,7 +74,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 9;
+        wave = 0;
         startWave();
         
         // give total rerolls
