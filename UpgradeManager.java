@@ -62,14 +62,14 @@ public class UpgradeManager extends Actor
         
         // adds a confirm button
         confirmButton = new Button("Confirm");
-        GameWorld.gameWorld.addObject(confirmButton, 450, 450);
+        GameWorld.gameWorld.addObject(confirmButton, 435, 450);
         
         // adds a reroll button
         resetButton = new Button("Rerolls");
-        GameWorld.gameWorld.addObject(resetButton, 300, 450);
+        GameWorld.gameWorld.addObject(resetButton, 285, 450);
         
         homeButton = new Button("Home");
-        GameWorld.gameWorld.addObject(homeButton, 560, 450);
+        GameWorld.gameWorld.addObject(homeButton, 550, 450);
     }
     
     /**
