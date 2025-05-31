@@ -433,7 +433,7 @@ public class Hero extends SmoothMover
             GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
         }
         else {
-            Blast burst = new Blast(nx, ny, projectileSpeed, damage * 0.6, false);
+            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.6) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
     }
