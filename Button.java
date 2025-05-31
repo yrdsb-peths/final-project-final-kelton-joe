@@ -24,49 +24,61 @@ public class Button extends Actor
      * @param text: text to be displayed on the button
      */
     public Button(String text) {
+        // change type of button
         type = text;
+        
+        // default scale (size) of button
+        scale = 0.75;
+        
         if (type.equals("Start")) {
             image = new GreenfootImage("start.png");
             scale = 0.47;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Menu")) {
             image = new GreenfootImage("menu.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Rerolls")) {
             image = new GreenfootImage("reset.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Confirm")) {
             image = new GreenfootImage("confirm.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Home")) {
             image = new GreenfootImage("home.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Restart")) {
             image = new GreenfootImage("restart.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
         else if (type.equals("Unique")) {
             image = new GreenfootImage("uniques.png");
-            scale = 0.75;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-            setImage(image);
         }
+        else if (type.equals("Pause")) {
+            image = new GreenfootImage("pause.png");
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+        }
+        else if (type.equals("Stat")) {
+            image = new GreenfootImage("stat.png");
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+        }
+        else if (type.equals("Continue")) {
+            image = new GreenfootImage("start.png");
+            scale = 0.47;
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+        }
+        else if (type.equals("Setting")) {
+            image = new GreenfootImage("setting.png");
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+        }
+        
+        // sets the image
+        setImage(image);
     }
     
     /**
