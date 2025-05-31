@@ -23,7 +23,7 @@ public class EndScreen extends World
         Button restart = new Button("Restart");
         addObject(restart, 360, 500);
         
-        Button home = new Button("Home");
+        Button home = new Button("Title");
         addObject(home, 440, 500);
     }
 }

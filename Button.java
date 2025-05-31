@@ -12,8 +12,12 @@ public class Button extends Actor
     public String type;
     private double scale;
     
+    // mouse location
     private int mouseX, mouseY;
     private boolean isHovered;
+    
+    // buttons to be removed after upgrades
+    private boolean isRemovable;
     
     // image for the button
     public GreenfootImage image;
@@ -42,12 +46,19 @@ public class Button extends Actor
         else if (type.equals("Rerolls")) {
             image = new GreenfootImage("reset.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            isRemovable = true;
         }
         else if (type.equals("Confirm")) {
             image = new GreenfootImage("confirm.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            isRemovable = true;
         }
         else if (type.equals("Home")) {
+            image = new GreenfootImage("home.png");
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            isRemovable = true;
+        }
+        else if (type.equals("Title")) {
             image = new GreenfootImage("home.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
         }
@@ -99,36 +110,38 @@ public class Button extends Actor
             isHovered = false;
         }
         
-        // confirm or reroll
-        if (type.equals("Confirm") || type.equals("Rerolls")) {
-            // removes any button if there is no upgrade manager
-            if (GameWorld.gameWorld.upgradeManager == null) GameWorld.gameWorld.removeObject(this);
+        // removes buttons if there is no upgrade manager (not in upgrade phase anymore)
+        if (GameWorld.gameWorld != null && GameWorld.gameWorld.upgradeManager == null && isRemovable) GameWorld.gameWorld.removeObject(this);
+        
+        if (Greenfoot.mouseClicked(this)) {
+            // confirm upgrades
+            if (type.equals("Confirm")) UpgradeManager.isConfirmed = true;
             
-            if (Greenfoot.mouseClicked(this) && type.equals("Confirm")) {
-                // confirms upgrades
-                UpgradeManager.isConfirmed = true;  
-            }
+            // reroll upgrades
+            else if (type.equals("Rerolls")) GameWorld.gameWorld.upgradeManager.rerollUpgrades();
             
-            else if (Greenfoot.mouseClicked(this) && type.equals("Rerolls")) {
-                // rerolls upgrades
-                GameWorld.gameWorld.upgradeManager.rerollUpgrades();
+            // home
+            else if (type.equals("Home")) {
+                TitleScreen titleScreen = new TitleScreen();
+                GameWorld.gameWorld = null;
+                Greenfoot.setWorld(titleScreen);
             }
-        }
-        // start button
-        else if (type.equals("Start") && Greenfoot.mouseClicked(this)) {
-            GameWorld gameWorld = new GameWorld();
-            Greenfoot.setWorld(gameWorld);
-        }
-        // return to home screen
-        else if (type.equals("Home") && Greenfoot.mouseClicked(this)) {
-            TitleScreen titleScreen = new TitleScreen();
-            GameWorld.gameWorld = null;
-            Greenfoot.setWorld(titleScreen);
-        }
-        // restart game
-        else if (type.equals("Restart") && Greenfoot.mouseClicked(this)) {
-            GameWorld gameWorld = new GameWorld();
-            Greenfoot.setWorld(gameWorld);
+            // start button
+            else if (type.equals("Start")) {
+                GameWorld gameWorld = new GameWorld();
+                Greenfoot.setWorld(gameWorld);
+            }
+            // return to home screen
+            else if (type.equals("Home") || type.equals("Title")) {
+                TitleScreen titleScreen = new TitleScreen();
+                GameWorld.gameWorld = null;
+                Greenfoot.setWorld(titleScreen);
+            }
+            // restart game
+            else if (type.equals("Restart")) {
+                GameWorld gameWorld = new GameWorld();
+                Greenfoot.setWorld(gameWorld);
+            }
         }
     }
     
