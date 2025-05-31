@@ -38,6 +38,7 @@ public class Wyrmroot extends Enemy
     
     // boss conditions
     private boolean isAttacking;
+    private boolean hasAttacked;
     private boolean isAnimating;
     public static boolean isDead = false;
     
@@ -62,7 +63,7 @@ public class Wyrmroot extends Enemy
     private SimpleTimer disableTimer = new SimpleTimer();
     
     public Wyrmroot(int hitpoints, int attack) {
-        super(hitpoints, 0.0, attack, 1500);
+        super(hitpoints, 0.35, attack, 1500);
         
         for (int i = 0; i < blueBiteRight.length; i++) {
             blueBiteLeft[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
@@ -162,8 +163,8 @@ public class Wyrmroot extends Enemy
             
             // remove status effects when timer ends
             if (frostbiteTimer.millisElapsed() >= slowDuration) isSlowed = false;
-            if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
-            if (stunTimer.millisElapsed() >= 800) isStunned = false;
+            if (frostbiteFreezeTimer.millisElapsed() >= 750) isFrozen = false;
+            if (stunTimer.millisElapsed() >= 600) isStunned = false;
             if (weakenTimer.millisElapsed() > weakenDuration) isWeakened = false;
             
             // slow, frozen, and stun movements
@@ -183,7 +184,7 @@ public class Wyrmroot extends Enemy
                 this.setRotation(heading);
                 
                 if (isFrozen || isStunned) setLocation(getExactX(), getExactY());
-                else if (isSlowed) setLocation(getExactX() + (nx * speed/2), getExactY() + (ny * speed/2));
+                else if (isSlowed) setLocation(getExactX() + (nx * speed/3), getExactY() + (ny * speed/3));
                 else setLocation(getExactX() + (nx * speed), getExactY() + (ny * speed));
             }
             
@@ -192,11 +193,6 @@ public class Wyrmroot extends Enemy
                 if (magnitude < 75 || isAttacking) {
                     if (attackCooldown.millisElapsed() >= attackSpeed) {
                         animateBlueBite();
-                        
-                        if (blueBiteIndex == 5) {
-                            BlueBite blueBite = new BlueBite((int) (this.attack * 0.2), isDodged);
-                            GameWorld.gameWorld.addObject(blueBite, (int) getExactX(), (int) getExactY());
-                        }
                     }
                 }
             }
@@ -206,23 +202,6 @@ public class Wyrmroot extends Enemy
                 if (magnitude < 75 || isAttacking) {
                     if (attackCooldown.millisElapsed() >= attackSpeed) {
                         animatePurpleBite();
-    
-                        if (purpleBiteIndex == 5)  {
-                            dx = Hero.hero.getExactX() - getExactX();
-                            dy = Hero.hero.getExactY() - getExactY();
-                            
-                            if (Math.sqrt(dx * dx + dy * dy) < 70) attack();
-                            
-                            if (vineToSpawn > 0 && !spawnedVine) {
-                                Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 40, GameWorld.gameWorld.waveMultiplier * 3);
-                                GameWorld.gameWorld.addObject(vine, (int) getExactX(), (int) getExactY());
-                                vineToSpawn--;
-                                vineRemaining++;
-                                isAttacking = false;
-                                spawnedVine = true;
-                                if (vineToSpawn <= 0) attackIndex = 0;
-                            }
-                        }
                     }
                 }
             }
@@ -253,6 +232,22 @@ public class Wyrmroot extends Enemy
             
             // animates death
             animateDeath();
+        }
+    }
+    
+    @Override
+    public void frostbite() {
+        if (Hero.hero.frostbiteLvl > 0) {
+            isSlowed = true;
+            slowDuration = 1500;
+            frostbiteTimer.mark();
+        }   
+        if (Hero.hero.frostbiteLvl > 1) {
+            isFrozen = true;
+            frostbiteFreezeTimer.mark();
+            
+            freezeSounds[freezeSoundIndex].play();
+            freezeSoundIndex = (freezeSoundIndex + 1) % freezeSounds.length;
         }
     }
     
@@ -309,9 +304,17 @@ public class Wyrmroot extends Enemy
             
             if (facingRight) setImage(blueBiteRight[blueBiteIndex]);
             else setImage(blueBiteLeft[blueBiteIndex]);
+            
+            if (blueBiteIndex == 5 && !hasAttacked) {
+                hasAttacked = true;
+                BlueBite blueBite = new BlueBite((int) (this.attack * 0.4), isDodged);
+                GameWorld.gameWorld.addObject(blueBite, (int) getExactX(), (int) getExactY());
+            }
+            
             blueBiteIndex++;
         }
         else {
+            hasAttacked = false;
             blueBiteIndex = 0;
             attackIndex = 1;
             isAttacking = false;
@@ -329,6 +332,26 @@ public class Wyrmroot extends Enemy
             
             if (facingRight) setImage(purpleBiteRight[purpleBiteIndex]);
             else setImage(purpleBiteLeft[purpleBiteIndex]);
+            
+            if (purpleBiteIndex == 5)  {
+                dx = Hero.hero.getExactX() - getExactX();
+                dy = Hero.hero.getExactY() - getExactY();
+                            
+                if (Math.sqrt(dx * dx + dy * dy) < 70) {
+                    attack();
+                    hasAttacked = true;
+                }
+                            
+                if (vineToSpawn > 0 && !spawnedVine) {
+                    Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 40, GameWorld.gameWorld.waveMultiplier * 3);
+                    GameWorld.gameWorld.addObject(vine, (int) getExactX(), (int) getExactY());
+                    vineToSpawn--;
+                    vineRemaining++;
+                    isAttacking = false;
+                    spawnedVine = true;
+                    if (vineToSpawn <= 0) attackIndex = 0;
+                }
+            }
             purpleBiteIndex++;
         }
         
@@ -338,6 +361,7 @@ public class Wyrmroot extends Enemy
             if (vineToSpawn > 0) attackIndex = 1;
             else attackIndex = 0;
                 
+            hasAttacked = false;
             isAttacking = false;
             isAnimating = false;
             spawnedVine = false;

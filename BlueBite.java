@@ -35,15 +35,17 @@ public class BlueBite extends Actor
     {
         animateBite();
         
-        if (this.isTouching(Hero.class) && !Hero.hero.isImmune && !isDodged && !hasAttacked) {
-            Hero.hero.currentHp -= this.damage;
-            
+        if (this.isTouching(Hero.class) && !hasAttacked && index == 15) {
             hasAttacked = true;
             
-            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
-            
-            if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
-            else if (!isDodged && !Hero.hero.isImmune) Hero.hero.isHurt = true;
+            if (!Hero.hero.isImmune && !isDodged) {
+                Hero.hero.currentHp -= this.damage;
+                
+                GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                
+                if (Hero.hero.currentHp <= 0) Hero.hero.isDead = true;
+                else if (!isDodged && !Hero.hero.isImmune) Hero.hero.isHurt = true;
+            }
         }
         
         if (index == image.length) GameWorld.gameWorld.removeObject(this);
