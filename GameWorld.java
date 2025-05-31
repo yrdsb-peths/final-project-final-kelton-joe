@@ -82,7 +82,7 @@ public class GameWorld extends World {
     }
     
     public void act() {
-        if (labelTimer.millisElapsed() > 1500) {
+        if (labelTimer.millisElapsed() > 2000) {
             removeObject(bossText);
             removeObject(boss1);
         }
@@ -190,7 +190,7 @@ public class GameWorld extends World {
     }
     
     private void spawnBoss() {
-        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 4 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 2 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         enemiesToSpawn--;
