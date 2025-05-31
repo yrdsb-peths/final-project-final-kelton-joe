@@ -16,7 +16,7 @@ public class Upgrade extends Actor
         "attack", // 1
         "speed", // 2
         "attackSpeed", // 3 
-        "attackRange", // 4
+        "attackRange", // 4 
         "projectileSpeed", // 5
         "critRate", // 6
         "critDamage", // 7
