@@ -19,8 +19,16 @@ public class Button extends Actor
     // buttons to be removed after upgrades
     private boolean isRemovable;
     
+    // for no hovering
+    private boolean disableHover;
+    
     // image for the button
     public GreenfootImage image;
+    
+    // things for setting screen
+    public Label displayText;
+    private boolean isSelected;
+    private String key;
     
     /**
      * Constructor for a button
@@ -44,6 +52,11 @@ public class Button extends Actor
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
         }
         else if (type.equals("Rerolls")) {
+            image = new GreenfootImage("reset.png");
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            isRemovable = true;
+        }
+        else if (type.equals("Reset")) {
             image = new GreenfootImage("reset.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
             isRemovable = true;
@@ -87,6 +100,23 @@ public class Button extends Actor
             image = new GreenfootImage("setting.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
         }
+        else if (type.equals("Settings")) {
+            image = new GreenfootImage("setting.png");
+            scale = 1.25;
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+            disableHover = true;
+        }
+        else if (type.equals("Big Frame")) {
+            image = new GreenfootImage("bigFrame.png");
+            scale = 0.5;
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale * 0.75));
+            disableHover = true;
+        }
+        else if (type.equals("Small Frame")) {
+            image = new GreenfootImage("smallFrame.png");
+            scale = 0.35;
+            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
+        }
         
         // sets the image
         setImage(image);
@@ -99,8 +129,10 @@ public class Button extends Actor
      */
     public void act()
     {
+        key = Greenfoot.getKey();
+        
         // checks mouse hovering for lighter background
-        if (isMouseOver() && !isHovered) {
+        if ((isMouseOver() && !isHovered && !disableHover) || isSelected) {
             getImage().setTransparency(200);
             isHovered = true;
         }
@@ -141,6 +173,21 @@ public class Button extends Actor
             else if (type.equals("Restart")) {
                 GameWorld gameWorld = new GameWorld();
                 Greenfoot.setWorld(gameWorld);
+            }
+            else if (type.equals("Setting")) {
+                Settings settings = new Settings();
+                Greenfoot.setWorld(settings);
+            }
+            else if (type.equals("Reset")) {
+                Hero.forward = "w";
+                Hero.backward = "s";
+                Hero.left = "a";
+                Hero.right = "d";
+                Hero.dash = "e";
+                Hero.skill = "space";
+            }
+            else if (type.equals("Small Frame")) {
+                isSelected = !isSelected;
             }
         }
     }

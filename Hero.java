@@ -149,6 +149,15 @@ public class Hero extends SmoothMover
     // angle between hero and enemy (for bow targeting enemies)
     double dx, dy, angle;
     
+    // controls
+    public static String forward;
+    public static String backward;
+    public static String left;
+    public static String right;
+    public static String dash;
+    public static String skill;
+    public static String pause;
+    
     /**
      * Constructor for Hero Class
      * 
@@ -229,6 +238,14 @@ public class Hero extends SmoothMover
         
         // sets hero arm (bow)
         this.heroArm = heroArm;
+        
+        // sets default controls;
+        forward = "w";
+        backward = "s";
+        left = "a";
+        right = "d";
+        skill = "space";
+        dash = "e";
     }
     
     /**
