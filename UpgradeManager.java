@@ -108,8 +108,8 @@ public class UpgradeManager extends Actor
             GameWorld.gameWorld.removeUpgrades();
             
             // remove text
-            GameWorld.gameWorld.removeObject(frame);
-            GameWorld.gameWorld.removeObject(upgradeText);
+            GameWorld.gameWorld.removeObject(this.frame);
+            GameWorld.gameWorld.removeObject(this.upgradeText);
             
             // removes itself and starts the next wave
             GameWorld.gameWorld.removeObject(this);
@@ -171,6 +171,10 @@ public class UpgradeManager extends Actor
             // sets new upgrade manager for game world and adds it to the world
             GameWorld.gameWorld.upgradeManager = rerolledManager;
             GameWorld.gameWorld.addObject(rerolledManager, 0, 0);
+            
+            // remove text
+            GameWorld.gameWorld.removeObject(this.frame);
+            GameWorld.gameWorld.removeObject(this.upgradeText);
         }
     }
 }
