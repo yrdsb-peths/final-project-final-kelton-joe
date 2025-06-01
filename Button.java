@@ -27,8 +27,9 @@ public class Button extends Actor
     
     // things for setting screen
     public Label displayText;
-    private boolean isSelected;
+    private boolean waitingForInput;
     private String key;
+    public String control;
     
     /**
      * Constructor for a button
@@ -136,10 +137,8 @@ public class Button extends Actor
      */
     public void act()
     {
-        key = Greenfoot.getKey();
-        
         // checks mouse hovering for lighter background
-        if ((isMouseOver() && !isHovered && !disableHover) || isSelected) {
+        if ((isMouseOver() && !isHovered && !disableHover) || waitingForInput) {
             getImage().setTransparency(200);
             isHovered = true;
         }
@@ -152,49 +151,102 @@ public class Button extends Actor
         // removes buttons if there is no upgrade manager (not in upgrade phase anymore)
         if (GameWorld.gameWorld != null && GameWorld.gameWorld.upgradeManager == null && isRemovable) GameWorld.gameWorld.removeObject(this);
         
-        if (Greenfoot.mouseClicked(this)) {
+        if (Greenfoot.mouseClicked(this) && !waitingForInput) {
             // confirm upgrades
             if (type.equals("Confirm")) UpgradeManager.isConfirmed = true;
             
             // reroll upgrades
-            else if (type.equals("Rerolls")) GameWorld.gameWorld.upgradeManager.rerollUpgrades();
+            if (type.equals("Rerolls")) GameWorld.gameWorld.upgradeManager.rerollUpgrades();
             
             // home
-            else if (type.equals("Home")) {
+            if (type.equals("Home")) {
                 TitleScreen titleScreen = new TitleScreen();
                 GameWorld.gameWorld = null;
                 Greenfoot.setWorld(titleScreen);
             }
             // start button
-            else if (type.equals("Start")) {
+            if (type.equals("Start")) {
                 GameWorld gameWorld = new GameWorld();
                 Greenfoot.setWorld(gameWorld);
             }
             // return to home screen
-            else if (type.equals("Home") || type.equals("Title")) {
+            if (type.equals("Home") || type.equals("Title")) {
                 TitleScreen titleScreen = new TitleScreen();
                 GameWorld.gameWorld = null;
                 Greenfoot.setWorld(titleScreen);
             }
             // restart game
-            else if (type.equals("Restart")) {
+            if (type.equals("Restart")) {
                 GameWorld gameWorld = new GameWorld();
                 Greenfoot.setWorld(gameWorld);
             }
-            else if (type.equals("Setting")) {
+            // visit settings screen
+            if (type.equals("Setting")) {
                 Settings settings = new Settings();
                 Greenfoot.setWorld(settings);
             }
-            else if (type.equals("Reset")) {
+            // reset settings
+            if (type.equals("Reset")) {
+                // resets hero default keybinds
                 Hero.forward = "w";
                 Hero.backward = "s";
                 Hero.left = "a";
                 Hero.right = "d";
                 Hero.dash = "e";
                 Hero.skill = "space";
+                
+                // changes display texts
+                Settings.changeForwards.displayText.setValue("w");
+                Settings.changeBackwards.displayText.setValue("s");
+                Settings.changeLeft.displayText.setValue("a");
+                Settings.changeRight.displayText.setValue("d");
+                Settings.changeDash.displayText.setValue("e");
+                Settings.changeAttack.displayText.setValue("space");
+                Settings.changeForwards.setLocation(Settings.changeForwards.getX(), Settings.changeForwards.getY());
+                Settings.changeBackwards.setLocation(Settings.changeBackwards.getX(), Settings.changeBackwards.getY());
+                Settings.changeLeft.setLocation(Settings.changeLeft.getX(), Settings.changeLeft.getY());
+                Settings.changeRight.setLocation(Settings.changeRight.getX(), Settings.changeRight.getY());
+                Settings.changeDash.setLocation(Settings.changeDash.getX(), Settings.changeDash.getY());
+                Settings.changeAttack.setLocation(Settings.changeAttack.getX(), Settings.changeAttack.getY());
             }
-            else if (type.equals("Small Frame")) {
-                isSelected = !isSelected;
+        }
+        if (Greenfoot.mouseClicked(displayText) || Greenfoot.mouseClicked(this)) {
+            // setting change key
+            if (type.equals("Small Frame")) {
+                key = null;
+                displayText.setValue(" ");
+                displayText.setLocation(getX(), getY());
+                waitingForInput = true;
+            }
+        }
+        // change keybinds
+        if (waitingForInput) {
+            key = Greenfoot.getKey();
+            if (key != null) {
+                key = key.toLowerCase();
+                displayText.setValue(key);
+                displayText.setLocation(getX(), getY());
+                switch (control) {
+                    case "forwards":
+                        Hero.forward = key;
+                        break;
+                    case "backwards":
+                        Hero.backward = key;
+                        break;
+                    case "left":
+                        Hero.left = key;
+                        break;
+                    case "right":
+                        Hero.right = key;
+                        break;
+                    case "attack":
+                        Hero.skill = key;
+                        break;
+                    case "dash":
+                        Hero.dash = key;
+                        break;
+                }
+                waitingForInput = false;
             }
         }
     }

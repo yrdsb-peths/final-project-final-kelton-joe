@@ -8,7 +8,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Settings extends World
 {
-
+    public static Button changeForwards;
+    public static Button changeBackwards;
+    public static Button changeLeft;
+    public static Button changeRight;
+    public static Button changeAttack;
+    public static Button changeDash;
+    
     /**
      * Constructor for objects of class Settings.
      */
@@ -39,8 +45,9 @@ public class Settings extends World
         addObject(forwardText, 175, 175);
         
         // change forwards
-        Button changeForwards = new Button("Small Frame");
+        changeForwards = new Button("Small Frame");
         changeForwards.displayText = new Label("w", 30);
+        changeForwards.control = "forwards";
         addObject(changeForwards, 325, 175);
         addObject(changeForwards.displayText, 325, 175);
         
@@ -51,8 +58,9 @@ public class Settings extends World
         addObject(backwardText, 175, 250);
         
         // change backwards
-        Button changeBackwards = new Button("Small Frame");
+        changeBackwards = new Button("Small Frame");
         changeBackwards.displayText = new Label("s", 30);
+        changeBackwards.control = "backwards";
         addObject(changeBackwards, 325, 250);
         addObject(changeBackwards.displayText, 325, 250);
         
@@ -63,8 +71,9 @@ public class Settings extends World
         addObject(leftText, 175, 325);
         
         // change left
-        Button changeLeft = new Button("Small Frame");
+        changeLeft = new Button("Small Frame");
         changeLeft.displayText = new Label("a", 30);
+        changeLeft.control = "left";
         addObject(changeLeft, 325, 325);
         addObject(changeLeft.displayText, 325, 325);
         
@@ -75,8 +84,9 @@ public class Settings extends World
         addObject(rightText, 175, 400);
         
         // change right
-        Button changeRight = new Button("Small Frame");
+        changeRight = new Button("Small Frame");
         changeRight.displayText = new Label("d", 30);
+        changeRight.control = "right";
         addObject(changeRight, 325, 400);
         addObject(changeRight.displayText, 325, 400);
         
@@ -87,8 +97,9 @@ public class Settings extends World
         addObject(dashText, 500, 175);
         
         // change dash
-        Button changeDash = new Button("Small Frame");
+        changeDash = new Button("Small Frame");
         changeDash.displayText = new Label("e", 30);
+        changeDash.control = "dash";
         addObject(changeDash, 650, 175);
         addObject(changeDash.displayText, 650, 175);
         
@@ -99,8 +110,9 @@ public class Settings extends World
         addObject(attackText, 500, 250);
         
         // change attack
-        Button changeAttack = new Button("Small Frame");
+        changeAttack = new Button("Small Frame");
         changeAttack.displayText = new Label("space", 30);
+        changeAttack.control = "attack";
         addObject(changeAttack, 650, 250);
         addObject(changeAttack.displayText, 650, 250);
         

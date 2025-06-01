@@ -150,13 +150,13 @@ public class Hero extends SmoothMover
     double dx, dy, angle;
     
     // controls
-    public static String forward;
-    public static String backward;
-    public static String left;
-    public static String right;
-    public static String dash;
-    public static String skill;
-    public static String pause;
+    public static String forward = "w";
+    public static String backward = "s";
+    public static String left = "a";
+    public static String right = "d";
+    public static String dash = "e";
+    public static String skill = "space";
+    //public static String pause;
     
     /**
      * Constructor for Hero Class
@@ -238,14 +238,6 @@ public class Hero extends SmoothMover
         
         // sets hero arm (bow)
         this.heroArm = heroArm;
-        
-        // sets default controls;
-        forward = "w";
-        backward = "s";
-        left = "a";
-        right = "d";
-        skill = "space";
-        dash = "e";
     }
     
     /**
@@ -280,7 +272,7 @@ public class Hero extends SmoothMover
             }
             
             // movement
-            if (Greenfoot.isKeyDown("e")) {
+            if (Greenfoot.isKeyDown(dash)) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
                     isDashing = true;
                     dashMultiplier = dashSpeed;
@@ -292,20 +284,20 @@ public class Hero extends SmoothMover
                 dashMultiplier = 1.0;
             }
             
-            if (Greenfoot.isKeyDown("w")) {
+            if (Greenfoot.isKeyDown(forward)) {
                 this.setLocation(getExactX(), getExactY() - speed*dashMultiplier);
             }
             
-            if (Greenfoot.isKeyDown("s")) {
+            if (Greenfoot.isKeyDown(backward)) {
                 this.setLocation(getExactX(), getExactY() + speed*dashMultiplier);
             }
             
-            if (Greenfoot.isKeyDown("a")) {
+            if (Greenfoot.isKeyDown(left)) {
                 this.setLocation(getExactX() - speed*dashMultiplier, getExactY());
                 facing = "left";
             }
             
-            if (Greenfoot.isKeyDown("d")) {
+            if (Greenfoot.isKeyDown(right)) {
                 this.setLocation(getExactX() + speed*dashMultiplier, getExactY());
                 facing = "right";
             }
@@ -313,7 +305,7 @@ public class Hero extends SmoothMover
             heroArm.setPos(getExactX(), getExactY(), facing);
             
             // attack
-            if (Greenfoot.isKeyDown("space")) {
+            if (Greenfoot.isKeyDown(skill)) {
                 if (attackCooldown.millisElapsed() >= attackSpeed) {
                     attack(false);
                     attackCooldown.mark();
