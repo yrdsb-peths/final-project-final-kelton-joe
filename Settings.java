@@ -8,6 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Settings extends World
 {
+    // buttons for changing keybinds
     public static Button changeForwards;
     public static Button changeBackwards;
     public static Button changeLeft;
@@ -120,7 +121,7 @@ public class Settings extends World
         //Button other1 = new Button("Big Frame");
         //addObject(other1, 500, 325);
         
-        // change left
+        // change other
         //Button changeOther1 = new Button("Small Frame");
         //addObject(changeOther1, 650, 325);
         
@@ -128,7 +129,7 @@ public class Settings extends World
         //Button other2 = new Button("Big Frame");
         //addObject(other2, 500, 400);
         
-        // change left
+        // change other 
         //Button changeOther2 = new Button("Small Frame");
         //addObject(changeOther2, 650, 400);
     }

@@ -81,7 +81,13 @@ public class GameWorld extends World {
         UpgradeManager.numRerolls = 5;
     }
     
+    /**
+     * Act method for game world
+     * spawns new enemies every wave and generates bonus stats for them
+     * also spawns upgrades when enemies are killed
+     */
     public void act() {
+        // boss label
         if (labelTimer.millisElapsed() > 2000) {
             removeObject(bossText);
             removeObject(boss1);
@@ -89,7 +95,8 @@ public class GameWorld extends World {
         // spawn interval
         if (wave % 10 == 0) spawnInterval = 3000;
         else spawnInterval = 1000 / waveMultiplier;
-                    
+        
+        // spawns enemies as long as there are more enemies to spawn
         if (enemiesToSpawn > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
                 if (wave % 10 == 0) {
@@ -107,6 +114,7 @@ public class GameWorld extends World {
                     Enemy enemy = new Enemy((wave + bonusHp) * waveMultiplier, bonusSpeed, bonusAttack * waveMultiplier, bonusAttackSpeed);
                     addObject(enemy, Greenfoot.getRandomNumber(800), Greenfoot.getRandomNumber(600));
                     
+                    // reduces enemies to spawn and restarts timer
                     enemiesToSpawn--;
                     spawnTimer.mark();
                 }
@@ -132,34 +140,38 @@ public class GameWorld extends World {
         }
     }
     
+    /**
+     * Method for starting a new wave
+     */
     public void startWave() {
         // increase wave number every time it is called
         wave++;
         
+        // boss wave every 10 waves
         if (wave % 10 == 0) {
             labelTimer.mark();
             addObject(bossText, 400, 300);
             addObject(boss1, 400, 375);
         }
         
+        // more difficult scaling every 10 waves
         waveMultiplier = wave/10 + 1;
         
+        // full heal hero
         Hero.hero.currentHp = Hero.hero.maxHp;
         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         
+        // new wave label
         waveLabel.setValue("Wave " + wave);
+    
         
-        if (wave % 10 == 0) {
-            enemiesToSpawn = 1;
-            spawnTimer.mark();
-            waveDifficulty = 2;
-            return;
-        }
-        
+        // wave difficulty
         waveDifficulty = Greenfoot.getRandomNumber(3);
         
+        // enemies to spawn
         enemiesToSpawn = (wave + Greenfoot.getRandomNumber(2)) * waveMultiplier;
         
+        // wave difficulty
         switch (waveDifficulty) {
             case 0:
                 enemiesToSpawn = wave;
@@ -186,17 +198,29 @@ public class GameWorld extends World {
                 }
                 break;
         }
+        
+        // boss wave stuff
+        if (wave % 10 == 0) enemiesToSpawn = 1;
+        
         spawnTimer.mark();
     }
     
+    /**
+     * Method for spawning the boss
+     */
     private void spawnBoss() {
+        // adds the boss to the center of the world
         Wyrmroot wyrmroot = new Wyrmroot(400 * waveMultiplier, 5 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
+        // reduces enemies to spawn
         enemiesToSpawn--;
         spawnTimer.mark();
     }
     
+    /**
+     * Method for removing upgrades and upgrade manager
+     */
     public void removeUpgrades() {
         removeObject(upgradeManager);
         upgradeManager = null;
