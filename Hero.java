@@ -212,7 +212,7 @@ public class Hero extends SmoothMover
         speed = 1.15;
         attackRange = 200;
         regenInterval = 5000;
-        regenAmount = 15;
+        regenAmount = 5;
         attackSpeed = 1000.0;
         attack = 10.0;
         projectileSpeed = 1.0;
@@ -552,9 +552,7 @@ public class Hero extends SmoothMover
                 if (frostbiteLvl >= 2) Upgrade.uniques.remove("Frostbite");
                 break;
             case "Scorch":
-                if (scorchLvl < 2) {
-                    scorchLvl++;
-                }
+                if (scorchLvl < 2) scorchLvl++;
                 if (scorchLvl >= 2) Upgrade.uniques.remove("Scorch");
                 break;
             case "Sharpshot":
@@ -577,11 +575,11 @@ public class Hero extends SmoothMover
                 if (vampireLvl == 0) {
                     vampireLvl++;
                     speed -= 0.15;
-                    maxHp += 3;
+                    maxHp += 30;
                 } 
                 else if (vampireLvl == 1) {
                     vampireLvl++;
-                    maxHp += 5;
+                    maxHp += 50;
                     Upgrade.uniques.remove("Vampire");
                 }
                 break;
@@ -594,9 +592,9 @@ public class Hero extends SmoothMover
                         critDamage += 60.0; 
                         speed += 0.5; 
                         dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
-                        attackRange = 80;
-                        currentHp = 3;
-                        maxHp = 3;
+                        attackRange = 120;
+                        currentHp = 30;
+                        maxHp = 30;
                         GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
                         Upgrade.type.remove("attackRange");
@@ -626,7 +624,7 @@ public class Hero extends SmoothMover
                         echoMult = 0.6;
                     }
                     else {
-                        echoChance = 100;
+                        echoChance = 80;
                         echoMult = 1.2;
                         Upgrade.uniques.remove("Arcane Echo");
                     }
@@ -643,14 +641,14 @@ public class Hero extends SmoothMover
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
-                    tornadoChance = 10 * vortexLvl;
+                    tornadoChance = 20 * vortexLvl;
                 }
                 if (vortexLvl >= 2) Upgrade.uniques.remove("Violent Vortex");
                 break;
             case "Blood Pact":
                 if (bloodPactLvl == 0) {
                     bloodPactLvl++;
-                    maxHp += 3;
+                    maxHp += 35;
                     critDamage += 30;
                     attackRange = 200;
                     Upgrade.type.remove("projectile"); 

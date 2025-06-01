@@ -240,8 +240,8 @@ public class Enemy extends SmoothMover
     
     public void vampire() {
         if (Hero.hero.vampireLvl == 1) {
-            // increases current hp by 1 or 5% of max hp, whichever is more
-            Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+            // increases current hp by 5 or 5% of max hp, whichever is more
+            Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 5, Hero.hero.maxHp);
             Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
         }
@@ -253,9 +253,9 @@ public class Enemy extends SmoothMover
                     Hero.hero.currentHp++;
                 }
             }
-            // otherwise increase current hp by 1 or 15%, whicherver is more
+            // otherwise increase current hp by 15 or 15%, whicherver is more
             else {
-                Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 1, Hero.hero.maxHp);
+                Hero.hero.currentHp = Math.min(Hero.hero.currentHp + 15, Hero.hero.maxHp);
                 Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
             }
             GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
@@ -269,7 +269,7 @@ public class Enemy extends SmoothMover
             }
             if (Greenfoot.getRandomNumber(2) > 0 && Hero.hero.jesterLvl > 1) {
                 this.isStunned = true;
-                removeHp(Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1), false, Color.MAGENTA, 30);
+                removeHp((int) (Hero.hero.attack * 0.6), false, Color.MAGENTA, 30);
                 stunTimer.mark();
             }
         }
