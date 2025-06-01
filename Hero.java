@@ -402,7 +402,7 @@ public class Hero extends SmoothMover
                 
                 Slash slash = new Slash(damageDealt, isCrit);
                 
-                currentHp -= maxHp * 0.15;
+                currentHp -= maxHp * 0.2;
                 
                 dx = closestEnemy.getExactX() - getExactX();
                 dy = closestEnemy.getExactY() - getExactY();
