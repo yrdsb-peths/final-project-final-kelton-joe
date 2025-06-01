@@ -27,6 +27,9 @@ public class UpgradeManager extends Actor
     
     UpgradeManager rerolledManager;
     
+    private Button frame;
+    private Label upgradeText;
+    
     /**
      * Constructor for upgradeManager
      * 
@@ -56,7 +59,6 @@ public class UpgradeManager extends Actor
             world.addObject(upgrade, world.getWidth()/2 + (int)(upgradeSpacing*i), world.getHeight()/2);
         }
         
-        
         // gives user 1 selection
         Upgrade.numSelections = 1;
         
@@ -68,8 +70,15 @@ public class UpgradeManager extends Actor
         resetButton = new Button("Rerolls");
         GameWorld.gameWorld.addObject(resetButton, 285, 450);
         
+        // return to home screen
         homeButton = new Button("Home");
         GameWorld.gameWorld.addObject(homeButton, 550, 450);
+        
+        // upgrade text
+        frame = new Button("Big Frame 2");
+        GameWorld.gameWorld.addObject(frame, 400, 140);
+        upgradeText = new Label("Select an Upgrade", 35);
+        GameWorld.gameWorld.addObject(upgradeText, 400, 140);
     }
     
     /**
@@ -97,6 +106,10 @@ public class UpgradeManager extends Actor
             
             // removes upgrade manager in the world
             GameWorld.gameWorld.removeUpgrades();
+            
+            // remove text
+            GameWorld.gameWorld.removeObject(frame);
+            GameWorld.gameWorld.removeObject(upgradeText);
             
             // removes itself and starts the next wave
             GameWorld.gameWorld.removeObject(this);

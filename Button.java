@@ -112,6 +112,12 @@ public class Button extends Actor
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale * 0.75));
             disableHover = true;
         }
+        else if (type.equals("Big Frame 2")) {
+            image = new GreenfootImage("bigFrame.png");
+            scale = 0.65;
+            image.scale((int) (image.getWidth() * scale * 1.5), (int) (image.getHeight() * scale * 0.75));
+            disableHover = true;
+        }
         else if (type.equals("Small Frame")) {
             image = new GreenfootImage("smallFrame.png");
             scale = 0.35;
