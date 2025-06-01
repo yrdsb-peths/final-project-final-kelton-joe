@@ -66,7 +66,7 @@ public class GameWorld extends World {
         addObject(hero, 400, 300);
         addObject(heroArm, 0, 0);
         healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
-        addObject(healthBar, 730, 20);
+        addObject(healthBar, 710, 20);
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 80, 20);
         
@@ -100,7 +100,7 @@ public class GameWorld extends World {
                     // randomly generate buffs based on wave number
                     bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
                     bonusHp = Greenfoot.getRandomNumber(wave);
-                    bonusAttack = Greenfoot.getRandomNumber((int)(wave / 2.5) + 1);
+                    bonusAttack = Greenfoot.getRandomNumber(wave);
                     bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
                     
                     // spawn enemy with buffs
@@ -190,7 +190,7 @@ public class GameWorld extends World {
     }
     
     private void spawnBoss() {
-        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 5 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(400 * waveMultiplier, 5 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         enemiesToSpawn--;

@@ -80,10 +80,10 @@ public class Enemy extends SmoothMover
         }
         
         // stat increases
-        maxHitpoints = hitpoints;
-        this.hitpoints = hitpoints;
-        this.speed += speed;
-        this.attack += attack;
+        maxHitpoints = hitpoints * 10;
+        this.hitpoints = hitpoints * 10;
+        this.speed += speed; 
+        this.attack += (attack + 0.5) * 8;
         this.attackSpeed -= Math.min(attackSpeed, maxAttackSpeed);
         
         // add to list of all current enemies

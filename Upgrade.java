@@ -32,16 +32,16 @@ public class Upgrade extends Actor
     
     // values of upgrades
     private double[] value = {
-        1.0, // hp
-        1.0, // attack
+        10.0, // hp 
+        6.0, // attack
         0.1, // speed
         -30.0, // attack speed
         10, // attack range
         0.25, // projectile speed
         3.0, //crit rate
-        12.0, // crit damage
-        -150.0, // hp regen interval
-        1.0, // hp regen amount
+        6.0, // crit damage
+        -200.0, // hp regen interval
+        5.0, // hp regen amount
         2.0, // both crit buff
         50.0, // dash length
         0.15, // dash mult
