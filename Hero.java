@@ -668,8 +668,10 @@ public class Hero extends SmoothMover
                 if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
                 break;
             case "Hydro Burst":
-                if (burstLvl < 1) burstLvl++;
-                if (burstLvl >= 1) Upgrade.uniques.remove("Hydro Burst");
+                if (burstLvl == 0) {
+                    burstLvl++;
+                    Upgrade.uniques.remove("Hydro Burst");
+                }
                 break;
         }
     }
