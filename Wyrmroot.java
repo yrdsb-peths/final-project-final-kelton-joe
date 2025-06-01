@@ -17,11 +17,9 @@ public class Wyrmroot extends Enemy
     GreenfootImage[] blueBiteLeft = new GreenfootImage[6];
     GreenfootImage[] purpleBiteLeft = new GreenfootImage[6];
     GreenfootImage[] runLeft = new GreenfootImage[6];
-    
     GreenfootImage[] blueBiteRight = new GreenfootImage[6];
     GreenfootImage[] purpleBiteRight = new GreenfootImage[6];
-    GreenfootImage[] runRight = new GreenfootImage[6];
-    
+    GreenfootImage[] runRight = new GreenfootImage[6];    
     GreenfootImage[] death = new GreenfootImage[6];
     
     // animation timers
@@ -62,34 +60,43 @@ public class Wyrmroot extends Enemy
     private boolean isDisabled;
     private SimpleTimer disableTimer = new SimpleTimer();
     
+    /**
+     * Wyrmroot constructor
+     * 
+     * @param hitpoints: hp of the boss
+     * @param attack: attack of the boss
+     */
     public Wyrmroot(int hitpoints, int attack) {
+        // creates enemy
         super(hitpoints, GameWorld.gameWorld.waveMultiplier * 0.35, attack, 1000);
         
+        // sets images
         for (int i = 0; i < blueBiteRight.length; i++) {
             blueBiteLeft[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
             blueBiteRight[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
             blueBiteRight[i].mirrorHorizontally();
         }
-        
         for (int i = 0; i < death.length; i++) {
             death[i] = new GreenfootImage("Wyrm/death/death" + i + ".png");
         }
-        
         for (int i = 0; i < purpleBiteLeft.length; i++) {
             purpleBiteLeft[i] = new GreenfootImage("Wyrm/purpleBite/purpleBite" + i + ".png");
             purpleBiteRight[i] = new GreenfootImage("Wyrm/purpleBite/purpleBite" + i + ".png");
             purpleBiteRight[i].mirrorHorizontally();
         }
-        
         for (int i = 0; i < runLeft.length; i++) {
             runLeft[i] = new GreenfootImage("Wyrm/run/run" + i + ".png");
             runRight[i] = new GreenfootImage("Wyrm/run/run" + i + ".png");
             runRight[i].mirrorHorizontally();
         }
         
+        // animation
         isAnimating = false;
+        
+        // marks attack cooldown
         attackCooldown.mark();
         
+        // sets instance variables
         isDead = false;
         phase = 1;
         isDisabled = false;
@@ -98,6 +105,9 @@ public class Wyrmroot extends Enemy
         vineToSpawn = 0;
     }
     
+    /**
+     * Act method for the boss
+     */
     public void act()
     {
         if (!isDead) {
@@ -110,6 +120,7 @@ public class Wyrmroot extends Enemy
                 hitpoints = maxHitpoints;
             }
             
+            // stun and lose hp every time a vine dies
             if (vineDied) {
                 hitpoints = Math.max(1, (int) (hitpoints - (maxHitpoints * 0.1)));
                 isDisabled = true;
@@ -117,6 +128,7 @@ public class Wyrmroot extends Enemy
                 vineDied = false;
             }
             
+            // less resistance when all vines are dead
             if (vineRemaining <= 0 && vineToSpawn <= 0 && phase == 2) {
                 resMult = 2.0;
                 attackIndex = 0;
@@ -188,22 +200,10 @@ public class Wyrmroot extends Enemy
                 else setLocation(getExactX() + (nx * speed), getExactY() + (ny * speed));
             }
             
-            // blue bite
-            if (attackIndex == 0 && vineToSpawn == 0) {
-                if (magnitude < 75 || isAttacking) {
-                    if (attackCooldown.millisElapsed() >= attackSpeed) {
-                        animateBlueBite();
-                    }
-                }
-            }
-            
-            // purple bite
-            else if (attackIndex == 1) {
-                if (magnitude < 75 || isAttacking) {
-                    if (attackCooldown.millisElapsed() >= attackSpeed) {
-                        animatePurpleBite();
-                    }
-                }
+            // bite attacks
+            if (attackCooldown.millisElapsed() >= attackSpeed && (magnitude < 75 || isAttacking)) { 
+                if (attackIndex == 0 && vineToSpawn == 0) animateBlueBite();
+                else animatePurpleBite();
             }
             
             // update health bar
@@ -211,13 +211,16 @@ public class Wyrmroot extends Enemy
             
             // tells itself that it died
             if (hitpoints <= 0) {
+                // reset rotation on death
                 setRotation(0);
+                
                 // remove health bars when dead
                 GameWorld.gameWorld.removeObject(redBar);
                 GameWorld.gameWorld.removeObject(greenBar);
                 redBar = null;
                 greenBar = null;
-            
+                
+                // removes boss bar text
                 GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
                 
                 // boss is now dead
@@ -239,7 +242,7 @@ public class Wyrmroot extends Enemy
     public void frostbite() {
         if (Hero.hero.frostbiteLvl > 0) {
             isSlowed = true;
-            slowDuration = 1500;
+            slowDuration = 800;
             frostbiteTimer.mark();
         }   
         if (Hero.hero.frostbiteLvl > 1) {

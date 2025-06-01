@@ -251,7 +251,11 @@ public class Button extends Actor
         }
     }
     
-    // checks if mouse is hovering
+    /**
+     * Method for checking if mouse is hovering over the button
+     * 
+     * @return whether it is hovering or not
+     */
     public Boolean isMouseOver() {
         mouseX = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getX() : -1;
         mouseY = Greenfoot.getMouseInfo() != null ? Greenfoot.getMouseInfo().getY() : -1;
