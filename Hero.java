@@ -715,12 +715,10 @@ public class Hero extends SmoothMover
                 }
                 break;
             case "Spectral Veil":
-                if (spectralVeilLvl < 1) {
-                    spectralVeilLvl++;
-                    immuneChance = 60;
-                    immuneDuration = 3000;
-                }
-                if (spectralVeilLvl >= 1) Upgrade.uniques.remove("Spectral Veil");
+                spectralVeilLvl = 1;
+                immuneChance = 60;
+                immuneDuration = 3000;
+                Upgrade.uniques.remove("Spectral Veil");
                 break;
             case "Violent Vortex":
                 if (vortexLvl < 2) {
@@ -730,17 +728,16 @@ public class Hero extends SmoothMover
                 if (vortexLvl >= 2) Upgrade.uniques.remove("Violent Vortex");
                 break;
             case "Blood Pact":
-                if (bloodPactLvl == 0) {
-                    bloodPactLvl++;
-                    maxHp += 35;
-                    critDamage += 30;
-                    attackRange = 200;
-                    Upgrade.type.remove("projectile"); 
-                    Upgrade.type.remove("projectileSpeed");
-                    Upgrade.type.remove("attackRange");
-                    Upgrade.uniques.remove("Sharpshot");
-                    Upgrade.uniques.remove("Blood Pact");
-                }
+                bloodPactLvl = 1;
+                maxHp += 35;
+                critDamage += 30;
+                attackRange = 200;
+                
+                Upgrade.type.remove("projectile"); 
+                Upgrade.type.remove("projectileSpeed");
+                Upgrade.type.remove("attackRange");
+                Upgrade.uniques.remove("Sharpshot");
+                Upgrade.uniques.remove("Blood Pact");
                 break;
             case "Shrapnel Shot": 
                 if (shrapnelLvl < 2) {
@@ -757,16 +754,14 @@ public class Hero extends SmoothMover
                 }
                 break;
             case "Thunderstrike \nVolley":
-                if (thunderLvl < 2) {
-                    thunderLvl++;
-                    
-                    projectileSpeed = Math.min(projectileSpeed + 1.0, maxProjectileSpeed);
+                thunderLvl++;
+                if (thunderLvl == 1) {
                     spread = 60;
-                    
-                    if (thunderLvl == 2) {
-                        Upgrade.uniques.remove("Thunderstrike Volley");
-                        spread = 30;
-                    }
+                    Upgrade.uniques.remove("Shrapnel Shot");
+                }
+                if (thunderLvl == 2) {
+                    Upgrade.uniques.remove("Thunderstrike Volley");
+                    spread = 30;
                 }
                 break;
         }

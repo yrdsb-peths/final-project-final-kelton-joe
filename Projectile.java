@@ -110,7 +110,7 @@ public class Projectile extends SmoothMover
                 enemy.stun(300 * Hero.hero.thunderLvl);
             }
             
-            shrapnel(enemy);
+            if (Hero.hero.thunderLvl == 0) shrapnel(enemy);
         }
         
         durability--;
