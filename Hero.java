@@ -268,7 +268,7 @@ public class Hero extends SmoothMover
             
             if (rogueLvl > 0) {
                 maxHp = 3;
-                GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
             }
             
             // movement
@@ -320,7 +320,7 @@ public class Hero extends SmoothMover
             
             if (regenCooldown.millisElapsed() >= regenInterval) {
                 currentHp = Math.min(regenAmount + currentHp, maxHp);
-                GameWorld.healthBar.setValue(currentHp + "/" + maxHp + " hp");
+                GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + maxHp + " hp");
                 regenCooldown.mark();
             }
             
@@ -595,7 +595,7 @@ public class Hero extends SmoothMover
                         attackRange = 120;
                         currentHp = 30;
                         maxHp = 30;
-                        GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                        GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
                         Upgrade.type.remove("attackRange");
                         Upgrade.uniques.remove("Blood Pact");

@@ -67,7 +67,7 @@ public class GameWorld extends World {
         
         addObject(hero, 400, 300);
         addObject(heroArm, 0, 0);
-        healthBar = new Label(hero.currentHp + "/" + hero.maxHp + " hp", 40);
+        healthBar = new Label(Math.max(Hero.hero.currentHp, 0) + "/" + hero.maxHp + " hp", 40);
         addObject(healthBar, 710, 20);
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 80, 20);
@@ -175,7 +175,7 @@ public class GameWorld extends World {
         
         // full heal hero
         hero.currentHp = hero.maxHp;
-        GameWorld.healthBar.setValue(hero.currentHp + "/" + hero.maxHp + " hp");
+        GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + hero.maxHp + " hp");
         
         // new wave label
         waveLabel.setValue("Wave " + wave);

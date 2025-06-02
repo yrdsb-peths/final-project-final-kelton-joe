@@ -61,6 +61,13 @@ public class Wyrmroot extends Enemy
     private SimpleTimer disableTimer = new SimpleTimer();
     
     Label healthBar;
+    Actor bossBarFrame = new Actor() {
+        {
+            GreenfootImage image = new GreenfootImage("bossbarframe.png");
+            image.scale(500, 80);
+            setImage(image);
+        }
+    };
     
     /**
      * Wyrmroot constructor
@@ -223,6 +230,7 @@ public class Wyrmroot extends Enemy
                 greenBar = null;
                 
                 // removes boss bar text
+                GameWorld.gameWorld.removeObject(bossBarFrame);
                 GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
                 
                 // boss is now dead
@@ -261,20 +269,12 @@ public class Wyrmroot extends Enemy
         if (redBar != null && greenBar != null) {
             redBar.setPos(400, 40);
             greenBar.setPos(400, 40, (double) hitpoints / (double) maxHitpoints);
-            healthBar.setValue(this.hitpoints + "/" + this.maxHitpoints);
+            healthBar.setValue(Math.max(this.hitpoints, 0) + "/" + this.maxHitpoints);
         }
     }
     
     @Override
     protected void addedToWorld(World world) {
-        Actor bossBarFrame = new Actor() {
-            {
-                GreenfootImage image = new GreenfootImage("bossbarframe.png");
-                image.scale(500, 80);
-                setImage(image);
-            }
-        };
-        
         world.addObject(bossBarFrame, 400, 60);
         
         redBar = new RedBar(0.0, 0.0, true);

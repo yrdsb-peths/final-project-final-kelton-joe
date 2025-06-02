@@ -234,7 +234,7 @@ public class Enemy extends SmoothMover
         
         // deal damage if hero is not immune
         if (!isDodged || !Hero.hero.isImmune) Hero.hero.currentHp -= this.attack * (1.0 - weakenAmount/100.0);
-        GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
         
         // chance to activate spectral veil on hitting hero
         if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0) {
@@ -299,7 +299,7 @@ public class Enemy extends SmoothMover
         if (Hero.hero.vampireLvl == 1) {
             // increases current hp by 5% of max hp
             Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
-            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+            GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
         }
         else if (Hero.hero.vampireLvl == 2) {
             // chance to grant additional hp on kill (33%)
@@ -316,7 +316,7 @@ public class Enemy extends SmoothMover
             else Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
             
             // updates health bar
-            GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+            GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
         }
     }
     
