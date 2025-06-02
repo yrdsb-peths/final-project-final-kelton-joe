@@ -80,7 +80,7 @@ public class Projectile extends SmoothMover
                 isRemoved = true;
             }
         }
-        if (shrapnelTimer.millisElapsed() > 600 && isShrapnel) GameWorld.gameWorld.removeObject(this);
+        if (shrapnelTimer.millisElapsed() > 800 && isShrapnel) GameWorld.gameWorld.removeObject(this);
     }
     
     private void attack(Enemy enemy) {
@@ -101,7 +101,7 @@ public class Projectile extends SmoothMover
             enemy.jester();
             enemy.tornado(damage);
             
-            shrapnel();
+            shrapnel(enemy);
         }
         
         durability--;
@@ -111,7 +111,7 @@ public class Projectile extends SmoothMover
         }
     }
     
-    private void shrapnel() {
+    private void shrapnel(Enemy enemy) {
         if (Hero.hero.shrapnelLvl > 0 && Greenfoot.getRandomNumber(100) <= Hero.hero.shrapnelChance) {
             for (int i = 1; i < Hero.hero.numShrapnel + 2; i++) {
                 if (!isShrapnel) {
@@ -127,6 +127,7 @@ public class Projectile extends SmoothMover
                     shrapnelDamage = Hero.hero.shrapnelLvl == 1 ? (0.4 * damage) + 1.0 : (0.8 * damage) + 1.0;
                     
                     Projectile shrapnel = new Projectile(dx, dy, shrapnelSpeed, shrapnelDamage, isCrit, true);
+                    shrapnel.enemiesHit.add(enemy);
                     
                     GameWorld.gameWorld.addObject(shrapnel, (int)getExactX(), (int)getExactY());
                 }
