@@ -108,7 +108,7 @@ public class GameWorld extends World {
                 } else {
                     // randomly generate buffs based on wave number
                     bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
-                    bonusHp = Greenfoot.getRandomNumber(wave);
+                    bonusHp = Greenfoot.getRandomNumber((int) ((wave * 0.5) + 0.5));
                     bonusAttack = Greenfoot.getRandomNumber((int) ((wave * 0.5) + 0.5));
                     bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
                     
