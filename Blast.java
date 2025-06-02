@@ -46,6 +46,14 @@ public class Blast extends SmoothMover
     private SimpleTimer shrapnelTimer = new SimpleTimer();
     private double shrapnelDamage;
     
+    // blast sound
+    GreenfootSound[] blastSound = {
+        new GreenfootSound("splash/blast1.mp3"),
+        new GreenfootSound("splash/blast2.mp3"),
+        new GreenfootSound("splash/blast3.mp3")
+    };
+    int blastSoundIndex = 0;
+    
     /**
      * Constructor is blast 
      * 
@@ -118,7 +126,14 @@ public class Blast extends SmoothMover
         // deals damage to all enemies touching the blast
         for (Enemy enemy : enemies) {
             if (enemy != null && blastIndex == 7 && !enemiesHitSet.contains(enemy)) {
-                if (enemy.hitpoints <= enemy.maxHitpoints * 0.3 && Hero.hero.burstLvl > 1) this.damage *= 2;
+                // play blast sound
+                blastSound[blastSoundIndex].play();
+                blastSoundIndex = (blastSoundIndex + 1) % blastSound.length;
+                
+                if (Hero.hero.burstLvl > 1) {
+                    enemy.weaken(30, 5000);
+                    if (enemy.hitpoints <= enemy.maxHitpoints * 0.3) this.damage *= 2;
+                }
                 
                 enemy.removeHp((int) this.damage, false, Color.BLUE, 25);
                 
@@ -136,7 +151,6 @@ public class Blast extends SmoothMover
                 
                 // create shrapnels
                 shrapnel();
-                if (Hero.hero.burstLvl > 1) enemy.weaken(30, 5000);
             }
         }
         

@@ -165,8 +165,8 @@ public class Hero extends SmoothMover
     public static String right = "d";
     public static String dash = "e";
     public static String skill = "space";
-    //public static String pause;
     
+    // arrow sound
     GreenfootSound[] arrowShoot = {
         new GreenfootSound("arrows/arrow/arrow1.mp3"),
         new GreenfootSound("arrows/arrow/arrow2.mp3"),
@@ -174,12 +174,37 @@ public class Hero extends SmoothMover
     };
     int arrowIndex = 0;
     
+    // sharpshot upgrade arrow sound
     GreenfootSound[] sharpshotShoot = {
         new GreenfootSound("arrows/sharpshot/sharpshot1.mp3"),
         new GreenfootSound("arrows/sharpshot/sharpshot2.mp3"),
         new GreenfootSound("arrows/sharpshot/sharpshot3.mp3")
     };
     int sharpshotIndex = 0;
+    
+    // hydro burst projectile sound
+    GreenfootSound[] dripSound = {
+        new GreenfootSound("drip/drip1.mp3"),
+        new GreenfootSound("drip/drip2.mp3"),
+        new GreenfootSound("drip/drip3.mp3")
+    };
+    int dripIndex = 0;
+        
+    // slash sound
+    GreenfootSound[] slashSound = {
+        new GreenfootSound("slash/slash1.mp3"),
+        new GreenfootSound("slash/slash2.mp3"),
+        new GreenfootSound("slash/slash3.mp3")
+    };
+    int slashSoundIndex = 0;
+    
+    // dash sound
+    GreenfootSound[] dashSound = {
+        new GreenfootSound("dash/dash1.mp3"),
+        new GreenfootSound("dash/dash2.mp3"),
+        new GreenfootSound("dash/dash3.mp3")
+    };
+    int dashSoundIndex = 0;
     
     /**
      * Constructor for Hero Class
@@ -217,6 +242,10 @@ public class Hero extends SmoothMover
             hurtLeft[i] = new GreenfootImage("images/hurt/hurt" + i + ".png");
             hurtLeft[i].mirrorHorizontally();
             hurtLeft[i].scale(xScale, yScale);
+        }
+        
+        for (GreenfootSound s : dripSound) {
+            s.setVolume(50);
         }
         
         idleAnimationTimer.mark();
@@ -297,8 +326,13 @@ public class Hero extends SmoothMover
             // movement
             if (Greenfoot.isKeyDown(dash)) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
-                    isDashing = true;
+                    // play dash sound
+                    dashSound[dashSoundIndex].play();
+                    dashSoundIndex = (dashSoundIndex + 1) % dashSound.length;
+                    
+                    // increases speed while dashing
                     dashMultiplier = dashSpeed;
+                    isDashing = true;
                     dashTimer.mark();
                 }
             }
@@ -417,23 +451,32 @@ public class Hero extends SmoothMover
             // fire only if no blood pact
             if (bloodPactLvl == 0) fireProjectile(damageDealt, closestEnemy);
             else {
+                // additional crit scaling
                 if (isCrit) {
                     critMultiplier = 1.0 + (critDamage/100.0);
                     damageDealt = maxHp * 0.9 * critMultiplier;
                 }
+                // regular hp scaling
                 else damageDealt = maxHp * 0.4;
                 
+                // creates slash
                 Slash slash = new Slash(damageDealt, isCrit);
                 
+                // plays slash sound
+                slashSound[slashSoundIndex].play();
+                slashSoundIndex = (slashSoundIndex + 1) % slashSound.length;
+                
+                // consumes health
                 currentHp -= maxHp * 0.2;
                 if (currentHp <= 0) isDead = true;
                 
+                // calculates rotation
                 dx = closestEnemy.getExactX() - getExactX();
                 dy = closestEnemy.getExactY() - getExactY();
                 angle = Math.toDegrees(Math.atan2(dy, dx));
-                
                 slash.setRotation((int) angle - 90);
                 
+                // adds to world
                 GameWorld.gameWorld.addObject(slash, (int) getExactX(), (int) getExactY());
             }
             
@@ -488,10 +531,14 @@ public class Hero extends SmoothMover
             }
         }
         else if (burstLvl == 1) {
+            dripSound[dripIndex].play();
+            dripIndex = (dripIndex + 1) % dripSound.length;
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
         else {
+            dripSound[dripIndex].play();
+            dripIndex = (dripIndex + 1) % dripSound.length;
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.7) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
