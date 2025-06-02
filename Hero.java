@@ -641,7 +641,7 @@ public class Hero extends SmoothMover
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
-                    tornadoChance = 20 * vortexLvl;
+                    tornadoChance = 25 * vortexLvl;
                 }
                 if (vortexLvl >= 2) Upgrade.uniques.remove("Violent Vortex");
                 break;

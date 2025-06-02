@@ -76,6 +76,13 @@ public class Tornado extends SmoothMover
                         attackTimer.mark();
                     }
                 }
+                else {
+                    if (attackTimer.millisElapsed() > 1600) {
+                        // green damage indicator
+                        enemy.removeHp((int) (this.damage * 0.5), false, Color.GREEN, 20);
+                        attackTimer.mark();
+                    }
+                }
             }
         }
         
