@@ -692,6 +692,8 @@ public class Hero extends SmoothMover
     public void animateDeath() {
         Enemy.removeAll();
         GameWorld.gameWorld.removeObject(GameWorld.gameWorld.healthBar);
+        GameWorld.gameWorld.removeObject(redBar);
+        GameWorld.gameWorld.removeObject(greenBar);
         
         if (deathAnimationTimer.millisElapsed() < 250) return;
         deathAnimationTimer.mark();

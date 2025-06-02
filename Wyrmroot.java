@@ -77,7 +77,7 @@ public class Wyrmroot extends Enemy
      */
     public Wyrmroot(int hitpoints, int attack) {
         // creates enemy
-        super(hitpoints, GameWorld.gameWorld.waveMultiplier * 0.35, attack, 1000);
+        super(hitpoints, GameWorld.gameWorld.waveMultiplier * 0.5, attack, 1000);
         
         // sets images
         for (int i = 0; i < blueBiteRight.length; i++) {
