@@ -267,7 +267,7 @@ public class Hero extends SmoothMover
             greenBar.setPos(barX, barY, cooldownPercent);
             
             if (rogueLvl > 0) {
-                maxHp = 3;
+                maxHp = 30;
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
             }
             
@@ -691,6 +691,7 @@ public class Hero extends SmoothMover
     
     public void animateDeath() {
         Enemy.removeAll();
+        GameWorld.gameWorld.removeObject(GameWorld.gameWorld.healthBar);
         
         if (deathAnimationTimer.millisElapsed() < 250) return;
         deathAnimationTimer.mark();

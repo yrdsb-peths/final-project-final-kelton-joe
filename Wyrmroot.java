@@ -131,7 +131,7 @@ public class Wyrmroot extends Enemy
             
             // stun and lose hp every time a vine dies
             if (vineDied) {
-                hitpoints = Math.max(1, (int) (hitpoints - (maxHitpoints * 0.1)));
+                hitpoints = Math.max(1, (int) (hitpoints - (maxHitpoints * 0.15)));
                 isDisabled = true;
                 disableTimer.mark();
                 vineDied = false;
@@ -232,6 +232,8 @@ public class Wyrmroot extends Enemy
                 // removes boss bar text
                 GameWorld.gameWorld.removeObject(bossBarFrame);
                 GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
+                
+                GameWorld.gameWorld.removeObject(healthBar);
                 
                 // boss is now dead
                 isDead = true;

@@ -226,7 +226,7 @@ public class GameWorld extends World {
      */
     private void spawnBoss() {
         // adds the boss to the center of the world
-        Wyrmroot wyrmroot = new Wyrmroot(300 * waveMultiplier, 5 * waveMultiplier);
+        Wyrmroot wyrmroot = new Wyrmroot(250 * waveMultiplier, 7 * waveMultiplier);
         addObject(wyrmroot, 400, 300);
         
         // reduces enemies to spawn
