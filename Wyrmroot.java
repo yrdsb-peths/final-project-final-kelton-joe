@@ -69,6 +69,8 @@ public class Wyrmroot extends Enemy
         }
     };
     
+    private final int scale = 90;
+    
     /**
      * Wyrmroot constructor
      * 
@@ -84,19 +86,29 @@ public class Wyrmroot extends Enemy
             blueBiteLeft[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
             blueBiteRight[i] = new GreenfootImage("Wyrm/blueBite/blueBite" + i + ".png");
             blueBiteRight[i].mirrorHorizontally();
+            
+            blueBiteLeft[i].scale(scale, scale);
+            blueBiteRight[i].scale(scale, scale);
         }
         for (int i = 0; i < death.length; i++) {
             death[i] = new GreenfootImage("Wyrm/death/death" + i + ".png");
+            death[i].scale(scale, scale);
         }
         for (int i = 0; i < purpleBiteLeft.length; i++) {
             purpleBiteLeft[i] = new GreenfootImage("Wyrm/purpleBite/purpleBite" + i + ".png");
             purpleBiteRight[i] = new GreenfootImage("Wyrm/purpleBite/purpleBite" + i + ".png");
             purpleBiteRight[i].mirrorHorizontally();
+            
+            purpleBiteLeft[i].scale(scale, scale);
+            purpleBiteRight[i].scale(scale, scale);
         }
         for (int i = 0; i < runLeft.length; i++) {
             runLeft[i] = new GreenfootImage("Wyrm/run/run" + i + ".png");
             runRight[i] = new GreenfootImage("Wyrm/run/run" + i + ".png");
             runRight[i].mirrorHorizontally();
+            
+            runLeft[i].scale(scale, scale);
+            runRight[i].scale(scale, scale);
         }
         
         // animation

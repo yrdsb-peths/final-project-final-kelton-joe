@@ -30,6 +30,9 @@ public class UpgradeManager extends Actor
     private Button frame;
     private Label upgradeText;
     
+    private Button rerollsFrame;
+    private Label rerollsText;
+    
     /**
      * Constructor for upgradeManager
      * 
@@ -64,21 +67,27 @@ public class UpgradeManager extends Actor
         
         // adds a confirm button
         confirmButton = new Button("Confirm");
-        GameWorld.gameWorld.addObject(confirmButton, 435, 450);
+        GameWorld.gameWorld.addObject(confirmButton, 460, 450);
         
         // adds a reroll button
         resetButton = new Button("Rerolls");
-        GameWorld.gameWorld.addObject(resetButton, 285, 450);
+        GameWorld.gameWorld.addObject(resetButton, 310, 450);
         
         // return to home screen
         homeButton = new Button("Home");
-        GameWorld.gameWorld.addObject(homeButton, 550, 450);
+        GameWorld.gameWorld.addObject(homeButton, 575, 450);
         
         // upgrade text
         frame = new Button("Big Frame 2");
         GameWorld.gameWorld.addObject(frame, 400, 140);
         upgradeText = new Label("Select an Upgrade", 35);
         GameWorld.gameWorld.addObject(upgradeText, 400, 140);
+        
+        // number of rerolls
+        rerollsFrame = new Button("Small Frame 2");
+        GameWorld.gameWorld.addObject(rerollsFrame, 200, 450);
+        rerollsText = new Label(Integer.toString(numRerolls), 30);
+        GameWorld.gameWorld.addObject(rerollsText, 195, 450);
     }
     
     /**
@@ -110,6 +119,8 @@ public class UpgradeManager extends Actor
             // remove text
             GameWorld.gameWorld.removeObject(this.frame);
             GameWorld.gameWorld.removeObject(this.upgradeText);
+            GameWorld.gameWorld.removeObject(this.rerollsText);
+            GameWorld.gameWorld.removeObject(this.rerollsFrame);
             
             // removes itself and starts the next wave
             GameWorld.gameWorld.removeObject(this);
@@ -172,12 +183,14 @@ public class UpgradeManager extends Actor
             GameWorld.gameWorld.upgradeManager = rerolledManager;
             GameWorld.gameWorld.addObject(rerolledManager, 0, 0);
             
-            // remove text and buttons
+            // remove text and buttons when rerolling
             GameWorld.gameWorld.removeObject(this.frame);
             GameWorld.gameWorld.removeObject(this.upgradeText);
             GameWorld.gameWorld.removeObject(this.homeButton);
             GameWorld.gameWorld.removeObject(this.resetButton);
             GameWorld.gameWorld.removeObject(this.confirmButton);
+            GameWorld.gameWorld.removeObject(this.rerollsText);
+            GameWorld.gameWorld.removeObject(this.rerollsFrame);
         }
     }
 }
