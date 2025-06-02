@@ -85,13 +85,9 @@ public class Upgrade extends Actor
         "Spectral Veil", // chance to become immune to damage for a short time when hit
         "Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
                          // chance to become immune to damage for a short time when hit
-        //"Blightroot",    // apply poison on hit
-                         // upgraded: poison damage spreads and increases the longer it is active
-        //"Blaze Rush",     // dash leaves a trail of fire that applies burn to enemies in the trail
         "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
                          // upgraded: vortex also deals damage and becomes bigger
         "Blood Pact",    // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
-        //"Stormcaller",   // chance to chain and stun enemies on hit
         "Shrapnel Shot", // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
                          // upgraded: shrapnels have max speed and range, and can additionally pierce
         "Hydro Burst"    // projectiles become blasts

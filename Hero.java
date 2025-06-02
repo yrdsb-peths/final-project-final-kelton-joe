@@ -464,8 +464,12 @@ public class Hero extends SmoothMover
             Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
             GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
         }
+        else if (burstLvl == 1) {
+            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
+            GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
+        }
         else {
-            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.6) + 1, false);
+            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.7) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
     }
@@ -689,9 +693,9 @@ public class Hero extends SmoothMover
                 if (shrapnelLvl >= 2) Upgrade.uniques.remove("Shrapnel Shot");
                 break;
             case "Hydro Burst":
-                if (burstLvl == 0) {
+                if (burstLvl < 2) {
                     burstLvl++;
-                    Upgrade.uniques.remove("Hydro Burst");
+                    if (burstLvl == 1) Upgrade.uniques.remove("Hydro Burst");
                 }
                 break;
         }
