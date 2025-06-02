@@ -185,7 +185,7 @@ public class GameWorld extends World {
         waveDifficulty = Greenfoot.getRandomNumber(3);
         
         // enemies to spawn
-        enemiesToSpawn = (wave + Greenfoot.getRandomNumber(2)) * waveMultiplier;
+        enemiesToSpawn = (int) ((((wave * 0.5) + Greenfoot.getRandomNumber(2)) + 0.5) * waveMultiplier);
         
         // wave difficulty
         switch (waveDifficulty) {
