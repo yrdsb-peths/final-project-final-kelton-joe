@@ -336,11 +336,10 @@ public class Enemy extends SmoothMover
                 
                 if (Hero.hero.jesterLvl > 1) {
                     // stuns
-                    this.isStunned = true;
+                    stun(1200);
                     
                     // deals jester damage
-                    removeHp((int) (Hero.hero.attack * 0.6), false, Color.MAGENTA, 30);
-                    stunTimer.mark();
+                    removeHp((int) (Hero.hero.attack * 1.5), false, Color.MAGENTA, 30);
                 }
             }
         }

@@ -18,7 +18,7 @@ public class Hero extends SmoothMover
     
     // attack speed
     public double attackSpeed;
-    private final double maxAttackSpeed = 300.0;
+    private double maxAttackSpeed = 300.0;
     SimpleTimer attackCooldown = new SimpleTimer();
     
     // attack range
@@ -55,6 +55,7 @@ public class Hero extends SmoothMover
     
     // damage dealt calculation variable
     double damageDealt;
+    int damageBonus;
     
     // dash
     boolean isDashing;
@@ -280,10 +281,12 @@ public class Hero extends SmoothMover
         else { 
             if (immunityTimer.millisElapsed() >= immuneDuration) {
                 isImmune = false;
+                damageBonus -= 30;
                 GameWorld.gameWorld.removeObject(indicator);
             }
             
             else {
+                damageBonus += 30;
                 GameWorld.gameWorld.addObject(indicator, 50, 550);
             }
             
@@ -413,10 +416,10 @@ public class Hero extends SmoothMover
             if (Greenfoot.getRandomNumber(100) <= critRate) {
                 isCrit = true;
                 critMultiplier = 1.0 + (critDamage/100.0);
-                damageDealt = attack * critMultiplier;
+                damageDealt = attack * critMultiplier * (1 + damageBonus / 100.0);
             }
             else {
-              damageDealt = attack;
+              damageDealt = attack * (1 + damageBonus / 100.0);
               isCrit = false;
             }
             
@@ -666,7 +669,7 @@ public class Hero extends SmoothMover
                         critDamage += 60.0; 
                         speed += 0.5; 
                         dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
-                        attackRange = 120;
+                        attackRange = 110;
                         currentHp = 30;
                         maxHp = 30;
                         GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
@@ -676,9 +679,10 @@ public class Hero extends SmoothMover
                     }
                     else {
                         critRate = 100.0;
-                        critDamage += 100.0;
-                        speed *= 1.5;
+                        critDamage += 50.0;
+                        attack += 50.0;
                         dashCooldown = minDashCooldown;
+                        maxAttackSpeed = 150;
                         attackSpeed = maxAttackSpeed;
                         Upgrade.type.remove("attackSpeed");
                         Upgrade.type.remove("dashCooldown");
@@ -715,7 +719,7 @@ public class Hero extends SmoothMover
             case "Violent Vortex":
                 if (vortexLvl < 2) {
                     vortexLvl++;
-                    tornadoChance = 25 * vortexLvl;
+                    tornadoChance = 15 * vortexLvl;
                 }
                 if (vortexLvl >= 2) Upgrade.uniques.remove("Violent Vortex");
                 break;
