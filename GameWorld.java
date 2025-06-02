@@ -74,7 +74,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 0;
+        wave = 9;
         startWave();
         
         // give total rerolls
@@ -87,6 +87,8 @@ public class GameWorld extends World {
      * also spawns upgrades when enemies are killed
      */
     public void act() {
+        if (wave % 10 == 0) setBackground("background/background3.png");
+        else setBackground("background/background6.png");
         // boss label
         if (labelTimer.millisElapsed() > 2000) {
             removeObject(bossText);

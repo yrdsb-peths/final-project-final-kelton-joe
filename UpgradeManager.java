@@ -172,9 +172,12 @@ public class UpgradeManager extends Actor
             GameWorld.gameWorld.upgradeManager = rerolledManager;
             GameWorld.gameWorld.addObject(rerolledManager, 0, 0);
             
-            // remove text
+            // remove text and buttons
             GameWorld.gameWorld.removeObject(this.frame);
             GameWorld.gameWorld.removeObject(this.upgradeText);
+            GameWorld.gameWorld.removeObject(this.homeButton);
+            GameWorld.gameWorld.removeObject(this.resetButton);
+            GameWorld.gameWorld.removeObject(this.confirmButton);
         }
     }
 }
