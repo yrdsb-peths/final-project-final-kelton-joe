@@ -11,7 +11,7 @@ public class BlueBite extends Actor
     // stats
     private int damage;
     private boolean isDodged;
-    private final int size = 160;
+    private final int size = 200;
     private boolean hasAttacked;
     
     // image

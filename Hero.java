@@ -158,6 +158,20 @@ public class Hero extends SmoothMover
     public static String skill = "space";
     //public static String pause;
     
+    GreenfootSound[] arrowShoot = {
+        new GreenfootSound("arrows/arrow/arrow1.mp3"),
+        new GreenfootSound("arrows/arrow/arrow2.mp3"),
+        new GreenfootSound("arrows/arrow/arrow3.mp3")
+    };
+    int arrowIndex = 0;
+    
+    GreenfootSound[] sharpshotShoot = {
+        new GreenfootSound("arrows/sharpshot/sharpshot1.mp3"),
+        new GreenfootSound("arrows/sharpshot/sharpshot2.mp3"),
+        new GreenfootSound("arrows/sharpshot/sharpshot3.mp3")
+    };
+    int sharpshotIndex = 0;
+    
     /**
      * Constructor for Hero Class
      * 
@@ -439,6 +453,14 @@ public class Hero extends SmoothMover
         double ny = dy / magnitude;
         
         if (burstLvl == 0) {
+            if (sharpshotLvl > 0) {
+                sharpshotShoot[sharpshotIndex].play();
+                sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
+            } else {
+                arrowShoot[arrowIndex].play();
+                arrowIndex = (arrowIndex + 1) % arrowShoot.length;
+            }
+            
             Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
             GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
         }
