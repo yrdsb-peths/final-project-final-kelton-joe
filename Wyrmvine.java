@@ -34,8 +34,11 @@ public class Wyrmvine extends Enemy
     
     private final int scale = 40;
     
+    // attack sound
+    GreenfootSound chompSound = new GreenfootSound("chomp.mp3");
+    
     public Wyrmvine(int hp, int attack) {
-        super(hp, -1.0, attack, 1500);
+        super(hp, -1.0, attack, 1000);
         
         for (int i = 0; i < attackLeft.length; i++) {
             attackLeft[i] = new GreenfootImage("Wyrm/summon/wyrmAttack/wyrmAttack" + i + ".png");
@@ -64,7 +67,7 @@ public class Wyrmvine extends Enemy
         this.isAttacking = false;
         this.facingRight = false;
         this.isAnimating = false;
-        this.attackSpeed = 1500;
+        this.attackSpeed = 1000;
         this.isDead = false;
         idleTimer.mark();
         attackTimer.mark();
@@ -92,8 +95,15 @@ public class Wyrmvine extends Enemy
             facingRight = dx >= 0;
             
             if ((Math.sqrt(dx * dx + dy * dy) < 75 || isAttacking) && attackTimer.millisElapsed() > attackSpeed) {
+                // animate attack
                 animateAttack();
+                
+                // deals damage to player
                 if (attackIndex == 4 && Math.sqrt(dx * dx + dy * dy) < 50 && !hasAttacked) {
+                    // plays chomp sound
+                    chompSound.play();
+                    
+                    // prevent dealing damage multiple times per attack cycle
                     hasAttacked = true;
                     attack();
                 }

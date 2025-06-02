@@ -60,6 +60,9 @@ public class Wyrmroot extends Enemy
     private boolean isDisabled;
     private SimpleTimer disableTimer = new SimpleTimer();
     
+    // vine spawn sound
+    GreenfootSound vineSound = new GreenfootSound("vine/vine1.mp3");
+    
     Label healthBar;
     Actor bossBarFrame = new Actor() {
         {
@@ -373,8 +376,14 @@ public class Wyrmroot extends Enemy
                 }
                             
                 if (vineToSpawn > 0 && !spawnedVine) {
+                    // creates a new vine
                     Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 20, GameWorld.gameWorld.waveMultiplier * 3);
                     GameWorld.gameWorld.addObject(vine, (int) getExactX(), (int) getExactY());
+                    
+                    // play vine sound
+                    vineSound.play();
+                    
+                    // changes variables
                     vineToSpawn--;
                     vineRemaining++;
                     isAttacking = false;

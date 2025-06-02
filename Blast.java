@@ -47,12 +47,7 @@ public class Blast extends SmoothMover
     private double shrapnelDamage;
     
     // blast sound
-    GreenfootSound[] blastSound = {
-        new GreenfootSound("splash/blast1.mp3"),
-        new GreenfootSound("splash/blast2.mp3"),
-        new GreenfootSound("splash/blast3.mp3")
-    };
-    int blastSoundIndex = 0;
+    GreenfootSound blastSound = new GreenfootSound("blast.mp3");
     
     /**
      * Constructor is blast 
@@ -127,8 +122,7 @@ public class Blast extends SmoothMover
         for (Enemy enemy : enemies) {
             if (enemy != null && blastIndex == 7 && !enemiesHitSet.contains(enemy)) {
                 // play blast sound
-                blastSound[blastSoundIndex].play();
-                blastSoundIndex = (blastSoundIndex + 1) % blastSound.length;
+                blastSound.play();
                 
                 if (Hero.hero.burstLvl > 1) {
                     enemy.weaken(30, 5000);

@@ -182,30 +182,10 @@ public class Hero extends SmoothMover
     };
     int sharpshotIndex = 0;
     
-    // hydro burst projectile sound
-    GreenfootSound[] dripSound = {
-        new GreenfootSound("drip/drip1.mp3"),
-        new GreenfootSound("drip/drip2.mp3"),
-        new GreenfootSound("drip/drip3.mp3")
-    };
-    int dripIndex = 0;
-        
-    // slash sound
-    GreenfootSound[] slashSound = {
-        new GreenfootSound("slash/slash1.mp3"),
-        new GreenfootSound("slash/slash2.mp3"),
-        new GreenfootSound("slash/slash3.mp3")
-    };
-    int slashSoundIndex = 0;
-    
-    // dash sound
-    GreenfootSound[] dashSound = {
-        new GreenfootSound("dash/dash1.mp3"),
-        new GreenfootSound("dash/dash2.mp3"),
-        new GreenfootSound("dash/dash3.mp3")
-    };
-    int dashSoundIndex = 0;
-    
+    // sounds
+    GreenfootSound dripSound = new GreenfootSound("drip.mp3");
+    GreenfootSound slashSound = new GreenfootSound("slash.mp3");
+    GreenfootSound dashSound = new GreenfootSound("dash.mp3");
     /**
      * Constructor for Hero Class
      * 
@@ -242,10 +222,6 @@ public class Hero extends SmoothMover
             hurtLeft[i] = new GreenfootImage("images/hurt/hurt" + i + ".png");
             hurtLeft[i].mirrorHorizontally();
             hurtLeft[i].scale(xScale, yScale);
-        }
-        
-        for (GreenfootSound s : dripSound) {
-            s.setVolume(50);
         }
         
         idleAnimationTimer.mark();
@@ -327,8 +303,7 @@ public class Hero extends SmoothMover
             if (Greenfoot.isKeyDown(dash)) {
                 if (dashTimer.millisElapsed() >= dashCooldown) {
                     // play dash sound
-                    dashSound[dashSoundIndex].play();
-                    dashSoundIndex = (dashSoundIndex + 1) % dashSound.length;
+                    dashSound.play();
                     
                     // increases speed while dashing
                     dashMultiplier = dashSpeed;
@@ -463,8 +438,7 @@ public class Hero extends SmoothMover
                 Slash slash = new Slash(damageDealt, isCrit);
                 
                 // plays slash sound
-                slashSound[slashSoundIndex].play();
-                slashSoundIndex = (slashSoundIndex + 1) % slashSound.length;
+                slashSound.play();
                 
                 // consumes health
                 currentHp -= maxHp * 0.2;
@@ -531,14 +505,18 @@ public class Hero extends SmoothMover
             }
         }
         else if (burstLvl == 1) {
-            dripSound[dripIndex].play();
-            dripIndex = (dripIndex + 1) % dripSound.length;
+            // plays sound
+            dripSound.play();
+            
+            // creates blast
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
         else {
-            dripSound[dripIndex].play();
-            dripIndex = (dripIndex + 1) % dripSound.length;
+            // plays sound
+            dripSound.play();
+            
+            // creates blast
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.7) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }

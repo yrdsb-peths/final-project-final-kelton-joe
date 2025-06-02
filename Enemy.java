@@ -74,12 +74,7 @@ public class Enemy extends SmoothMover
     public double dx, dy;
     
     // spectral veil sounds
-    GreenfootSound[] veilSound = {
-        new GreenfootSound("veil/veil1.mp3"),
-        new GreenfootSound("veil/veil2.mp3"),
-        new GreenfootSound("veil/veil3.mp3")
-    };
-    int veilIndex = 0;
+    GreenfootSound veilSound = new GreenfootSound("veil.mp3");
     
     /**
      * Constructor for enemy class
@@ -248,8 +243,7 @@ public class Enemy extends SmoothMover
         // chance to activate spectral veil on hitting hero
         if (Greenfoot.getRandomNumber(100) <= Hero.hero.immuneChance && Hero.hero.spectralVeilLvl > 0 && !Hero.hero.isImmune) {
             // spectral veil sound
-            veilSound[veilIndex].play();
-            veilIndex = (veilIndex + 1) % veilSound.length;
+            veilSound.play();
             
             Hero.hero.isImmune = true;
             Hero.hero.immunityTimer.mark();
