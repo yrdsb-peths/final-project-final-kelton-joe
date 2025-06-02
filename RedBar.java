@@ -13,7 +13,7 @@ public class RedBar extends SmoothMover
     public RedBar(double xScale, double yScale, boolean isBoss) {
         
         if (isBoss) {
-            image = new GreenfootImage("bossbarred.png");
+            image = new GreenfootImage("bossbargreen.png");
             image.scale(480, 55);
             setImage(image);
         }
