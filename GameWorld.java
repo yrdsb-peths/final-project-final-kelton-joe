@@ -63,9 +63,11 @@ public class GameWorld extends World {
         
         // spawn actors
         hero = new Hero(heroArm);
+        Hero.hero = hero;
+        
         addObject(hero, 400, 300);
         addObject(heroArm, 0, 0);
-        healthBar = new Label(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp", 40);
+        healthBar = new Label(hero.currentHp + "/" + hero.maxHp + " hp", 40);
         addObject(healthBar, 710, 20);
         waveLabel = new Label("Wave 0", 50);
         addObject(waveLabel, 80, 20);
@@ -99,7 +101,7 @@ public class GameWorld extends World {
         else spawnInterval = 1000 / waveMultiplier;
         
         // spawns enemies as long as there are more enemies to spawn
-        if (enemiesToSpawn > 0) {
+        if (enemiesToSpawn > 0 && wave > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
                 if (wave % 10 == 0) {
                     // spawns the boss
@@ -107,10 +109,22 @@ public class GameWorld extends World {
                     addObject(bossBarText, 400, 20);
                 } else {
                     // randomly generate buffs based on wave number
-                    bonusSpeed = ((double) Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier))) / 10.0;
-                    bonusHp = Greenfoot.getRandomNumber((int) ((wave * 0.5) + 0.5));
-                    bonusAttack = Greenfoot.getRandomNumber((int) ((wave * 0.5) + 0.5));
-                    bonusAttackSpeed = Greenfoot.getRandomNumber(Math.min(wave, maxSpeedMultiplier)) * 10;
+                    int speedBound = Math.min(wave, maxSpeedMultiplier);
+                    if (speedBound <= 0) speedBound = 1;  // fallback to 1
+                    
+                    bonusSpeed = ((double) Greenfoot.getRandomNumber(speedBound)) / 10.0;
+                    
+                    int hpBound = wave;
+                    if (hpBound <= 0) hpBound = 1;
+                    
+                    bonusHp = Greenfoot.getRandomNumber(hpBound);
+                    
+                    int attackBound = (int) (wave * 0.5);
+                    if (attackBound <= 0) attackBound = 1;
+                    
+                    bonusAttack = Greenfoot.getRandomNumber(attackBound);
+                    
+                    bonusAttackSpeed = Greenfoot.getRandomNumber(speedBound) * 10;
                     
                     // spawn enemy with buffs
                     Enemy enemy = new Enemy((wave + bonusHp) * waveMultiplier, bonusSpeed, bonusAttack * waveMultiplier, bonusAttackSpeed);
@@ -160,8 +174,8 @@ public class GameWorld extends World {
         waveMultiplier = wave/10 + 1;
         
         // full heal hero
-        Hero.hero.currentHp = Hero.hero.maxHp;
-        GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+        hero.currentHp = hero.maxHp;
+        GameWorld.healthBar.setValue(hero.currentHp + "/" + hero.maxHp + " hp");
         
         // new wave label
         waveLabel.setValue("Wave " + wave);
