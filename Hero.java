@@ -90,6 +90,7 @@ public class Hero extends SmoothMover
     
     // spectral veil
     public boolean isImmune;
+    private boolean hasChanged;
     int immuneChance;
     int immuneDuration;
     SimpleTimer immunityTimer = new SimpleTimer();
@@ -279,15 +280,20 @@ public class Hero extends SmoothMover
             animateDeath();
         }
         else { 
-            if (immunityTimer.millisElapsed() >= immuneDuration) {
-                isImmune = false;
-                damageBonus -= 30;
-                GameWorld.gameWorld.removeObject(indicator);
-            }
-            
-            else {
-                damageBonus += 30;
-                GameWorld.gameWorld.addObject(indicator, 50, 550);
+            if (spectralVeilLvl > 0) {
+                if (immunityTimer.millisElapsed() >= immuneDuration && isImmune) {
+                    isImmune = false;
+                    hasChanged = false;
+                    damageBonus -= 30;
+                    GameWorld.gameWorld.removeObject(indicator);
+                }
+                else if (isImmune) {
+                    if (!hasChanged)  {
+                        damageBonus += 30;
+                        hasChanged = true;
+                    }
+                    GameWorld.gameWorld.addObject(indicator, 50, 550);
+                }
             }
             
             // dash bar
