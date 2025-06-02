@@ -92,7 +92,7 @@ public class Upgrade extends Actor
                                 // upgraded: shrapnels have max speed and range, and can additionally pierce
         "Hydro Burst",          // projectiles become blasts
                                 // upgraded: weakens enemies by 30% and deals double damage to enemies under 30% hp
-        "Thunderstrike Volley"  // fire a volley of arrows with a chance to spawn that deal partial damage
+        "Thunderstrike \nVolley"  // fire a volley of arrows with a chance to spawn that deal partial damage
                                 // upgraded: more arrows that can pierce slightly and have higher stun chance
     };
     public String uniqueTrait;

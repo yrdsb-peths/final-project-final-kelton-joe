@@ -61,7 +61,7 @@ public class Wyrmroot extends Enemy
     private SimpleTimer disableTimer = new SimpleTimer();
     
     // vine spawn sound
-    GreenfootSound vineSound = new GreenfootSound("vine/vine1.mp3");
+    GreenfootSound vineSound = new GreenfootSound("vine.mp3");
     
     Label healthBar;
     Actor bossBarFrame = new Actor() {

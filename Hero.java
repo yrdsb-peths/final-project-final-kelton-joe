@@ -756,12 +756,13 @@ public class Hero extends SmoothMover
                     if (burstLvl == 2) Upgrade.uniques.remove("Hydro Burst");
                 }
                 break;
-            case "Thunderstrike Volley":
+            case "Thunderstrike \nVolley":
                 if (thunderLvl < 2) {
-                    attackSpeed += 800; 
-                    projectileSpeed = Math.min(projectileSpeed + 3.0, maxProjectileSpeed);
                     thunderLvl++;
+                    
+                    projectileSpeed = Math.min(projectileSpeed + 1.0, maxProjectileSpeed);
                     spread = 60;
+                    
                     if (thunderLvl == 2) {
                         Upgrade.uniques.remove("Thunderstrike Volley");
                         spread = 30;
