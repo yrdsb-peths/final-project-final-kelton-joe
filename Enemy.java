@@ -60,6 +60,7 @@ public class Enemy extends SmoothMover
     // dodge and stun
     boolean isDodged;
     boolean isStunned;
+    int stunDuration;
     SimpleTimer stunTimer = new SimpleTimer();
     
     // weaken
@@ -169,7 +170,7 @@ public class Enemy extends SmoothMover
         if (weakenTimer.millisElapsed() > weakenDuration) isWeakened = false;
         if (frostbiteTimer.millisElapsed() >= slowDuration) isSlowed = false;
         if (frostbiteFreezeTimer.millisElapsed() >= 1500) isFrozen = false;
-        if (stunTimer.millisElapsed() >= 800) isStunned = false;
+        if (stunTimer.millisElapsed() >= stunDuration) isStunned = false;
         
         // movement based status effects
         if (isFrozen || isStunned) setLocation(getExactX(), getExactY());
@@ -376,6 +377,18 @@ public class Enemy extends SmoothMover
         this.weakenAmount = weakenAmount;
         this.weakenDuration = weakenDuration;
         weakenTimer.mark();
+    }
+    
+    /**
+     * Stun method
+     * 
+     * @param duration: how long to stun enemies for
+     */
+    public void stun(int duration) {
+        // makes this enemy weakened
+        this.isStunned = true;
+        this.stunDuration = duration;
+        stunTimer.mark();
     }
     
     /**

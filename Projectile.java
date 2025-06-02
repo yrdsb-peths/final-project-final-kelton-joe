@@ -31,6 +31,8 @@ public class Projectile extends SmoothMover
     
     GreenfootImage image;
     
+    private SimpleTimer stormTimer = new SimpleTimer();
+    
     public Projectile(double nx, double ny, double speed, double damage, boolean isCrit, boolean isShrapnel) {
         if (Hero.hero.scorchLvl > 0) image = new GreenfootImage("scorchArrow.png");
         else if (Hero.hero.frostbiteLvl > 0) image = new GreenfootImage("frostArrow.png");
@@ -52,12 +54,14 @@ public class Projectile extends SmoothMover
         
         if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
         else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
+        else if (Hero.hero.thunderLvl > 1) this.durability = 2;
         else this.durability = 1;
         
         if (isShrapnel) {
             if (Hero.hero.shrapnelLvl == 1) this.durability = 1;
             else this.durability = 3;
         }
+        if (Hero.hero.thunderLvl > 0) stormTimer.mark();
         
         isRemoved = false;
         
@@ -81,6 +85,7 @@ public class Projectile extends SmoothMover
             }
         }
         if (shrapnelTimer.millisElapsed() > 800 && isShrapnel) GameWorld.gameWorld.removeObject(this);
+        if (stormTimer.millisElapsed() > 1400 && Hero.hero.thunderLvl > 0) GameWorld.gameWorld.removeObject(this);
     }
     
     private void attack(Enemy enemy) {
@@ -100,6 +105,10 @@ public class Projectile extends SmoothMover
             enemy.vampire();
             enemy.jester();
             enemy.tornado(damage);
+            
+            if (Hero.hero.thunderLvl > 0 && (Greenfoot.getRandomNumber(100) < Hero.hero.thunderLvl * 5)) {
+                enemy.stun(300 * Hero.hero.thunderLvl);
+            }
             
             shrapnel(enemy);
         }

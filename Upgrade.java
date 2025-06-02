@@ -70,28 +70,30 @@ public class Upgrade extends Actor
     // unique upgrades
     public boolean isUnique;
     public String[] uniqueTraits = {
-        "Frostbite",     // slows enemies
-                         // upgraded: freezes enemies on hit (they can still attack)
-        "Scorch",        // burn damage to enemies overtime
-                         // upgraded: increases burn damage
-        "Sharpshot",     // pierce through enemies
-                         // pierce through enemies
-        "Vampire",       // Hero heals hp on hit
-                         // upgraded: chance to increase max hp on hit
-        "Rogue",         // much increased speed and crit, but low range and hp
-                         // upgraded: chance to fully dodge attacks, attack speed buff
-        "Jester",        // chance to teleport enemies to random location on hit
-                         // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
-        "Spectral Veil", // chance to become immune to damage for a short time when hit
-        "Arcane Echo",   // attacks have a chance to repeat a second time but are weaker
-                         // chance to become immune to damage for a short time when hit
-        "Violent Vortex",// grants vortex skill on hit: pull nearby enemies and slows them
-                         // upgraded: vortex also deals damage and becomes bigger
-        "Blood Pact",    // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
-        "Shrapnel Shot", // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
-                         // upgraded: shrapnels have max speed and range, and can additionally pierce
-        "Hydro Burst"    // projectiles become blasts
-                         // upgraded: weakens enemies by 30% and deals double damage to enemies under 30% hp
+        "Frostbite",            // slows enemies
+                                // upgraded: freezes enemies on hit (they can still attack)
+        "Scorch",               // burn damage to enemies overtime
+                                // upgraded: increases burn damage
+        "Sharpshot",            // pierce through enemies
+                                // pierce through enemies
+        "Vampire",              // Hero heals hp on hit
+                                // upgraded: chance to increase max hp on hit
+        "Rogue",                // much increased speed and crit, but low range and hp
+                                // upgraded: chance to fully dodge attacks, attack speed buff
+        "Jester",               // chance to teleport enemies to random location on hit
+                                // upgraded: higher teleport chance + stun (unable to move and attack) on teleport
+        "Spectral Veil",        // chance to become immune to damage for a short time when hit
+        "Arcane Echo",          // attacks have a chance to repeat a second time but are weaker
+                                // chance to become immune to damage for a short time when hit
+        "Violent Vortex",       // grants vortex skill on hit: pull nearby enemies and slows them
+                                // upgraded: vortex also deals damage and becomes bigger
+        "Blood Pact",           // converts arrows to "blood pact" attack, consuming health and dealing additonal crit damage
+        "Shrapnel Shot",        // after projectiles hit enemies, chance to fire shrapnels with lower speed, damage, and range
+                                // upgraded: shrapnels have max speed and range, and can additionally pierce
+        "Hydro Burst",          // projectiles become blasts
+                                // upgraded: weakens enemies by 30% and deals double damage to enemies under 30% hp
+        "Thunderstrike Volley"  // fire a volley of arrows with a chance to spawn that deal partial damage
+                                // upgraded: more arrows that can pierce slightly and have higher stun chance
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;

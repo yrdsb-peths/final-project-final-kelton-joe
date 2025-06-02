@@ -78,6 +78,7 @@ public class Hero extends SmoothMover
     int bloodPactLvl;
     int shrapnelLvl;
     int burstLvl;
+    int thunderLvl;
     
     // arcane echo
     int echoChance;
@@ -99,6 +100,14 @@ public class Hero extends SmoothMover
     // shrapnel shot
     int numShrapnel;
     int shrapnelChance;
+    
+    // thunderstrike volley
+    private int spread;
+    private double randomness;
+    private double newDirection;
+    private double newVelocityX;
+    private double newVelocityY;
+    private SimpleTimer delay = new SimpleTimer();
     
     // facing direction
     String facing = "right";
@@ -456,13 +465,27 @@ public class Hero extends SmoothMover
             if (sharpshotLvl > 0) {
                 sharpshotShoot[sharpshotIndex].play();
                 sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
-            } else {
+            } 
+            else {
                 arrowShoot[arrowIndex].play();
                 arrowIndex = (arrowIndex + 1) % arrowShoot.length;
             }
             
-            Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
-            GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
+            if (thunderLvl > 0) {
+                for (int j = 0; j < thunderLvl * 6; j++) {
+                    randomness = (Greenfoot.getRandomNumber(spread * 2) - spread);
+                    newDirection = Math.atan2(ny, nx) + Math.toRadians(randomness);
+                    newVelocityX = Math.cos(newDirection) * projectileSpeed;
+                    newVelocityY = Math.sin(newDirection) * projectileSpeed;
+                    
+                    Projectile arrow = new Projectile(newVelocityX, newVelocityY, projectileSpeed, damage * 0.2, isCrit, false);
+                    GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
+                }
+            }
+            else {
+                Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
+                GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
+            }
         }
         else if (burstLvl == 1) {
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
@@ -695,7 +718,19 @@ public class Hero extends SmoothMover
             case "Hydro Burst":
                 if (burstLvl < 2) {
                     burstLvl++;
-                    if (burstLvl == 1) Upgrade.uniques.remove("Hydro Burst");
+                    if (burstLvl == 2) Upgrade.uniques.remove("Hydro Burst");
+                }
+                break;
+            case "Thunderstrike Volley":
+                if (thunderLvl < 2) {
+                    attackSpeed += 800; 
+                    projectileSpeed = Math.min(projectileSpeed + 3.0, maxProjectileSpeed);
+                    thunderLvl++;
+                    spread = 60;
+                    if (thunderLvl == 2) {
+                        Upgrade.uniques.remove("Thunderstrike Volley");
+                        spread = 30;
+                    }
                 }
                 break;
         }
