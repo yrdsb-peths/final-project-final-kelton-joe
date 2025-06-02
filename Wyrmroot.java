@@ -60,6 +60,8 @@ public class Wyrmroot extends Enemy
     private boolean isDisabled;
     private SimpleTimer disableTimer = new SimpleTimer();
     
+    Label healthBar;
+    
     /**
      * Wyrmroot constructor
      * 
@@ -257,21 +259,32 @@ public class Wyrmroot extends Enemy
     @Override
     public void changeBar() {
         if (redBar != null && greenBar != null) {
-            redBar.setPos(400, 30);
-            greenBar.setPos(400, 30, (double) hitpoints / (double) maxHitpoints);
+            redBar.setPos(400, 40);
+            greenBar.setPos(400, 40, (double) hitpoints / (double) maxHitpoints);
+            healthBar.setValue(this.hitpoints + "/" + this.maxHitpoints);
         }
     }
     
     @Override
     protected void addedToWorld(World world) {
-        double xScale = 1.0;
-        double yScale = 0.3;
+        Actor bossBarFrame = new Actor() {
+            {
+                GreenfootImage image = new GreenfootImage("bossbarframe.png");
+                image.scale(500, 80);
+                setImage(image);
+            }
+        };
         
-        redBar = new RedBar(xScale, yScale);
-        world.addObject(redBar, 400, 50);
+        world.addObject(bossBarFrame, 400, 60);
         
-        greenBar = new GreenBar(xScale, yScale);
-        world.addObject(greenBar, 400, 50);
+        redBar = new RedBar(0.0, 0.0, true);
+        world.addObject(redBar, 400, 40);
+        
+        greenBar = new GreenBar(0.0, 0.0, true);
+        world.addObject(greenBar, 400, 40);
+        
+        healthBar = new Label(this.hitpoints + "/" + this.maxHitpoints + " hp", 30);
+        world.addObject(healthBar, 400, 60);
     }
     
     @Override

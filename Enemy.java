@@ -117,11 +117,11 @@ public class Enemy extends SmoothMover
         double scale = 0.05;
         
         // red bar
-        redBar = new RedBar(scale, scale);
+        redBar = new RedBar(scale, scale, false);
         world.addObject(redBar, getX(), getY());
         
         // green bar
-        greenBar = new GreenBar(scale, scale);
+        greenBar = new GreenBar(scale, scale, false);
         world.addObject(greenBar, getX(), getY());
     }
     

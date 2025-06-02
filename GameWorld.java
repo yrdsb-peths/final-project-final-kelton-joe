@@ -163,6 +163,7 @@ public class GameWorld extends World {
         
         // new wave label
         waveLabel.setValue("Wave " + wave);
+        if (wave % 10 == 0) waveLabel.setValue(" ");
     
         // wave difficulty
         waveDifficulty = Greenfoot.getRandomNumber(3);

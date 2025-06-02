@@ -17,13 +17,17 @@ public class GreenBar extends SmoothMover
      * @param xScale: horizontal scale
      * @param yScale: vertical scale
      */
-    public GreenBar(double xScale, double yScale) {
-        // sets the image
-        image = new GreenfootImage("greenBar.png");
-        setImage(image);
-        
-        // scales the image
-        image.scale((int)(image.getWidth() * xScale), (int)(image.getHeight() * yScale));
+    public GreenBar(double xScale, double yScale, boolean isBoss) {
+        if (isBoss) {
+            image = new GreenfootImage("bossbargreen.png");
+            image.scale(480, 55);
+            setImage(image);
+        }
+        else {
+            image = new GreenfootImage("greenBar.png");
+            setImage(image);
+            image.scale((int)(image.getWidth() * xScale), (int)(image.getHeight() * yScale));
+        }
         
         startWidth = image.getWidth();
     }

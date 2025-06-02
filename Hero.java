@@ -139,8 +139,8 @@ public class Hero extends SmoothMover
     private final double dashBarScale = 0.2;
     private final int barX = 730;
     private final int barY = 40;
-    RedBar redBar = new RedBar(dashBarScale, dashBarScale);
-    GreenBar greenBar = new GreenBar(dashBarScale, dashBarScale);
+    RedBar redBar = new RedBar(dashBarScale, dashBarScale, false);
+    GreenBar greenBar = new GreenBar(dashBarScale, dashBarScale, false);
     double cooldownPercent;
     
     // hero arm
