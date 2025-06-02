@@ -325,7 +325,7 @@ public class Wyrmroot extends Enemy
     }
     
     private void animateBlueBite() {
-        if (blueBiteTimer.millisElapsed() < 150) return;
+        if (blueBiteTimer.millisElapsed() < 100) return;
         blueBiteTimer.mark();
         
         if (blueBiteIndex < blueBiteLeft.length) {
@@ -353,7 +353,7 @@ public class Wyrmroot extends Enemy
     }
     
     private void animatePurpleBite() {
-        if (purpleBiteTimer.millisElapsed() < 225) return;
+        if (purpleBiteTimer.millisElapsed() < 150) return;
         purpleBiteTimer.mark();
         
         if (purpleBiteIndex < purpleBiteRight.length) {
