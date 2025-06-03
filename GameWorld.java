@@ -1,5 +1,6 @@
 import greenfoot.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GameWorld extends World {
     static GameWorld gameWorld;
@@ -81,6 +82,13 @@ public class GameWorld extends World {
         
         // give total rerolls
         UpgradeManager.numRerolls = 5;
+        
+        Upgrade.type = new ArrayList<String>(Arrays.asList(Upgrade.typeString)); 
+        Upgrade.uniques = new ArrayList<String>(Arrays.asList(Upgrade.uniqueTraits));
+        
+        for (int i = 0; i < Upgrade.typeString.length; i++) {
+            Upgrade.upgradeValues.put(Upgrade.typeString[i], Upgrade.value[i]);
+        }
     }
     
     /**

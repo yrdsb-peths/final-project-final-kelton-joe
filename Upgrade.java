@@ -31,7 +31,7 @@ public class Upgrade extends Actor
     public static ArrayList<String> type;
     
     // values of upgrades
-    private double[] value = {
+    public static double[] value = {
         10.0, // hp 
         6.0, // attack
         0.1, // speed
@@ -69,7 +69,7 @@ public class Upgrade extends Actor
     
     // unique upgrades
     public boolean isUnique;
-    public String[] uniqueTraits = {
+    public static String[] uniqueTraits = {
         "Frostbite",            // slows enemies (B) (A)
                                 // upgraded: freezes enemies on hit (they can still attack) (S) (S)
         "Scorch",               // burn damage to enemies overtime (A) (S)
@@ -106,6 +106,8 @@ public class Upgrade extends Actor
     public String uniqueTrait;
     public static ArrayList<String> uniques;
     
+    public static java.util.HashMap<String, Double> upgradeValues = new java.util.HashMap<>();
+    
     // upgrade manager
     public UpgradeManager upgradeManager;
     
@@ -139,8 +141,8 @@ public class Upgrade extends Actor
         setImage(rectangle);
         
         // converts string to arraylist
-        type = new ArrayList<String>(Arrays.asList(typeString)); 
-        uniques = new ArrayList<String>(Arrays.asList(uniqueTraits));
+        //type = new ArrayList<String>(Arrays.asList(typeString)); 
+        //uniques = new ArrayList<String>(Arrays.asList(uniqueTraits));
     }
     
     /**
@@ -154,7 +156,8 @@ public class Upgrade extends Actor
             return;
         }
         // randomly generate an upgrade type
-        num = Greenfoot.getRandomNumber(type.size());
+        String upgradeType = type.get(Greenfoot.getRandomNumber(type.size()));
+        theValue = upgradeValues.get(upgradeType);
         
         // rarity with probability
         rarity = Greenfoot.getRandomNumber(100);
@@ -169,64 +172,64 @@ public class Upgrade extends Actor
         if (rarity == 5) rarity = 9;
         
         // make name label for generated upgrade
-        switch (num) {
-            case 0:
+        switch (upgradeType) {
+            case "health":
                 name = new Label("Health Boost", 20);
                 theValue = value[0];
                 break;
-            case 1:
+            case "attack":
                 name = new Label("Attack Boost", 20);
                 theValue = value[1];
                 break;
-            case 2:
+            case "speed":
                 name = new Label("Speed Boost", 20);
                 theValue = value[2];
                 break;
-            case 3:
+            case "attackSpeed":
                 name = new Label("Attack Speed Boost", 20);
                 theValue = value[3];
                 break;
-            case 4:
+            case "attackRange":
                 name = new Label("Attack Range Boost", 20);
                 theValue = value[4];
                 break;
-            case 5:
+            case "projectileSpeed":
                 name = new Label("Projectile Speed \nBoost", 20);
                 theValue = value[5];
                 break;
-            case 6:
+            case "critRate":
                 name = new Label("Crit Rate Boost", 20);
                 theValue = value[6];
                 break;
-            case 7:
+            case "critDamage":
                 name = new Label("Crit Damage Boost", 20);
                 theValue = value[7];
                 break;
-            case 8:
+            case "regenInterval":
                 name = new Label("Health Regen \nFrequency Boost", 20);
                 theValue = value[8];
                 break;
-            case 9:
+            case "regenAmount":
                 name = new Label("Health Regen \nAmount Boost", 20);
                 theValue = value[9];
                 break;
-            case 10:
+            case "crit":
                 name = new Label("Full Crit Boost", 20);
                 theValue = value[10];
                 break;
-            case 11:
+            case "dashLength":
                 name = new Label("Dash Length Boost", 20);
                 theValue = value[11];
                 break;
-            case 12:
+            case "dashMultiplier":
                 name = new Label("Dash Speed \nMultiplier Boost", 20);
                 theValue = value[12];
                 break;
-            case 13:
+            case "projectile":
                 name = new Label("Weapon Mastery", 20);
                 theValue = value[13];
                 break;
-            case 14:
+            case "dashCooldown":
                 name = new Label("Dash Cooldown \nReduction", 20);
                 theValue = value[14];
                 break;
