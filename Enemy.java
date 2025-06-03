@@ -304,9 +304,8 @@ public class Enemy extends SmoothMover
         if (Hero.hero.vampireLvl == 1) {
             // increases current hp by 5% of max hp
             Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
-            GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
         }
-        else if (Hero.hero.vampireLvl == 2) {
+        else if (Hero.hero.vampireLvl >= 2) {
             // chance to grant additional hp on kill (33%)
             if (this.hitpoints <= 0) {
                 if (Greenfoot.getRandomNumber(3) == 1) {
@@ -314,7 +313,7 @@ public class Enemy extends SmoothMover
                     Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
                     
                     // increases max hp by 5
-                    Hero.hero.currentHp += 5;
+                    Hero.hero.maxHp += 5;
                 }
             }
             // otherwise increase current hp by 15%
