@@ -636,6 +636,7 @@ public class Hero extends SmoothMover
                 switch (sharpshotLvl) {
                     case 0:
                         sharpshotLvl++;
+                        critRate = Math.min(critRate + 30, 100);
                         projectileSpeed = maxProjectileSpeed;
                         Upgrade.type.remove("projectileSpeed");
                         Upgrade.uniques.remove("Blood Pact");
