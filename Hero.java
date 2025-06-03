@@ -169,12 +169,7 @@ public class Hero extends SmoothMover
     public static String skill = "space";
     
     // arrow sound
-    GreenfootSound[] arrowShoot = {
-        new GreenfootSound("arrows/arrow/arrow1.mp3"),
-        new GreenfootSound("arrows/arrow/arrow2.mp3"),
-        new GreenfootSound("arrows/arrow/arrow3.mp3")
-    };
-    int arrowIndex = 0;
+    GreenfootSound arrowSound = new GreenfootSound("arrow.mp3");
     
     // sharpshot upgrade arrow sound
     GreenfootSound[] sharpshotShoot = {
@@ -188,6 +183,7 @@ public class Hero extends SmoothMover
     GreenfootSound dripSound = new GreenfootSound("drip.mp3");
     GreenfootSound slashSound = new GreenfootSound("slash.mp3");
     GreenfootSound dashSound = new GreenfootSound("dash.mp3");
+    
     /**
      * Constructor for Hero Class
      * 
@@ -225,6 +221,8 @@ public class Hero extends SmoothMover
             hurtLeft[i].mirrorHorizontally();
             hurtLeft[i].scale(xScale, yScale);
         }
+        
+        arrowSound.setVolume(50);
         
         idleAnimationTimer.mark();
         setImage(idleRight[0]);
@@ -364,7 +362,6 @@ public class Hero extends SmoothMover
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + maxHp + " hp");
                 regenCooldown.mark();
             }
-            
             // check if hurt
             if (isHurt) animateHurt();
             
@@ -492,10 +489,7 @@ public class Hero extends SmoothMover
                 sharpshotShoot[sharpshotIndex].play();
                 sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
             } 
-            else {
-                arrowShoot[arrowIndex].play();
-                arrowIndex = (arrowIndex + 1) % arrowShoot.length;
-            }
+            else arrowSound.play();
             
             if (thunderLvl > 0) {
                 for (int j = 0; j < thunderLvl * 6; j++) {
