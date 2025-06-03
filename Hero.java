@@ -681,7 +681,8 @@ public class Hero extends SmoothMover
                     else {
                         critRate = 100.0;
                         critDamage += 50.0;
-                        attack += 50.0;
+                        attack += 20.0;
+                        speed *= 1.5;
                         dashCooldown = minDashCooldown;
                         maxAttackSpeed = 150;
                         attackSpeed = maxAttackSpeed;
