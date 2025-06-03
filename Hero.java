@@ -492,11 +492,11 @@ public class Hero extends SmoothMover
             else arrowSound.play();
             
             if (thunderLvl > 0) {
-                for (int j = 0; j < thunderLvl * 6; j++) {
+                for (int j = 0; j < thunderLvl * 5; j++) {
                     randomness = (Greenfoot.getRandomNumber(spread * 2) - spread);
                     newDirection = Math.atan2(ny, nx) + Math.toRadians(randomness);
-                    newVelocityX = Math.cos(newDirection) * projectileSpeed;
-                    newVelocityY = Math.sin(newDirection) * projectileSpeed;
+                    newVelocityX = Math.cos(newDirection);
+                    newVelocityY = Math.sin(newDirection);
                     
                     Projectile arrow = new Projectile(newVelocityX, newVelocityY, projectileSpeed, damage * 0.2, isCrit, false);
                     GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());

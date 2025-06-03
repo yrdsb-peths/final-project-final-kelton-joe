@@ -85,7 +85,7 @@ public class Projectile extends SmoothMover
             }
         }
         if (shrapnelTimer.millisElapsed() > 800 && isShrapnel) GameWorld.gameWorld.removeObject(this);
-        if (stormTimer.millisElapsed() > 1400 && Hero.hero.thunderLvl > 0) GameWorld.gameWorld.removeObject(this);
+        if (stormTimer.millisElapsed() > 800 && Hero.hero.thunderLvl > 0) GameWorld.gameWorld.removeObject(this);
     }
     
     private void attack(Enemy enemy) {
@@ -106,7 +106,7 @@ public class Projectile extends SmoothMover
             enemy.jester();
             enemy.tornado(damage);
             
-            if (Hero.hero.thunderLvl > 0 && (Greenfoot.getRandomNumber(100) < Hero.hero.thunderLvl * 5)) {
+            if (Hero.hero.thunderLvl > 0 && (Greenfoot.getRandomNumber(100) < Hero.hero.thunderLvl * 3)) {
                 enemy.stun(300 * Hero.hero.thunderLvl);
             }
             
