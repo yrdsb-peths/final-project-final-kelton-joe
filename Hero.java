@@ -258,7 +258,7 @@ public class Hero extends SmoothMover
         regenInterval = 5000;
         regenAmount = 5;
         attackSpeed = 1000.0;
-        attack = 10000.0;
+        attack = 10.0;
         projectileSpeed = 1.0;
         critRate = 5.0;
         critDamage = 50.0;

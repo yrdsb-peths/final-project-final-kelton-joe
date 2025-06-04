@@ -38,7 +38,7 @@ public class GameWorld extends World {
     public UpgradeManager upgradeManager;
     
     // waves per unique upgrade
-    public static final int waveUnique = 2;
+    public static final int waveUnique = 5;
     
     // boss label timer and text
     Label bossText = new Label("Boss Wave", 90);
@@ -77,7 +77,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 19;
+        wave = 0;
         startWave();
         
         // give total rerolls
@@ -249,12 +249,12 @@ public class GameWorld extends World {
     private void spawnBoss() {
         if (wave % 20 == 0) {
             // spawns the boss in the center of the world
-            Shark shark = new Shark(300 * waveMultiplier, 3 * waveMultiplier);
+            Shark shark = new Shark(200 * waveMultiplier, 2 * waveMultiplier);
             addObject(shark, 400, 300);
         }
         else {
             // adds the boss to the center of the world
-            Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 7 * waveMultiplier);
+            Wyrmroot wyrmroot = new Wyrmroot(150 * waveMultiplier, 7 * waveMultiplier);
             addObject(wyrmroot, 400, 300);
         }        
         

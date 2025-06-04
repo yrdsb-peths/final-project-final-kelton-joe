@@ -139,7 +139,7 @@ public class Shark extends Enemy
     {
         if (!isDead) {
             // reduced resistance while attacking
-            if (isAttacking && phase == 0) resMult = 2.0;
+            if (isAttacking && phase == 0) resMult = 1.4;
             
             // phase increasing
             if (hitpoints <= 0 && phase < 2) animatePhase();
@@ -366,7 +366,7 @@ public class Shark extends Enemy
         }
         // reset the index when finished animation
         else {
-            this.resMult = phase == 0 ? 0.7 : 3.0;
+            this.resMult = phase == 0 ? 0.7 : 1.6;
             attackIndex = 0;
             isAttacking = false;
             attackCooldown.mark();
@@ -444,7 +444,7 @@ public class Shark extends Enemy
             phase++;
             isEnraged = true;
             enrageTimer.mark();
-            this.resMult = 3.0;
+            this.resMult = 1.6;
             
             // resets health
             hitpoints = maxHitpoints;
