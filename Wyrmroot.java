@@ -244,6 +244,7 @@ public class Wyrmroot extends Enemy
                 GameWorld.gameWorld.removeObject(bossBarFrame);
                 GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
                 
+                // removes health bar
                 GameWorld.gameWorld.removeObject(healthBar);
                 
                 // boss is now dead
@@ -407,7 +408,6 @@ public class Wyrmroot extends Enemy
         }
         else {
             GameWorld.gameWorld.removeObject(this);
-            GameWorld.gameWorld.removeObject(GameWorld.gameWorld.boss);
             enemies.remove(this);
         }
     }

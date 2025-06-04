@@ -229,7 +229,9 @@ public class Shark extends Enemy
                 // removes boss bar text
                 GameWorld.gameWorld.removeObject(bossBarFrame);
                 GameWorld.gameWorld.removeObject(GameWorld.gameWorld.bossBarText);
+                GameWorld.gameWorld.removeObject(GameWorld.gameWorld.boss);
                 
+                // removes health bar
                 GameWorld.gameWorld.removeObject(healthBar);
                 
                 // boss is now dead
@@ -389,7 +391,6 @@ public class Shark extends Enemy
         
         // removes itself from the world once animation is finished
         else {
-            GameWorld.gameWorld.removeObject(GameWorld.gameWorld.boss);
             GameWorld.gameWorld.removeObject(this);
             enemies.remove(this);
         }

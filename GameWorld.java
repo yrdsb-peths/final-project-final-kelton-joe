@@ -38,7 +38,7 @@ public class GameWorld extends World {
     public UpgradeManager upgradeManager;
     
     // waves per unique upgrade
-    public static final int waveUnique = 5;
+    public static final int waveUnique = 2;
     
     // boss label timer and text
     Label bossText = new Label("Boss Wave", 90);
@@ -115,6 +115,7 @@ public class GameWorld extends World {
         // sets boss bar text
         if (wave % 20 == 0) bossBarText = new Label("Steelfin: Scourge of the Deep", 30);
         else if (wave % 10 == 0) bossBarText = new Label("Zarock: the All-Devouring", 30);
+        else bossBarText = new Label(" ", 1);
         
         // spawns enemies as long as there are more enemies to spawn
         if (enemiesToSpawn > 0 && wave > 0) {
