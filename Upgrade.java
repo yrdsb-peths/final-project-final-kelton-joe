@@ -287,8 +287,8 @@ public class Upgrade extends Actor
         getImage().fill();
         
         // adds labels to world
-        GameWorld.gameWorld.addObject(name, getX(), getY() - 10);
-        GameWorld.gameWorld.addObject(theRarity, getX(), getY() - 50);
+        getWorld().addObject(name, getX(), getY() - 10);
+        getWorld().addObject(theRarity, getX(), getY() - 50);
     }
     
     /**

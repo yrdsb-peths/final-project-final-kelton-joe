@@ -52,10 +52,15 @@ public class Projectile extends SmoothMover
         this.isShrapnel = isShrapnel;
         if (isShrapnel) shrapnelTimer.mark();
         
-        if (Hero.hero.sharpshotLvl == 2) this.durability = 5;
-        else if (Hero.hero.sharpshotLvl == 1) this.durability = 3;
-        else if (Hero.hero.thunderLvl > 1) this.durability = 2;
-        else this.durability = 1;
+        // default durability
+        this.durability = 1;
+        
+        // sharpshot durability increase
+        if (Hero.hero.sharpshotLvl == 2) this.durability += 4;
+        else if (Hero.hero.sharpshotLvl == 1) this.durability = 2;
+        
+        // thunderstrike volley durability increase
+        if (Hero.hero.thunderLvl > 1) this.durability++;
         
         if (isShrapnel) {
             if (Hero.hero.shrapnelLvl == 1) this.durability = 1;

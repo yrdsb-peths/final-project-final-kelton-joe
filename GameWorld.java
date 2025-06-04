@@ -107,6 +107,7 @@ public class GameWorld extends World {
             removeObject(bossText);
             removeObject(boss);
         }
+        
         // spawn interval
         if (wave % 10 == 0) spawnInterval = 3000;
         else spawnInterval = 1000 / waveMultiplier;

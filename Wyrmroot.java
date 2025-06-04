@@ -407,6 +407,7 @@ public class Wyrmroot extends Enemy
         }
         else {
             GameWorld.gameWorld.removeObject(this);
+            GameWorld.gameWorld.removeObject(GameWorld.gameWorld.boss);
             enemies.remove(this);
         }
     }

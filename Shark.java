@@ -389,6 +389,7 @@ public class Shark extends Enemy
         
         // removes itself from the world once animation is finished
         else {
+            GameWorld.gameWorld.removeObject(GameWorld.gameWorld.boss);
             GameWorld.gameWorld.removeObject(this);
             enemies.remove(this);
         }
