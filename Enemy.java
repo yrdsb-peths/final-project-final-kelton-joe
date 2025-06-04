@@ -355,10 +355,6 @@ public class Enemy extends SmoothMover
             // creates a new vortex
             Tornado vortex = new Tornado((int) damage);
             
-            // animation
-            vortex.numCycles = Hero.hero.vortexLvl * 5;
-            vortex.tornadoIndex = 0;
-            
             // changes target to the vortex
             this.target = "vortex";
             

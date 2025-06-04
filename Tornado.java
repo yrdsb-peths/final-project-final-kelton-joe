@@ -1,6 +1,8 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Tornado class for the Violent Vortex Unique upgrade
@@ -15,7 +17,6 @@ public class Tornado extends SmoothMover
     
     // damage
     int damage;
-    SimpleTimer attackTimer = new SimpleTimer();
     
     // active and how many cycles
     boolean isActive;
@@ -27,6 +28,9 @@ public class Tornado extends SmoothMover
     
     // list of enemies pulled
     List<Enemy> enemiesPulled = new ArrayList<Enemy>();
+    
+    // attack timers for each enemy
+    Map<Enemy, SimpleTimer> enemyTimers = new HashMap<>();
     
     /**
      * Constructor for tornado
@@ -42,8 +46,12 @@ public class Tornado extends SmoothMover
             // bigger size for level 2 vortex
             if (Hero.hero.vortexLvl > 1) tornadoImage[i].scale(125, 125);
             
+            // sets damage
             this.damage = damage;
-            attackTimer.mark();
+            
+            // animation
+            this.numCycles = 5 + (Hero.hero.vortexLvl * 5);
+            this.tornadoIndex = 0;
         }
     }
     
@@ -68,20 +76,21 @@ public class Tornado extends SmoothMover
                 enemy.dx = this.getExactX() - enemy.getExactX();
                 enemy.dy = this.getExactY() - enemy.getExactY();
                 
-                // deals damage if vortex level is 2
-                if (Hero.hero.vortexLvl > 1) {
-                    if (attackTimer.millisElapsed() > 600) {
-                        // green damage indicator
-                        enemy.removeHp(this.damage, false, Color.GREEN, 20);
-                        attackTimer.mark();
-                    }
+                // sets attack intervals
+                int interval = (Hero.hero.vortexLvl > 1) ? 400 : 800;
+                
+                // creates timer for attacking enemies
+                SimpleTimer timer = enemyTimers.get(enemy);
+                if (timer == null) {
+                    timer = new SimpleTimer();
+                    enemyTimers.put(enemy, timer);
                 }
-                else {
-                    if (attackTimer.millisElapsed() > 1600) {
-                        // green damage indicator
-                        enemy.removeHp((int) (this.damage * 0.5), false, Color.GREEN, 20);
-                        attackTimer.mark();
-                    }
+                
+                // deals damage when off cooldown
+                if (timer.millisElapsed() > interval) {
+                    int damageDealt = (Hero.hero.vortexLvl > 1) ? this.damage : (int)(this.damage * 0.5);
+                    enemy.removeHp(damageDealt, false, Color.GREEN, 20);
+                    timer.mark();
                 }
             }
         }
