@@ -217,6 +217,7 @@ public class Wyrmroot extends Enemy
                 
                 if (isFrozen || isStunned) setLocation(getExactX(), getExactY());
                 else if (isSlowed) setLocation(getExactX() + (nx * speed/3), getExactY() + (ny * speed/3));
+                else if (phase == 2 && vineRemaining > 0) setLocation(getExactX() + (nx * 0.7), getExactY() + (ny * 0.7));
                 else setLocation(getExactX() + (nx * speed), getExactY() + (ny * speed));
             }
             
