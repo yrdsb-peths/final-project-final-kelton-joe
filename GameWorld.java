@@ -77,7 +77,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 0;
+        wave = 19;
         startWave();
         
         // give total rerolls
@@ -112,19 +112,20 @@ public class GameWorld extends World {
         if (wave % 10 == 0) spawnInterval = 3000;
         else spawnInterval = 1000 / waveMultiplier;
         
-        // sets boss bar text
-        if (wave % 20 == 0) bossBarText = new Label("Steelfin: Scourge of the Deep", 30);
-        else if (wave % 10 == 0) bossBarText = new Label("Zarock: the All-Devouring", 30);
-        else bossBarText = new Label(" ", 1);
-        
         // spawns enemies as long as there are more enemies to spawn
         if (enemiesToSpawn > 0 && wave > 0) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
+                // sets boss bar text
+                if (wave % 20 == 0) bossBarText = new Label("Steelfin: Scourge of the Deep", 30);
+                else if (wave % 10 == 0) bossBarText = new Label("Zarock: the All-Devouring", 30);
+                
                 if (wave % 10 == 0) {
                     // spawns the boss
                     spawnBoss();
                     addObject(bossBarText, 400, 20);
-                } else {
+                } 
+                
+                else {
                     // randomly generate buffs based on wave number
                     int speedBound = Math.min(wave, maxSpeedMultiplier);
                     if (speedBound <= 0) speedBound = 1;  // fallback to 1

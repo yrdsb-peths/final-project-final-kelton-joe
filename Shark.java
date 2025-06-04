@@ -216,7 +216,7 @@ public class Shark extends Enemy
             changeBar();
             
             // tells itself that it died
-            if (hitpoints <= 0 && phase == 1) {
+            if (hitpoints <= 0 && phase > 0) {
                 // reset rotation on death
                 setRotation(0);
                 
@@ -238,7 +238,7 @@ public class Shark extends Enemy
                 isDead = true;
             }
         }
-        if (isDead) animateDeath();
+        if (hitpoints <= 0) animateDeath();
     }
     
     /**
