@@ -200,7 +200,7 @@ public class Shark extends Enemy
             // status effect movement calculation
             if (isFrozen || isStunned) setLocation(getExactX(), getExactY());
             else if (isSlowed) setLocation(getExactX() + (nx * speed/3), getExactY() + (ny * speed/3));
-            else if (isEnraged) setLocation(getExactX() + (nx * 1.5), getExactY() + (ny * 1.5));
+            else if (isEnraged) setLocation(getExactX() + (nx * 1.65), getExactY() + (ny * 1.65));
             else setLocation(getExactX() + (nx * speed), getExactY() + (ny * speed));
             
             // attack
@@ -364,7 +364,7 @@ public class Shark extends Enemy
         }
         // reset the index when finished animation
         else {
-            this.resMult = phase == 0 ? 0.7 : 1.4;
+            this.resMult = phase == 0 ? 0.7 : 3.0;
             attackIndex = 0;
             isAttacking = false;
             attackCooldown.mark();
@@ -443,7 +443,7 @@ public class Shark extends Enemy
             phase++;
             isEnraged = true;
             enrageTimer.mark();
-            this.resMult = 1.4;
+            this.resMult = 3.0;
             
             // resets health
             hitpoints = maxHitpoints;
