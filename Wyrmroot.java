@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Wyrmroot extends Enemy
 {
     // boss attack speed
-    private double attackSpeed = 1000;
+    private double attackSpeed = 1300;
     private boolean facingRight = false;
     
     // animation
@@ -37,7 +37,6 @@ public class Wyrmroot extends Enemy
     // boss conditions
     private boolean isAttacking;
     private boolean hasAttacked;
-    private boolean isAnimating;
     public static boolean isDead = false;
     
     // location
@@ -63,6 +62,7 @@ public class Wyrmroot extends Enemy
     // vine spawn sound
     GreenfootSound vineSound = new GreenfootSound("vine.mp3");
     
+    // boss hp bar
     Label healthBar;
     Actor bossBarFrame = new Actor() {
         {
@@ -82,7 +82,7 @@ public class Wyrmroot extends Enemy
      */
     public Wyrmroot(int hitpoints, int attack) {
         // creates enemy
-        super(hitpoints, 0.55, attack, 1000);
+        super(hitpoints, 0.55, attack, 300);
         
         // sets images
         for (int i = 0; i < blueBiteRight.length; i++) {
@@ -113,9 +113,6 @@ public class Wyrmroot extends Enemy
             runLeft[i].scale(scale, scale);
             runRight[i].scale(scale, scale);
         }
-        
-        // animation
-        isAnimating = false;
         
         // marks attack cooldown
         attackCooldown.mark();
@@ -157,7 +154,6 @@ public class Wyrmroot extends Enemy
                 resMult = 2.0;
                 attackIndex = 0;
                 isAttacking = false;
-                isAnimating = false;
                 phase++;
             }
             
@@ -200,7 +196,7 @@ public class Wyrmroot extends Enemy
             // remove status effects when timer ends
             if (frostbiteTimer.millisElapsed() >= slowDuration) isSlowed = false;
             if (frostbiteFreezeTimer.millisElapsed() >= 750) isFrozen = false;
-            if (stunTimer.millisElapsed() >= 600) isStunned = false;
+            if (stunTimer.millisElapsed() >= stunDuration) isStunned = false;
             if (weakenTimer.millisElapsed() > weakenDuration) isWeakened = false;
             
             // slow, frozen, and stun movements
@@ -257,9 +253,6 @@ public class Wyrmroot extends Enemy
         
         // animate death when killed
         if (hitpoints <= 0) {
-            // stops other animations
-            isAnimating = false;
-            
             // animates death
             animateDeath();
         }
@@ -307,9 +300,8 @@ public class Wyrmroot extends Enemy
     @Override
     public void jester() {
         if (Greenfoot.getRandomNumber(2) > 0 && Hero.hero.jesterLvl > 1) {
-            isStunned = true;
-            removeHp(Greenfoot.getRandomNumber(((int) (Hero.hero.attack / 3)) + 1), false, Color.MAGENTA, 30);
-            stunTimer.mark();
+            stun(400);
+            removeHp((int) (Hero.hero.attack * 1.5), false, Color.MAGENTA, 30);
         }
     }
     
@@ -333,7 +325,6 @@ public class Wyrmroot extends Enemy
         
         if (blueBiteIndex < blueBiteLeft.length) {
             isAttacking = true;
-            isAnimating = true;
             
             if (facingRight) setImage(blueBiteRight[blueBiteIndex]);
             else setImage(blueBiteLeft[blueBiteIndex]);
@@ -351,7 +342,6 @@ public class Wyrmroot extends Enemy
             blueBiteIndex = 0;
             attackIndex = 1;
             isAttacking = false;
-            isAnimating = false;
         }
     }
     
@@ -361,7 +351,6 @@ public class Wyrmroot extends Enemy
         
         if (purpleBiteIndex < purpleBiteRight.length) {
             isAttacking = true;
-            isAnimating = true;
             
             if (facingRight) setImage(purpleBiteRight[purpleBiteIndex]);
             else setImage(purpleBiteLeft[purpleBiteIndex]);
@@ -402,7 +391,6 @@ public class Wyrmroot extends Enemy
                 
             hasAttacked = false;
             isAttacking = false;
-            isAnimating = false;
             spawnedVine = false;
                 
             attackCooldown.mark();
@@ -428,15 +416,10 @@ public class Wyrmroot extends Enemy
         runTimer.mark();
         
         if (runIndex < runLeft.length) {
-            isAnimating = true;
-            
             if (facingRight) setImage(runRight[runIndex]);
             else setImage(runLeft[runIndex]);
             runIndex++;
         }
-        else {
-            runIndex = 0;
-            isAnimating = false;
-        }
+        else runIndex = 0;
     }
 }

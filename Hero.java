@@ -184,6 +184,11 @@ public class Hero extends SmoothMover
     GreenfootSound slashSound = new GreenfootSound("slash.mp3");
     GreenfootSound dashSound = new GreenfootSound("dash.mp3");
     
+    // burn
+    private int burnTicks;
+    private double burnDamage;
+    private SimpleTimer burnTimer = new SimpleTimer();
+    
     /**
      * Constructor for Hero Class
      * 
@@ -241,7 +246,7 @@ public class Hero extends SmoothMover
         attackRange = 200;
         regenInterval = 5000;
         regenAmount = 5;
-        attackSpeed = 310.0;
+        attackSpeed = 1000.0;
         attack = 10.0;
         projectileSpeed = 1.0;
         critRate = 5.0;
@@ -278,6 +283,19 @@ public class Hero extends SmoothMover
             animateDeath();
         }
         else { 
+            // burn damage
+            if (burnTimer.millisElapsed() >= 1000) {
+                if (burnTicks > 0) {
+                    // burn damage
+                    currentHp = Math.max(0, (int) (currentHp - burnDamage));
+                    burnTicks--;
+                    burnTimer.mark();
+                    
+                    // updates health bar after burn
+                    GameWorld.healthBar.setValue(Hero.hero.currentHp + "/" + Hero.hero.maxHp + " hp");
+                }
+            }
+        
             if (spectralVeilLvl > 0) {
                 if (immunityTimer.millisElapsed() >= immuneDuration && isImmune) {
                     isImmune = false;
@@ -825,5 +843,14 @@ public class Hero extends SmoothMover
             isHurt = false;
             hurtImageIndex = 0;
         }
+    }
+    
+    public void burn(double damage, int burnTicks) {
+        burnDamage = damage;
+        this.burnTicks = burnTicks;
+        
+        burnTimer.mark();
+        
+        this.currentHp = Math.max(0, (int) (currentHp - damage));
     }
 }

@@ -42,8 +42,8 @@ public class GameWorld extends World {
     
     // boss label timer and text
     Label bossText = new Label("Boss Wave", 90);
-    Label boss1 = new Label("The Wyrmroot", 50);
-    Label bossBarText = new Label("Zarock: the All-Devouring", 30);
+    Label boss;
+    Label bossBarText;
     SimpleTimer labelTimer = new SimpleTimer();
     
     /**
@@ -97,16 +97,23 @@ public class GameWorld extends World {
      * also spawns upgrades when enemies are killed
      */
     public void act() {
-        if (wave % 10 == 0) setBackground("background/background3.png");
+        // sets background depending on wave
+        if (wave % 20 == 0) setBackground("background/background7.png");
+        else if (wave % 10 == 0) setBackground("background/background3.png");
         else setBackground("background/background6.png");
+        
         // boss label
         if (labelTimer.millisElapsed() > 2000) {
             removeObject(bossText);
-            removeObject(boss1);
+            removeObject(boss);
         }
         // spawn interval
         if (wave % 10 == 0) spawnInterval = 3000;
         else spawnInterval = 1000 / waveMultiplier;
+        
+        // sets boss bar text
+        if (wave % 20 == 0) bossBarText = new Label("Steelfin: Scourge of the Deep", 30);
+        else if (wave % 10 == 0) bossBarText = new Label("Zarock: the All-Devouring", 30);
         
         // spawns enemies as long as there are more enemies to spawn
         if (enemiesToSpawn > 0 && wave > 0) {
@@ -171,11 +178,14 @@ public class GameWorld extends World {
         // increase wave number every time it is called
         wave++;
         
+        if (wave % 20 == 0) boss = new Label("Mechajaw", 50);
+        else if (wave % 10 == 0) boss = new Label("The Wyrmroot", 50);
+        
         // boss wave every 10 waves
         if (wave % 10 == 0) {
             labelTimer.mark();
             addObject(bossText, 400, 300);
-            addObject(boss1, 400, 375);
+            addObject(boss, 400, 375);
         }
         
         // more difficult scaling every 10 waves
@@ -226,6 +236,7 @@ public class GameWorld extends World {
         // boss wave stuff
         if (wave % 10 == 0) enemiesToSpawn = 1;
         
+        // marks spawn timer
         spawnTimer.mark();
     }
     
@@ -233,9 +244,16 @@ public class GameWorld extends World {
      * Method for spawning the boss
      */
     private void spawnBoss() {
-        // adds the boss to the center of the world
-        Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 7 * waveMultiplier);
-        addObject(wyrmroot, 400, 300);
+        if (wave % 20 == 0) {
+            // spawns the boss in the center of the world
+            Shark shark = new Shark(300 * waveMultiplier, 3 * waveMultiplier);
+            addObject(shark, 400, 300);
+        }
+        else {
+            // adds the boss to the center of the world
+            Wyrmroot wyrmroot = new Wyrmroot(200 * waveMultiplier, 7 * waveMultiplier);
+            addObject(wyrmroot, 400, 300);
+        }        
         
         // reduces enemies to spawn
         enemiesToSpawn--;
