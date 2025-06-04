@@ -156,7 +156,8 @@ public class Upgrade extends Actor
             return;
         }
         // randomly generate an upgrade type
-        String upgradeType = type.get(Greenfoot.getRandomNumber(type.size()));
+        num = Greenfoot.getRandomNumber(type.size());
+        String upgradeType = type.get(num);
         theValue = upgradeValues.get(upgradeType);
         
         // rarity with probability
