@@ -708,13 +708,17 @@ public class Hero extends SmoothMover
                         maxHp = 30;
                         GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
+                        Upgrade.type.remove("regenInterval");
+                        Upgrade.type.remove("regenAmount");
+                        Upgrade.type.remove("projectile");
+                        Upgrade.type.remove("projectileSpeed");
                         Upgrade.type.remove("attackRange");
                         Upgrade.uniques.remove("Blood Pact");
                     }
                     else {
                         critRate = 100.0;
-                        attack += 15.0;
-                        speed *= 1.5;
+                        attack += 25.0;
+                        speed *= 1.3;
                         dashCooldown = minDashCooldown;
                         maxAttackSpeed = 150;
                         attackSpeed = maxAttackSpeed;
