@@ -675,6 +675,7 @@ public class Hero extends SmoothMover
                         break;
                     case 1:
                         sharpshotLvl++;
+                        critDamage += 100.0;
                         attackRange = maxAttackRange;
                         Upgrade.type.remove("attackRange");
                         Upgrade.uniques.remove("Sharpshot");
@@ -685,11 +686,11 @@ public class Hero extends SmoothMover
                 if (vampireLvl == 0) {
                     vampireLvl++;
                     speed -= 0.15;
-                    maxHp += 30;
+                    maxHp -= 15;
                 } 
                 else if (vampireLvl == 1) {
                     vampireLvl++;
-                    maxHp += 50;
+                    maxHp += 65;
                     Upgrade.uniques.remove("Vampire");
                 }
                 break;
@@ -740,7 +741,7 @@ public class Hero extends SmoothMover
                         echoMult = 0.6;
                     }
                     else {
-                        echoChance = 80;
+                        echoChance = 60;
                         echoMult = 1.2;
                         Upgrade.uniques.remove("Arcane Echo");
                     }
@@ -748,8 +749,8 @@ public class Hero extends SmoothMover
                 break;
             case "Spectral Veil":
                 spectralVeilLvl = 1;
-                immuneChance = 60;
-                immuneDuration = 3000;
+                immuneChance = 40;
+                immuneDuration = 2500;
                 Upgrade.uniques.remove("Spectral Veil");
                 break;
             case "Violent Vortex":
@@ -788,7 +789,8 @@ public class Hero extends SmoothMover
             case "Thunderstrike \nVolley":
                 thunderLvl++;
                 if (thunderLvl == 1) {
-                    spread = 60;
+                    spread = 45;
+                    projectileSpeed = Math.min(maxProjectileSpeed, projectileSpeed + 2.0);
                     Upgrade.uniques.remove("Shrapnel Shot");
                 }
                 if (thunderLvl == 2) {
@@ -799,6 +801,9 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method for animating the hero when the user has not attacked for a while
+     */
     public void animateIdle() {
         if (idleAnimationTimer.millisElapsed() < 100) return;
         idleAnimationTimer.mark();
@@ -813,6 +818,9 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method for animating the death of the hero
+     */
     public void animateDeath() {
         Enemy.removeAll();
         GameWorld.gameWorld.removeObject(GameWorld.gameWorld.healthBar);
@@ -834,6 +842,9 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method for animating the hero (not the bow) when attacking
+     */
     public void animateHero() {
         if (heroAnimationTimer.millisElapsed() < 150) return;
         heroAnimationTimer.mark();
@@ -848,6 +859,9 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method for animating the hero when it is hurt
+     */
     public void animateHurt() {
         if (hurtAnimationTimer.millisElapsed() < 100) return;
         hurtAnimationTimer.mark();
@@ -863,12 +877,16 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method for applying a burn to the player
+     * 
+     * @param damage: damage per burn tick
+     * @param burnTicks: number of times the burn lasts
+     */
     public void burn(double damage, int burnTicks) {
         burnDamage = damage;
         this.burnTicks = burnTicks;
-        
         burnTimer.mark();
-        
         this.currentHp = Math.max(0, (int) (currentHp - damage));
     }
 }
