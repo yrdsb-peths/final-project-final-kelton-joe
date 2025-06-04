@@ -85,6 +85,8 @@ public class Blast extends SmoothMover
         this.damage = damage;
         this.isShrapnel = isShrapnel;
         
+        blastSound.setVolume(70);
+        
         // marks shrapnel life timer
         if (isShrapnel) shrapnelTimer.mark();
     }

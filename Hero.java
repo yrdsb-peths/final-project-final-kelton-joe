@@ -84,7 +84,7 @@ public class Hero extends SmoothMover
     // arcane echo
     int echoChance;
     double echoMult;
-    private final int echoWait = 250;
+    private int echoWait = 250;
     boolean hasEchoed;
     SimpleTimer echoTimer = new SimpleTimer();
     
@@ -168,14 +168,23 @@ public class Hero extends SmoothMover
     public static String dash = "e";
     public static String skill = "space";
     
-    // arrow sound
-    GreenfootSound arrowSound = new GreenfootSound("arrow.mp3");
+    // sharpshot upgrade arrow sound
+    GreenfootSound[] arrowShoot = {
+        new GreenfootSound("arrows/arrow/arrow1.mp3"),
+        new GreenfootSound("arrows/arrow/arrow2.mp3"),
+        new GreenfootSound("arrows/arrow/arrow3.mp3"),
+        new GreenfootSound("arrows/arrow/arrow4.mp3"),
+        new GreenfootSound("arrows/arrow/arrow5.mp3")
+    };
+    int arrowIndex = 0;
     
     // sharpshot upgrade arrow sound
     GreenfootSound[] sharpshotShoot = {
         new GreenfootSound("arrows/sharpshot/sharpshot1.mp3"),
         new GreenfootSound("arrows/sharpshot/sharpshot2.mp3"),
-        new GreenfootSound("arrows/sharpshot/sharpshot3.mp3")
+        new GreenfootSound("arrows/sharpshot/sharpshot3.mp3"),
+        new GreenfootSound("arrows/sharpshot/sharpshot4.mp3"),
+        new GreenfootSound("arrows/sharpshot/sharpshot5.mp3")
     };
     int sharpshotIndex = 0;
     
@@ -227,7 +236,9 @@ public class Hero extends SmoothMover
             hurtLeft[i].scale(xScale, yScale);
         }
         
-        arrowSound.setVolume(50);
+        for (GreenfootSound s : arrowShoot) {
+            s.setVolume(80);
+        }
         
         idleAnimationTimer.mark();
         setImage(idleRight[0]);
@@ -507,7 +518,10 @@ public class Hero extends SmoothMover
                 sharpshotShoot[sharpshotIndex].play();
                 sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
             } 
-            else arrowSound.play();
+            else {
+                arrowShoot[arrowIndex].play();
+                arrowIndex = (arrowIndex + 1) % arrowShoot.length;
+            }
             
             if (thunderLvl > 0) {
                 for (int j = 0; j < thunderLvl * 5; j++) {
@@ -704,6 +718,7 @@ public class Hero extends SmoothMover
                         dashCooldown = minDashCooldown;
                         maxAttackSpeed = 150;
                         attackSpeed = maxAttackSpeed;
+                        echoWait = 100;
                         Upgrade.type.remove("attackSpeed");
                         Upgrade.type.remove("dashCooldown");
                         Upgrade.uniques.remove("Rogue");
