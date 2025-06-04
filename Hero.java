@@ -698,8 +698,9 @@ public class Hero extends SmoothMover
                     rogueLvl++;
                     if (rogueLvl == 1) {
                         critRate = Math.min(critRate + 30.0, 100.0); 
-                        attackSpeed = Math.max(attackSpeed - 300.0, maxAttackSpeed);
-                        critDamage += 60.0; 
+                        attackSpeed = Math.max(attackSpeed - 500.0, maxAttackSpeed);
+                        attack += 10.0;
+                        critDamage += 80.0; 
                         speed += 0.5; 
                         dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
                         attackRange = 110;
@@ -712,8 +713,7 @@ public class Hero extends SmoothMover
                     }
                     else {
                         critRate = 100.0;
-                        critDamage += 50.0;
-                        attack += 20.0;
+                        attack += 15.0;
                         speed *= 1.5;
                         dashCooldown = minDashCooldown;
                         maxAttackSpeed = 150;
