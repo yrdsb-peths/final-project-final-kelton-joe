@@ -333,6 +333,7 @@ public class Hero extends SmoothMover
             if (rogueLvl > 0) {
                 maxHp = 30;
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
+                attackRange = 110;
             }
             
             // movement
