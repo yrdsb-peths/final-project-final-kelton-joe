@@ -8,7 +8,10 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GreenBar extends SmoothMover
 {
+    // image for the bar
     private GreenfootImage image;
+    
+    // how wide to originally start with
     private int startWidth;
     
     /**
@@ -16,19 +19,23 @@ public class GreenBar extends SmoothMover
      * 
      * @param xScale: horizontal scale
      * @param yScale: vertical scale
+     * @param isBoss: whether the enemy the bar is for is a boss
      */
     public GreenBar(double xScale, double yScale, boolean isBoss) {
+        // custom boss bar 
         if (isBoss) {
             image = new GreenfootImage("bossbarred.png");
             image.scale(480, 55);
             setImage(image);
         }
+        // regular health bar
         else {
             image = new GreenfootImage("greenBar.png");
             setImage(image);
             image.scale((int)(image.getWidth() * xScale), (int)(image.getHeight() * yScale));
         }
         
+        // sets start width to max size
         startWidth = image.getWidth();
     }
     

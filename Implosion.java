@@ -42,6 +42,7 @@ public class Implosion extends Actor
      */
     public void act()
     {
+        // animates the attack
         animateImplosion();
         
         // attacks the hero only once per animation

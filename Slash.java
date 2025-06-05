@@ -104,9 +104,13 @@ public class Slash extends SmoothMover
      * Animate slash method
      */
     public void animateSlash() {
+        // breaks if animation frame is not finished
         if (slashTimer.millisElapsed() < 60) return;
+        
+        // marks animation timer
         slashTimer.mark();
         
+        // continues animation if not finished
         if (slashIndex < slash.length) {
             setImage(slash[slashIndex]);
             slashIndex++;

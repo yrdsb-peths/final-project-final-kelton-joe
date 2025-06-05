@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Class for the shark boss
+ * Class for the shark boss on every 20 waves
  * 
  * @author Joe and Kelton
  * @version June 2025
@@ -60,6 +60,8 @@ public class Shark extends Enemy
     
     // boss hp bar
     Label healthBar;
+    
+    // temporary actor for the boss bar frame
     Actor bossBarFrame = new Actor() {
         {
             GreenfootImage image = new GreenfootImage("bossbarframe.png");
@@ -238,6 +240,8 @@ public class Shark extends Enemy
                 isDead = true;
             }
         }
+        
+        // animates death when it is dead
         if (hitpoints <= 0) animateDeath();
     }
     
@@ -247,11 +251,13 @@ public class Shark extends Enemy
      */
     @Override
     public void frostbite() {
+        // frostbite level 1 (slow): has reduced slow duration: 4000ms > 600ms
         if (Hero.hero.frostbiteLvl > 0) {
             isSlowed = true;
-            slowDuration = 800;
+            slowDuration = 600;
             frostbiteTimer.mark();
         }   
+        // frostbite level 2 (freeze)
         if (Hero.hero.frostbiteLvl > 1) {
             isFrozen = true;
             frostbiteFreezeTimer.mark();
@@ -280,14 +286,16 @@ public class Shark extends Enemy
      */
     @Override
     protected void addedToWorld(World world) {
+        // adds boss bar frame
         world.addObject(bossBarFrame, 400, 60);
         
+        // adds health bars
         redBar = new RedBar(0.0, 0.0, true);
         world.addObject(redBar, 400, 40);
-        
         greenBar = new GreenBar(0.0, 0.0, true);
         world.addObject(greenBar, 400, 40);
         
+        // adds hp label
         healthBar = new Label(this.hitpoints + "/" + this.maxHitpoints + " hp", 30);
         world.addObject(healthBar, 400, 60);
     }
@@ -298,6 +306,7 @@ public class Shark extends Enemy
      */
     @Override
     public void jester() {
+        // has reduced stun time
         if (Greenfoot.getRandomNumber(2) > 0 && Hero.hero.jesterLvl > 1) {
             stun(600);
             removeHp((int) (Hero.hero.attack * 1.5), false, Color.MAGENTA, 30);
@@ -314,14 +323,19 @@ public class Shark extends Enemy
      */
     @Override
     public void removeHp(int damage, boolean isCrit, Color color, int size) {
+        // calculates damage taken based on resistance multiplier
         damage = (int) Math.max(damage * resMult, 0);
+        
+        // takes damage
         hitpoints -= damage;
         
+        // different indicator for crits
         if (isCrit) {
             color = Color.ORANGE;
             size = 35;
         }
         
+        // adds damage indicator
         DamageIndicator dmgIndicator = new DamageIndicator((int) damage, size, color);
         GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
     }

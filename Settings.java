@@ -47,7 +47,7 @@ public class Settings extends World
         
         // change forwards
         changeForwards = new Button("Small Frame");
-        changeForwards.displayText = new Label("w", 30);
+        changeForwards.displayText = new Label(Hero.hero.forward, 30);
         changeForwards.control = "forwards";
         addObject(changeForwards, 325, 175);
         addObject(changeForwards.displayText, 325, 175);
@@ -60,7 +60,7 @@ public class Settings extends World
         
         // change backwards
         changeBackwards = new Button("Small Frame");
-        changeBackwards.displayText = new Label("s", 30);
+        changeBackwards.displayText = new Label(Hero.hero.backward, 30);
         changeBackwards.control = "backwards";
         addObject(changeBackwards, 325, 250);
         addObject(changeBackwards.displayText, 325, 250);
@@ -73,7 +73,7 @@ public class Settings extends World
         
         // change left
         changeLeft = new Button("Small Frame");
-        changeLeft.displayText = new Label("a", 30);
+        changeLeft.displayText = new Label(Hero.hero.left, 30);
         changeLeft.control = "left";
         addObject(changeLeft, 325, 325);
         addObject(changeLeft.displayText, 325, 325);
@@ -86,7 +86,7 @@ public class Settings extends World
         
         // change right
         changeRight = new Button("Small Frame");
-        changeRight.displayText = new Label("d", 30);
+        changeRight.displayText = new Label(Hero.hero.right, 30);
         changeRight.control = "right";
         addObject(changeRight, 325, 400);
         addObject(changeRight.displayText, 325, 400);
@@ -99,7 +99,7 @@ public class Settings extends World
         
         // change dash
         changeDash = new Button("Small Frame");
-        changeDash.displayText = new Label("e", 30);
+        changeDash.displayText = new Label(Hero.hero.dash, 30);
         changeDash.control = "dash";
         addObject(changeDash, 650, 175);
         addObject(changeDash.displayText, 650, 175);
@@ -112,25 +112,9 @@ public class Settings extends World
         
         // change attack
         changeAttack = new Button("Small Frame");
-        changeAttack.displayText = new Label("space", 30);
+        changeAttack.displayText = new Label(Hero.hero.skill, 30);
         changeAttack.control = "attack";
         addObject(changeAttack, 650, 250);
         addObject(changeAttack.displayText, 650, 250);
-        
-        //other
-        //Button other1 = new Button("Big Frame");
-        //addObject(other1, 500, 325);
-        
-        // change other
-        //Button changeOther1 = new Button("Small Frame");
-        //addObject(changeOther1, 650, 325);
-        
-        // other
-        //Button other2 = new Button("Big Frame");
-        //addObject(other2, 500, 400);
-        
-        // change other 
-        //Button changeOther2 = new Button("Small Frame");
-        //addObject(changeOther2, 650, 400);
     }
 }

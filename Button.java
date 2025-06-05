@@ -48,11 +48,6 @@ public class Button extends Actor
             scale = 0.47;
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
         }
-        /*
-        else if (type.equals("Menu")) {
-            image = new GreenfootImage("menu.png");
-            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-        }*/
         else if (type.equals("Rerolls")) {
             image = new GreenfootImage("reset.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
@@ -80,19 +75,7 @@ public class Button extends Actor
         else if (type.equals("Restart")) {
             image = new GreenfootImage("restart.png");
             image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-        }/*
-        else if (type.equals("Unique")) {
-            image = new GreenfootImage("uniques.png");
-            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
         }
-        else if (type.equals("Pause")) {
-            image = new GreenfootImage("pause.png");
-            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-        }
-        else if (type.equals("Stat")) {
-            image = new GreenfootImage("stat.png");
-            image.scale((int) (image.getWidth() * scale), (int) (image.getHeight() * scale));
-        }*/
         else if (type.equals("Continue")) {
             image = new GreenfootImage("start.png");
             scale = 0.47;

@@ -2,7 +2,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
- * Write a description of class Boss here.
+ * Wyrmroot Boss
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -72,6 +72,7 @@ public class Wyrmroot extends Enemy
         }
     };
     
+    // size of the boss
     private final int scale = 90;
     
     /**
@@ -128,6 +129,7 @@ public class Wyrmroot extends Enemy
     
     /**
      * Act method for the boss
+     * Controls movement, vine spawning, and death
      */
     public void act()
     {
@@ -254,12 +256,13 @@ public class Wyrmroot extends Enemy
         }
         
         // animate death when killed
-        if (hitpoints <= 0) {
-            // animates death
-            animateDeath();
-        }
+        if (hitpoints <= 0) animateDeath();
     }
     
+    /**
+     * Frostbite method for the Wyrmroot class
+     * slow lasts shorter compared to regular enemies
+     */
     @Override
     public void frostbite() {
         if (Hero.hero.frostbiteLvl > 0) {
@@ -276,6 +279,11 @@ public class Wyrmroot extends Enemy
         }
     }
     
+    /**
+     * Method to updating health bars
+     * health bar does not change locations 
+     * there is also an added label for health remaining
+     */
     @Override
     public void changeBar() {
         if (redBar != null && greenBar != null) {
@@ -285,20 +293,28 @@ public class Wyrmroot extends Enemy
         }
     }
     
+    /**
+     * Method to spawn in health bars when boss is added to the world
+     */
     @Override
     protected void addedToWorld(World world) {
+        // adds boss bar frame
         world.addObject(bossBarFrame, 400, 60);
         
+        // adds hp bars
         redBar = new RedBar(0.0, 0.0, true);
         world.addObject(redBar, 400, 40);
-        
         greenBar = new GreenBar(0.0, 0.0, true);
         world.addObject(greenBar, 400, 40);
         
+        // adds health label
         healthBar = new Label(this.hitpoints + "/" + this.maxHitpoints + " hp", 30);
         world.addObject(healthBar, 400, 60);
     }
     
+    /**
+     * Boss is resistant to stun and immune to teleports
+     */
     @Override
     public void jester() {
         if (Greenfoot.getRandomNumber(2) > 0 && Hero.hero.jesterLvl > 1) {
@@ -307,39 +323,61 @@ public class Wyrmroot extends Enemy
         }
     }
     
+    /**
+     * Adjusted remove health function for damage calculations based on resistance multiplier
+     */
     @Override
     public void removeHp(int damage, boolean isCrit, Color color, int size) {
         damage = (int) Math.max(damage * resMult, 0);
         hitpoints -= damage;
         
+        // crit damage indicator
         if (isCrit) {
             color = Color.ORANGE;
             size = 35;
         }
         
+        // adds damage indicator
         DamageIndicator dmgIndicator = new DamageIndicator((int) damage, size, color);
         GameWorld.gameWorld.addObject(dmgIndicator, (int) getExactX(), (int) getExactY());
     }
     
+    /**
+     * Method for animating the blue bite attack 
+     */
     private void animateBlueBite() {
+        // breaks if frame is not finished
         if (blueBiteTimer.millisElapsed() < 100) return;
+        
+        // marks animation timer
         blueBiteTimer.mark();
         
+        // continues animation if it is not finished
         if (blueBiteIndex < blueBiteLeft.length) {
+            // boss is attacking while blue bite is animating
             isAttacking = true;
             
+            // checks facing direction and sets images accordingly
             if (facingRight) setImage(blueBiteRight[blueBiteIndex]);
             else setImage(blueBiteLeft[blueBiteIndex]);
             
+            // summons the swirl attack on specific index and if the boss has not already summoned it in the cycle
             if (blueBiteIndex == 5 && !hasAttacked) {
+                // prevent creating more blue bites
                 hasAttacked = true;
+                
+                // summons blue bite 
                 BlueBite blueBite = new BlueBite((int) (this.attack * 0.4), isDodged);
+                
+                // adds blue bite to the world
                 GameWorld.gameWorld.addObject(blueBite, (int) getExactX(), (int) getExactY());
             }
             
+            // next animation
             blueBiteIndex++;
         }
         else {
+            // resets variables for this bite instance
             hasAttacked = false;
             blueBiteIndex = 0;
             attackIndex = 1;
@@ -347,25 +385,38 @@ public class Wyrmroot extends Enemy
         }
     }
     
+    /**
+     * Method for animating the purple bite attack
+     */
     private void animatePurpleBite() {
+        // breaks if the current frame is not finished
         if (purpleBiteTimer.millisElapsed() < 150) return;
+        
+        // marks animation timer
         purpleBiteTimer.mark();
         
+        // continues if animation is not finished
         if (purpleBiteIndex < purpleBiteRight.length) {
+            // is attacking while animating
             isAttacking = true;
             
+            // checks facing direction
             if (facingRight) setImage(purpleBiteRight[purpleBiteIndex]);
             else setImage(purpleBiteLeft[purpleBiteIndex]);
             
+            // attacks only on the 5th animation index
             if (purpleBiteIndex == 5)  {
+                // calculates distance from hero
                 dx = Hero.hero.getExactX() - getExactX();
                 dy = Hero.hero.getExactY() - getExactY();
-                            
-                if (Math.sqrt(dx * dx + dy * dy) < 70) {
+                
+                // only deals damage to hero if it is close enough
+                if (Math.sqrt(dx * dx + dy * dy) < 80) {
                     attack();
                     hasAttacked = true;
                 }
-                            
+                
+                // spawns 1 vine per bite if not all of them (4) have been spawned
                 if (vineToSpawn > 0 && !spawnedVine) {
                     // creates a new vine
                     Wyrmvine vine = new Wyrmvine(GameWorld.gameWorld.waveMultiplier * 20, GameWorld.gameWorld.waveMultiplier * 3);
@@ -379,49 +430,68 @@ public class Wyrmroot extends Enemy
                     vineRemaining++;
                     isAttacking = false;
                     spawnedVine = true;
+                    
+                    // uses blue bite instead if no more vines to spawn
                     if (vineToSpawn <= 0) attackIndex = 0;
                 }
             }
+            
+            // increases animation index
             purpleBiteIndex++;
         }
         
         else {
+            // resets variables used in 1 loop of the animation
             purpleBiteIndex = 0;
-                
             if (vineToSpawn > 0) attackIndex = 1;
             else attackIndex = 0;
-                
             hasAttacked = false;
             isAttacking = false;
             spawnedVine = false;
-                
             attackCooldown.mark();
         }
     }
     
+    /**
+     * Method for animating the death of the Wyrmroot
+     */
     private void animateDeath() {
+        // breaks if the animation frame is not finished
         if (deathTimer.millisElapsed() < 250) return;
+        
+        // marks animation timer
         deathTimer.mark();
         
+        // continues animation if not finished
         if (deathIndex < death.length) {
             setImage(death[deathIndex]);
             deathIndex++;
         }
+        // removes itself from the world once animation is done
         else {
             GameWorld.gameWorld.removeObject(this);
             enemies.remove(this);
         }
     }
     
+    /**
+     * Method for animating the movement of the Wyrmroot
+     */
     private void animateRun() {
+        // breaks if the current frame is not finished
         if (runTimer.millisElapsed() < 80) return;
+        
+        // marks animation timer
         runTimer.mark();
         
+        // continues playing animation
         if (runIndex < runLeft.length) {
             if (facingRight) setImage(runRight[runIndex]);
             else setImage(runLeft[runIndex]);
             runIndex++;
         }
+        
+        // otherwise reset the animation
         else runIndex = 0;
     }
 }

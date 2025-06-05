@@ -2,7 +2,15 @@ import greenfoot.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Game World class
+ * 
+ * @author Kelton and Joe
+ * @version May 2025
+ */
+
 public class GameWorld extends World {
+    // static reference of itself (used by other classes)
     static GameWorld gameWorld;
     
     // enemies to spawn
@@ -53,10 +61,6 @@ public class GameWorld extends World {
         // size of the world is 800 by 600 pixels
         super(800, 600, 1);
         
-        // random background
-        //setBackground("background/background" + Greenfoot.getRandomNumber(5) + ".png");
-        //setBackground("background.png");
-        
         // init
         gameWorld = this;
         gameOver = false;
@@ -65,7 +69,6 @@ public class GameWorld extends World {
         // spawn actors
         hero = new Hero(heroArm);
         Hero.hero = hero;
-        
         addObject(hero, 400, 300);
         addObject(heroArm, 0, 0);
         healthBar = new Label(Math.max(Hero.hero.currentHp, 0) + "/" + hero.maxHp + " hp", 40);
@@ -83,9 +86,9 @@ public class GameWorld extends World {
         // give total rerolls
         UpgradeManager.numRerolls = 5;
         
+        // manager upgrades (init ONLY once to prevent upgrades not removing)
         Upgrade.type = new ArrayList<String>(Arrays.asList(Upgrade.typeString)); 
         Upgrade.uniques = new ArrayList<String>(Arrays.asList(Upgrade.uniqueTraits));
-        
         for (int i = 0; i < Upgrade.typeString.length; i++) {
             Upgrade.upgradeValues.put(Upgrade.typeString[i], Upgrade.value[i]);
         }
@@ -129,19 +132,13 @@ public class GameWorld extends World {
                     // randomly generate buffs based on wave number
                     int speedBound = Math.min(wave, maxSpeedMultiplier);
                     if (speedBound <= 0) speedBound = 1;  // fallback to 1
-                    
                     bonusSpeed = ((double) Greenfoot.getRandomNumber(speedBound)) / 10.0;
-                    
                     int hpBound = wave;
                     if (hpBound <= 0) hpBound = 1;
-                    
                     bonusHp = Greenfoot.getRandomNumber(hpBound);
-                    
                     int attackBound = (int) (wave * 0.5);
                     if (attackBound <= 0) attackBound = 1;
-                    
                     bonusAttack = Greenfoot.getRandomNumber(attackBound);
-                    
                     bonusAttackSpeed = Greenfoot.getRandomNumber(speedBound) * 10;
                     
                     // spawn enemy with buffs
@@ -169,6 +166,7 @@ public class GameWorld extends World {
                     upgradeManager = new UpgradeManager(easyReward + waveDifficulty, this, false);
                 }
                 
+                // adds the upgrade manager to the world
                 addObject(upgradeManager, 0, 0);
             }
         }
@@ -181,6 +179,7 @@ public class GameWorld extends World {
         // increase wave number every time it is called
         wave++;
         
+        // boss wave labels
         if (wave % 20 == 0) boss = new Label("Mechajaw", 50);
         else if (wave % 10 == 0) boss = new Label("The Wyrmroot", 50);
         

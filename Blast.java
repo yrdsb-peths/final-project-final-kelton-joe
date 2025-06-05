@@ -85,14 +85,18 @@ public class Blast extends SmoothMover
         this.damage = damage;
         this.isShrapnel = isShrapnel;
         
+        // configures sound volume
         blastSound.setVolume(70);
+        
+        // sets default image
+        setImage(blast[0]);
         
         // marks shrapnel life timer
         if (isShrapnel) shrapnelTimer.mark();
     }
     
     /**
-     * Act method for shrapnel
+     * Act method for Blast
      * 
      * hits all enemies if the blast occurs
      * otherwise keep travelling

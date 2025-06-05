@@ -48,6 +48,7 @@ public class BlueBite extends Actor
      */
     public void act()
     {
+        // animates the attack
         animateBite();
         
         // attacks the hero only once per animation

@@ -216,11 +216,13 @@ public class Enemy extends SmoothMover
         
         // removes itself and hp bar if it died
         if (hitpoints <= 0) {
+            // removers health bars
             GameWorld.gameWorld.removeObject(redBar);
             GameWorld.gameWorld.removeObject(greenBar);
             redBar = null;
             greenBar = null;
             
+            // removes itself 
             GameWorld.gameWorld.removeObject(this);
             enemies.remove(this);
         }
@@ -302,20 +304,20 @@ public class Enemy extends SmoothMover
      */
     public void vampire() {
         if (Hero.hero.vampireLvl == 1) {
-            // increases current hp by 5% of max hp
-            Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.05 * Hero.hero.maxHp)), Hero.hero.maxHp);
+            // increases current hp by 4% of max hp
+            Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.04 * Hero.hero.maxHp)), Hero.hero.maxHp);
             // updates health bar
             GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
         }
         else if (Hero.hero.vampireLvl >= 2) {
-            // chance to grant additional hp on kill (33%)
+            // chance to grant additional hp on kill (50%)
             if (this.hitpoints <= 0) {
-                if (Greenfoot.getRandomNumber(3) == 1) {
-                    // heals for 15% of max hp 
-                    Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.15 * Hero.hero.maxHp)), Hero.hero.maxHp);
+                if (Greenfoot.getRandomNumber(2) == 1) {
+                    // heals for 10% of max hp 
+                    Hero.hero.currentHp = Math.min((int) (Hero.hero.currentHp + (0.1 * Hero.hero.maxHp)), Hero.hero.maxHp);
                     
                     // increases max hp by 5
-                    Hero.hero.maxHp += 5;
+                    Hero.hero.maxHp += Greenfoot.getRandomNumber(7) + 2;
                 }
             }
             // otherwise increase current hp by 15%

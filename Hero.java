@@ -795,7 +795,7 @@ public class Hero extends SmoothMover
                     Upgrade.uniques.remove("Shrapnel Shot");
                 }
                 if (thunderLvl == 2) {
-                    Upgrade.uniques.remove("Thunderstrike Volley");
+                    Upgrade.uniques.remove("Thunderstrike \nVolley");
                     spread = 30;
                 }
                 break;

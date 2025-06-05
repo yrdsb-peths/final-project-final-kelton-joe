@@ -24,22 +24,11 @@ public class TitleScreen extends World
         Label gameName = new Label("Project Nameless", 70);
         addObject(gameName, 400, 100);
         
-        // start
+        // start button
         Button start = new Button("Start");
         addObject(start, 325, 475);
         
-        // menu
-        //Button menu = new Button("Menu");
-        //addObject(menu, 325, 475);
-        
-        // unique explanations
-        //Button unique = new Button("Unique");
-        //addObject(unique, 475, 475);
-        
-        // stat list
-        //Button stat = new Button("Stat");
-        //addObject(stat, 325, 540);
-        
+        // settings button
         Button setting = new Button("Setting");
         addObject(setting, 440, 475);
     }
