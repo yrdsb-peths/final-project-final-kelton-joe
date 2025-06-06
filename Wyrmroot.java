@@ -62,6 +62,8 @@ public class Wyrmroot extends Enemy
     // vine spawn sound
     GreenfootSound vineSound = new GreenfootSound("vine.mp3");
     
+    GreenfootSound chompSound = new GreenfootSound("loudChomp.mp3");
+    
     // boss hp bar
     Label healthBar;
     Actor bossBarFrame = new Actor() {
@@ -349,6 +351,8 @@ public class Wyrmroot extends Enemy
         // breaks if frame is not finished
         if (blueBiteTimer.millisElapsed() < 100) return;
         
+        chompSound.play();
+        
         // marks animation timer
         blueBiteTimer.mark();
         
@@ -391,6 +395,8 @@ public class Wyrmroot extends Enemy
     private void animatePurpleBite() {
         // breaks if the current frame is not finished
         if (purpleBiteTimer.millisElapsed() < 150) return;
+        
+        chompSound.play();
         
         // marks animation timer
         purpleBiteTimer.mark();
