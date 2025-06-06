@@ -23,7 +23,7 @@ public class GameWorld extends World {
     private double bonusSpeed;
     private int bonusAttack;
     private int bonusAttackSpeed;
-    private final int maxSpeedMultiplier = 8;
+    private final int maxSpeedMultiplier = 5;
     
     // hero
     private Hero hero;
