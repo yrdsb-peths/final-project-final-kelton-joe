@@ -7,8 +7,8 @@ import java.util.Set;
 /**
  * Blood Slash Unique Upgrade
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Joe and Kelton
+ * @version June 2025
  */
 public class Slash extends SmoothMover
 {

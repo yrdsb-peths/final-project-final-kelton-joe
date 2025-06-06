@@ -106,6 +106,7 @@ public class Upgrade extends Actor
     public String uniqueTrait;
     public static ArrayList<String> uniques;
     
+    // upgrade values
     public static java.util.HashMap<String, Double> upgradeValues = new java.util.HashMap<>();
     
     // upgrade manager
@@ -139,10 +140,6 @@ public class Upgrade extends Actor
         GreenfootImage rectangle = new GreenfootImage("rectangle.png");
         rectangle.scale(150, 150);
         setImage(rectangle);
-        
-        // converts string to arraylist
-        //type = new ArrayList<String>(Arrays.asList(typeString)); 
-        //uniques = new ArrayList<String>(Arrays.asList(uniqueTraits));
     }
     
     /**

@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Hero extends SmoothMover
 {
+    // global instance of the hero
     public static Hero hero;
     
     // attack dmg in hp units
@@ -212,6 +213,7 @@ public class Hero extends SmoothMover
      * @param heroArm: the hero arm (bow) of the hero
      */
     public Hero(HeroArm heroArm) {
+        // sets images
         for (int i = 0; i < idleLeft.length; i++) {
             idleRight[i] = new GreenfootImage("images/idle/idle" + i + ".png");
             idleRight[i].scale(xScale, yScale);
@@ -220,12 +222,10 @@ public class Hero extends SmoothMover
             idleLeft[i].mirrorHorizontally();
             idleLeft[i].scale(xScale, yScale);
         }
-        
         for (int i = 0; i < death.length; i++) {
             death[i] = new GreenfootImage("images/death/death" + i + ".png");
             death[i].scale(xScale, yScale);
         }
-        
         for (int i = 0; i < heroLeft.length; i++) {
             heroRight[i] = new GreenfootImage("images/hero/hero" + i + ".png");
             heroRight[i].scale(xScale,yScale);
@@ -234,7 +234,6 @@ public class Hero extends SmoothMover
             heroLeft[i].mirrorHorizontally();
             heroLeft[i].scale(xScale, yScale);
         }
-        
         for (int i = 0; i < hurtLeft.length; i++) {
             hurtRight[i] = new GreenfootImage("images/hurt/hurt" + i + ".png");
             hurtRight[i].scale(xScale, yScale);
@@ -244,15 +243,21 @@ public class Hero extends SmoothMover
             hurtLeft[i].scale(xScale, yScale);
         }
         
+        // sets sounds
         for (GreenfootSound s : arrowShoot) {
             s.setVolume(80);
         }
         
+        // marks animation timer
         idleAnimationTimer.mark();
+        
+        // sets default image
         setImage(idleRight[0]);
         
+        // global instance of the hero
         this.hero = this;
         
+        // change color of the dash bar
         redBar.getImage().setColor(new greenfoot.Color(137, 148, 153));
         redBar.getImage().fill();
         greenBar.getImage().setColor(new greenfoot.Color(15, 82, 186));
@@ -297,6 +302,7 @@ public class Hero extends SmoothMover
      */
     public void act()
     {
+        // animates death
         if (isDead) {
             GameWorld.gameWorld.removeObject(heroArm);
             animateDeath();
@@ -315,6 +321,7 @@ public class Hero extends SmoothMover
                 }
             }
         
+            // spectral veil immunity things
             if (spectralVeilLvl > 0) {
                 if (immunityTimer.millisElapsed() >= immuneDuration && isImmune) {
                     isImmune = false;
@@ -338,6 +345,7 @@ public class Hero extends SmoothMover
             cooldownPercent = Math.max(cooldownPercent, 0);
             greenBar.setPos(barX, barY, cooldownPercent);
             
+            // rogue final stats
             if (rogueLvl > 0) {
                 maxHp = 30;
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
@@ -356,19 +364,18 @@ public class Hero extends SmoothMover
                     dashTimer.mark();
                 }
             }
+            
+            // dash cooldown
             if (dashTimer.millisElapsed() >= dashLength) {
                 isDashing = false;
                 dashMultiplier = 1.0;
             }
             
-            if (Greenfoot.isKeyDown(forward)) {
-                this.setLocation(getExactX(), getExactY() - speed*dashMultiplier);
-            }
+            // movement
+            if (Greenfoot.isKeyDown(forward)) this.setLocation(getExactX(), getExactY() - speed*dashMultiplier);
+            if (Greenfoot.isKeyDown(backward)) this.setLocation(getExactX(), getExactY() + speed*dashMultiplier);
             
-            if (Greenfoot.isKeyDown(backward)) {
-                this.setLocation(getExactX(), getExactY() + speed*dashMultiplier);
-            }
-            
+            // facing direction
             if (Greenfoot.isKeyDown(left)) {
                 this.setLocation(getExactX() - speed*dashMultiplier, getExactY());
                 facing = "left";

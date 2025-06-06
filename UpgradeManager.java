@@ -3,33 +3,41 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * Write a description of class UpgradeManager here.
+ * Class for managing upgrades (spawning, selecting, rerolling, and confirming)
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Joe and Kelton
+ * @version June 2025
  */
 public class UpgradeManager extends Actor
 {
+    // spacing between upgrades
     private final int upgradeSpacing = 200;
     
+    // whether the upgrade is confirmed
     public static boolean isConfirmed;
+    
+    // whether the upgrade is unique
     private boolean isUnique;
     
+    // number of rerolls left
     public static int numRerolls;
     
-    Label confirmLabel = new Label("Confirm", 30);
-    
+    // list of selected upgrades
     private ArrayList<Upgrade> selectedUpgrades = new ArrayList<>();
     
+    // buttons
     private Button confirmButton;
     private Button resetButton;
     private Button homeButton;
     
+    // new upgrade manager
     UpgradeManager rerolledManager;
     
+    // upgrade frame and text
     private Button frame;
     private Label upgradeText;
     
+    // reroll frame and text
     private Button rerollsFrame;
     private Label rerollsText;
     
@@ -134,9 +142,7 @@ public class UpgradeManager extends Actor
      * @param upgrade: upgrade to be added
      */
     public void addSelectedUpgrade(Upgrade upgrade) {
-        if (!selectedUpgrades.contains(upgrade)) {
-            selectedUpgrades.add(upgrade);
-        }
+        if (!selectedUpgrades.contains(upgrade)) selectedUpgrades.add(upgrade);
     }
     
     /**
