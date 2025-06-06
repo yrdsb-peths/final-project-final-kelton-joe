@@ -189,7 +189,15 @@ public class Hero extends SmoothMover
     int sharpshotIndex = 0;
     
     // sounds
-    GreenfootSound dripSound = new GreenfootSound("drip.mp3");
+    GreenfootSound[] dripSounds = {
+        new GreenfootSound("drip/drip1.mp3"),
+        new GreenfootSound("drip/drip2.mp3"),
+        new GreenfootSound("drip/drip3.mp3"),
+        new GreenfootSound("drip/drip4.mp3"),
+        new GreenfootSound("drip/drip5.mp3")
+    };
+    int dripIndex = 0;
+    
     GreenfootSound slashSound = new GreenfootSound("slash.mp3");
     GreenfootSound dashSound = new GreenfootSound("dash.mp3");
     
@@ -542,7 +550,8 @@ public class Hero extends SmoothMover
         }
         else if (burstLvl == 1) {
             // plays sound
-            dripSound.play();
+            dripSounds[dripIndex].play();
+            dripIndex = (dripIndex + 1) % dripSounds.length;
             
             // creates blast
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
@@ -550,7 +559,8 @@ public class Hero extends SmoothMover
         }
         else {
             // plays sound
-            dripSound.play();
+            dripSounds[dripIndex].play();
+            dripIndex = (dripIndex + 1) % dripSounds.length;
             
             // creates blast
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.7) + 1, false);
