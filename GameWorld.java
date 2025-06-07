@@ -54,6 +54,9 @@ public class GameWorld extends World {
     Label bossBarText;
     SimpleTimer labelTimer = new SimpleTimer();
     
+    // max enemies that can be spawned at one time
+    private final int maxEnemies = 5;
+    
     /**
      * Constructor for the world
      */
@@ -80,7 +83,7 @@ public class GameWorld extends World {
         Enemy.enemies = new ArrayList<Enemy>();
         
         // start original wave
-        wave = 0;
+        wave = 10;
         startWave();
         
         // give total rerolls
@@ -113,10 +116,10 @@ public class GameWorld extends World {
         
         // spawn interval
         if (wave % 10 == 0) spawnInterval = 3000;
-        else spawnInterval = 1000 / waveMultiplier;
+        else spawnInterval = 800 / waveMultiplier;
         
         // spawns enemies as long as there are more enemies to spawn
-        if (enemiesToSpawn > 0 && wave > 0) {
+        if (enemiesToSpawn > 0 && wave > 0 && Enemy.enemies.size() < maxEnemies) {
             if (spawnTimer.millisElapsed() > spawnInterval) {
                 // sets boss bar text
                 if (wave % 20 == 0) bossBarText = new Label("Steelfin: Scourge of the Deep", 30);

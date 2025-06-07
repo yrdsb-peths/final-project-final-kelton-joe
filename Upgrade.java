@@ -32,21 +32,21 @@ public class Upgrade extends Actor
     
     // values of upgrades
     public static double[] value = {
-        10.0, // hp 
+        13.0, // hp 
         6.0, // attack
         0.07, // speed
         -25.0, // attack speed
-        10, // attack range
+        15, // attack range
         0.15, // projectile speed
         3.0, //crit rate
         6.0, // crit damage
-        -200.0, // hp regen interval
-        7.0, // hp regen amount
+        -250.0, // hp regen interval
+        10.0, // hp regen amount
         2.0, // both crit buff
         40.0, // dash length
-        0.25, // dash mult
+        0.35, // dash mult
         5.0, // projectile
-        50.0 // dash cooldown
+        70.0 // dash cooldown
     };
     
     // how much to buff a stat by
@@ -58,13 +58,13 @@ public class Upgrade extends Actor
     // rarity and probability for each rarity
     public int rarity;
     private int[] probability = { 
-            // rarity number: chance name multiplier
-        45, // 0: 45% common 1x
-        70, // 1: 25% uncommon 2x
-        85, // 2: 15% rare 3x
-        95, // 3: 10% epic 4x
-        98, // 4: 3% legendary 5x 
-        99 // 5: 2% mythic 10x
+            // rarity number: chance name multiplier (0 to 99)
+        34, // 0: 45% common 1x
+        69, // 1: 25% uncommon 2x
+        84, // 2: 15% rare 3x
+        94, // 3: 10% epic 4x
+        98, // 4: 4% legendary 5x 
+        99 // 5: 1% mythic 10x
     };
     
     // unique upgrades
