@@ -375,17 +375,17 @@ public class Hero extends SmoothMover
             if (Greenfoot.isKeyDown(forward)) this.setLocation(getExactX(), getExactY() - speed*dashMultiplier);
             if (Greenfoot.isKeyDown(backward)) this.setLocation(getExactX(), getExactY() + speed*dashMultiplier);
             
-            // facing direction
+            // facing direction and sideways movement
             if (Greenfoot.isKeyDown(left)) {
                 this.setLocation(getExactX() - speed*dashMultiplier, getExactY());
                 facing = "left";
             }
-            
             if (Greenfoot.isKeyDown(right)) {
                 this.setLocation(getExactX() + speed*dashMultiplier, getExactY());
                 facing = "right";
             }
             
+            // changes bow position
             heroArm.setPos(getExactX(), getExactY(), facing);
             
             // attack
@@ -518,9 +518,16 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Method to fire a projectile at a target enemy
+     * 
+     * @param damage: damage dealt by projectile
+     * @param enemy: enemy to aim at
+     */
     private void fireProjectile(double damage, Enemy enemy) {
         isAttacking = true;
         
+        // calculates direction
         double dx = enemy.getExactX() - getExactX();
         double dy = enemy.getExactY() - getExactY();
         
@@ -529,32 +536,40 @@ public class Hero extends SmoothMover
         double nx = dx / magnitude;
         double ny = dy / magnitude;
         
+        // check for hydro burst upgrade
         if (burstLvl == 0) {
+            // check for sharpshot (play special sound for it)
             if (sharpshotLvl > 0) {
                 sharpshotShoot[sharpshotIndex].play();
                 sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
             } 
+            // play regular sound
             else {
                 arrowShoot[arrowIndex].play();
                 arrowIndex = (arrowIndex + 1) % arrowShoot.length;
             }
             
+            // creates thunderstrike volley
             if (thunderLvl > 0) {
                 for (int j = 0; j < thunderLvl * 5; j++) {
+                    // calculates arrow direction with randomness
                     randomness = (Greenfoot.getRandomNumber(spread * 2) - spread);
                     newDirection = Math.atan2(ny, nx) + Math.toRadians(randomness);
                     newVelocityX = Math.cos(newDirection);
                     newVelocityY = Math.sin(newDirection);
                     
+                    // adds arrow to world
                     Projectile arrow = new Projectile(newVelocityX, newVelocityY, projectileSpeed, damage * 0.2, isCrit, false);
                     GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
                 }
             }
+            // creates a normal arrow if no special upgrades 
             else {
                 Projectile arrow = new Projectile(nx, ny, projectileSpeed, damage, isCrit, false);
                 GameWorld.gameWorld.addObject(arrow, (int) getExactX(), (int) getExactY());
             }
         }
+        // hydro burst level 1
         else if (burstLvl == 1) {
             // plays sound
             dripSounds[dripIndex].play();
@@ -564,6 +579,7 @@ public class Hero extends SmoothMover
             Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
+        // hydro burst level 2
         else {
             // plays sound
             dripSounds[dripIndex].play();
@@ -672,6 +688,11 @@ public class Hero extends SmoothMover
         }
     }
     
+    /**
+     * Gives the hero a unique stat
+     * 
+     * @param uniqueTrait: the unique upgrade to give to the player
+     */
     public void setStat(String uniqueTrait) {
         switch(uniqueTrait) {
             case "Frostbite":
