@@ -98,6 +98,7 @@ public class Tornado extends SmoothMover
         // removes if the animation is complete 
         if (tornadoIndex == tornadoImage.length) {
             GameWorld.gameWorld.removeObject(this);
+            for (Enemy enemy : enemiesPulled) enemy.isPulled = false;
         }
     }
     

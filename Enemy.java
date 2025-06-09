@@ -76,6 +76,8 @@ public class Enemy extends SmoothMover
     // spectral veil sounds
     GreenfootSound veilSound = new GreenfootSound("veil.mp3");
     
+    public boolean isPulled;
+    
     /**
      * Constructor for enemy class
      * 
@@ -135,8 +137,8 @@ public class Enemy extends SmoothMover
     public void act()
     {   
         // targeting
-        if (!isSlowed) target = "hero";
-        else if (Hero.hero.vortexLvl > 0) target = "vortex";
+        if (!isPulled) target = "hero";
+        else target = "vortex";
         
         // if hp is less than 0 enemy is dead
         if (hitpoints <= 0) return;
@@ -361,6 +363,7 @@ public class Enemy extends SmoothMover
             
             // changes target to the vortex
             this.target = "vortex";
+            this.isPulled = true;
             
             // adds the vortex to the world
             GameWorld.gameWorld.addObject(vortex, (int) this.getExactX(), (int) this.getExactY());
