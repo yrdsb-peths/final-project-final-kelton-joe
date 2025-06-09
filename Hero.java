@@ -831,7 +831,6 @@ public class Hero extends SmoothMover
                 if (thunderLvl == 1) {
                     spread = 45;
                     projectileSpeed = Math.min(maxProjectileSpeed, projectileSpeed + 2.0);
-                    Upgrade.uniques.remove("Shrapnel Shot");
                 }
                 if (thunderLvl == 2) {
                     Upgrade.uniques.remove("Thunderstrike \nVolley");
