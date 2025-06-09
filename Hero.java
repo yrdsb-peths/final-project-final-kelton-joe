@@ -678,6 +678,7 @@ public class Hero extends SmoothMover
                     Upgrade.type.remove("attackSpeed");
                     Upgrade.type.remove("projectile");
                 }
+                attack += (value / 2.0) + 0.5;
                 break;
             case "dashCooldown":
                 dashCooldown = Math.max(dashCooldown - (int) value, minDashCooldown);
