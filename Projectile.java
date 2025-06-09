@@ -72,7 +72,7 @@ public class Projectile extends SmoothMover
         
         // sharpshot durability increase
         if (Hero.hero.sharpshotLvl == 2) this.durability += 4;
-        else if (Hero.hero.sharpshotLvl == 1) this.durability = 2;
+        else if (Hero.hero.sharpshotLvl == 1) this.durability += 2;
         
         // thunderstrike volley durability increase
         if (Hero.hero.thunderLvl > 1) this.durability++;
