@@ -145,8 +145,8 @@ public class Projectile extends SmoothMover
             // chance to stun enemies on hit 
             if (Greenfoot.getRandomNumber(100) < Hero.hero.thunderLvl * 3) enemy.stun(300 * Hero.hero.thunderLvl);
             
-            // spawns shrapnels if not using thunderstrike volley
-            if (Hero.hero.thunderLvl == 0) shrapnel(enemy);
+            // shrapnel
+            shrapnel(enemy);
         }
         
         // reduces durability
