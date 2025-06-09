@@ -571,22 +571,43 @@ public class Hero extends SmoothMover
         }
         // hydro burst level 1
         else if (burstLvl == 1) {
-            // plays sound
-            dripSounds[dripIndex].play();
-            dripIndex = (dripIndex + 1) % dripSounds.length;
-            
-            // creates blast
-            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.4) + 1, false);
-            GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
+            addBlast(damage, nx, ny, 0.4);
         }
         // hydro burst level 2
         else {
-            // plays sound
-            dripSounds[dripIndex].play();
-            dripIndex = (dripIndex + 1) % dripSounds.length;
-            
-            // creates blast
-            Blast burst = new Blast(nx, ny, projectileSpeed, (damage * 0.7) + 1, false);
+            addBlast(damage, nx, ny, 0.7);
+        }
+    }
+    
+    private void addBlast(double damage, double nx, double ny, double damageMultiplier) {
+        // plays sound
+        dripSounds[dripIndex].play();
+        dripIndex = (dripIndex + 1) % dripSounds.length;
+        
+        // check for sharpshot (play special sound for it)
+        if (sharpshotLvl > 0) {
+            sharpshotShoot[sharpshotIndex].play();
+            sharpshotIndex = (sharpshotIndex + 1) % sharpshotShoot.length;
+        }
+        
+        // creates thunderstrike volley
+        if (thunderLvl > 0) {
+            for (int j = 0; j < thunderLvl * 5; j++) {
+                // calculates arrow direction with randomness
+                randomness = (Greenfoot.getRandomNumber(spread * 2) - spread);
+                newDirection = Math.atan2(ny, nx) + Math.toRadians(randomness);
+                newVelocityX = Math.cos(newDirection);
+                newVelocityY = Math.sin(newDirection);
+                
+                // creates a blast
+                Blast burst = new Blast(newVelocityX, newVelocityY, projectileSpeed,(damage * damageMultiplier) + 1, false);
+                GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
+            }
+        }
+        // creates a normal arrow if no special upgrades 
+        else {
+            // creates a blast
+            Blast burst = new Blast(nx, ny, projectileSpeed,(damage * damageMultiplier) + 1, false);
             GameWorld.gameWorld.addObject(burst, (int) getExactX(), (int) getExactY());
         }
     }
