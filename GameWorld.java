@@ -55,7 +55,7 @@ public class GameWorld extends World {
     SimpleTimer labelTimer = new SimpleTimer();
     
     // max enemies that can be spawned at one time
-    private final int maxEnemies = 12;
+    private final int maxEnemies = 8;
     
     /**
      * Constructor for the world
