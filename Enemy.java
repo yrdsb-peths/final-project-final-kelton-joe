@@ -136,6 +136,12 @@ public class Enemy extends SmoothMover
      */
     public void act()
     {   
+        // move enemies back into the screen
+        if (getExactX() <= 2 && getExactY() <= 2) setLocation(getExactX() + 3, getExactY() + 3);
+        if (getExactX() <= 2 && getExactY() >= 598) setLocation(getExactX() + 3, getExactY() - 3);
+        if (getExactX() >= 798 && getExactY() <= 2) setLocation(getExactX() - 3, getExactY() + 3);
+        if (getExactX() >= 798 && getExactY() >= 598) setLocation(getExactX() - 3, getExactY() - 3);
+        
         // targeting
         if (!isPulled) target = "hero";
         else target = "vortex";
