@@ -40,7 +40,7 @@ public class Upgrade extends Actor
         0.15, // projectile speed
         3.0, //crit rate
         6.0, // crit damage
-        -250.0, // hp regen interval
+        -400.0, // hp regen interval
         10.0, // hp regen amount
         2.0, // both crit buff
         40.0, // dash length
