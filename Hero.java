@@ -347,9 +347,9 @@ public class Hero extends SmoothMover
             
             // rogue final stats
             if (rogueLvl > 0) {
-                maxHp = 30;
+                maxHp = rogueLvl == 1 ? 30 : 70;
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
-                attackRange = 110;
+                attackRange = rogueLvl == 1  ? 100 : 130;
             }
             
             // movement
@@ -480,10 +480,13 @@ public class Hero extends SmoothMover
                 // additional crit scaling
                 if (isCrit) {
                     critMultiplier = 1.0 + (critDamage/100.0);
-                    damageDealt = maxHp * 0.9 * critMultiplier;
+                    damageDealt = maxHp * 0.8 * critMultiplier;
                 }
                 // regular hp scaling
-                else damageDealt = maxHp * 0.4;
+                else damageDealt = maxHp * 0.35;
+                
+                // more damage when lower than 30% health
+                if (currentHp <= maxHp * 0.3) damageDealt *= 1.3;
                 
                 // creates slash
                 Slash slash = new Slash(damageDealt, isCrit);
@@ -766,22 +769,19 @@ public class Hero extends SmoothMover
                         speed += 0.5; 
                         dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
                         attackRange = 110;
-                        currentHp = 30;
-                        maxHp = 30;
                         GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
                         Upgrade.type.remove("regenInterval");
                         Upgrade.type.remove("regenAmount");
                         Upgrade.type.remove("projectile");
                         Upgrade.type.remove("attackRange");
-                        Upgrade.uniques.remove("Blood Pact");
                     }
                     else {
                         critRate = 100.0;
                         attack += 25.0;
                         speed *= 1.3;
                         dashCooldown = minDashCooldown;
-                        maxAttackSpeed = 150;
+                        maxAttackSpeed = 200;
                         attackSpeed = maxAttackSpeed;
                         echoWait = 100;
                         Upgrade.type.remove("attackSpeed");
@@ -831,6 +831,9 @@ public class Hero extends SmoothMover
                 Upgrade.type.remove("projectileSpeed");
                 Upgrade.type.remove("attackRange");
                 Upgrade.uniques.remove("Sharpshot");
+                Upgrade.uniques.remove("Hydro Burst");
+                Upgrade.uniques.remove("Shrapnel Shot");
+                Upgrade.uniques.remove("Thunderstrike \nVolley");
                 Upgrade.uniques.remove("Blood Pact");
                 break;
             case "Shrapnel Shot": 

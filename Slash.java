@@ -66,14 +66,11 @@ public class Slash extends SmoothMover
                 if (isCrit) enemy.removeHp((int) this.damage, false, Color.RED, 35);
                 else enemy.removeHp((int) this.damage, false, Color.RED, 25);
                 
-                // kills give extra healing
-                if (enemy.hitpoints <= 0) selfHeal += Hero.hero.maxHp * 0.05;
-                
                 // dont hit the same enemy
                 enemiesHitSet.add(enemy);
                 
                 // self heal on hit
-                selfHeal += Hero.hero.maxHp * 0.02;
+                selfHeal += Hero.hero.maxHp * 0.05;
                 
                 // apply other effects from other uniques
                 enemy.frostbite();
