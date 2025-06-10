@@ -349,7 +349,7 @@ public class Hero extends SmoothMover
             if (rogueLvl > 0) {
                 maxHp = rogueLvl == 1 ? 30 : 70;
                 GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
-                attackRange = rogueLvl == 1  ? 100 : 130;
+                attackRange = rogueLvl == 1  ? 110 : 120;
             }
             
             // movement
@@ -767,8 +767,7 @@ public class Hero extends SmoothMover
                         attack += 10.0;
                         critDamage += 80.0; 
                         speed += 0.5; 
-                        dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown); 
-                        attackRange = 110;
+                        dashCooldown = Math.max(dashCooldown - 1000, minDashCooldown);
                         GameWorld.healthBar.setValue(Math.max(Hero.hero.currentHp, 0) + "/" + Hero.hero.maxHp + " hp");
                         Upgrade.type.remove("health");
                         Upgrade.type.remove("regenInterval");

@@ -94,15 +94,6 @@ public class Upgrade extends Actor
                                 // upgraded: weakens enemies by 30% and deals double damage to enemies under 30% hp (S) (S)
         "Thunderstrike \nVolley"  // fire a volley of arrows with a chance to spawn that deal partial damage (B) (A)
                                 // upgraded: more arrows that can pierce slightly and have higher stun chance (SS) (SS)
-        // Not Implemented yet:
-        // "Dreadful Aura"      // reduces enemies defense and attack when they are near you
-        // "Bloodthirst" // deal more damage on lower health percentage
-        // "Momentum Strike" // consecutive hits deal additional damage
-        // "Soul Reaper" // kills grant additional damage and speed for a certain duration
-                            // upgraded: more stacks, stronger effects, longer duration
-        // "Poison Tip" // poison enemies on hit
-                        // upgraded: poison spreads and deals additional damage if enemies are poisoned for longer, also weaken and slow
-        // "Trace" // arrows trace enemies
     };
     public String uniqueTrait;
     public static ArrayList<String> uniques;
