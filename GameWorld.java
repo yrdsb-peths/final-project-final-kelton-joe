@@ -46,7 +46,7 @@ public class GameWorld extends World {
     public UpgradeManager upgradeManager;
     
     // waves per unique upgrade
-    public static final int waveUnique = 5;
+    public static final int waveUnique = 1;
     
     // boss label timer and text
     Label bossText = new Label("Boss Wave", 90);
